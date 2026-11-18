@@ -2,13 +2,13 @@
   "id": "/",
   "name": "Tic Tac Toe Pro",
   "short_name": "TicTacToePro",
-  "description": "Classic Tic Tac Toe with unbeatable Minimax AI, local multiplayer, themes, and sound effects.",
+  "description": "All-ages offline Tic Tac Toe game with smart AI, pass-and-play multiplayer, and tactile feedback by CodeTech App Store.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#0a0e27",
-  "background_color": "#0a0e27",
+  "orientation": "any",
+  "theme_color": "#f4f7fb",
+  "background_color": "#f4f7fb",
   "icons": [
     {
       "src": "/icons/pwa-192x192.png",

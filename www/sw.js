@@ -1,8 +1,9 @@
-const CACHE_NAME = 'tic-tac-toe-pro-v2.1.0';
+const CACHE_NAME = 'tic-tac-toe-pro-v2.2.0';
 const ASSETS = [
   '/',
   '/index.html',
   '/privacy.html',
+  '/terms.html',
   '/manifest.webmanifest',
   '/icons/icon.svg',
   '/icons/apple-touch-icon.png',

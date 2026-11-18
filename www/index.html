@@ -3,17 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Tic Tac Toe Pro - Classic strategy game with unbeatable Minimax AI, local multiplayer, themes, and sound effects.">
-    <meta name="theme-color" content="#0a0e27" id="theme-color-meta">
+    <meta name="description" content="Tic Tac Toe Pro by CodeTech App Store - An all-ages offline strategy game for iOS, Android, and Web.">
+    <meta name="theme-color" content="#f4f7fb" id="theme-color-meta">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="TicTacToePro">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
     <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
     <title>Tic Tac Toe Pro</title>
     <style>
+        :root {
+            --bg-canvas: #f4f7fb;
+            --bg-surface: #ffffff;
+            --bg-subtle: #eaf0f8;
+            --bg-x-tint: #eff6ff;
+            --bg-o-tint: #fff1f2;
+            --bg-win-tint: #fef3c7;
+            --border-subtle: #dbe4f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent-primary: #2563eb;
+            --accent-primary-hover: #1d4ed8;
+            --accent-o: #e11d48;
+            --accent-win: #d97706;
+            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 6px 20px rgba(37, 99, 235, 0.08);
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --radius-sm: 10px;
+        }
+
+        body.theme-mint {
+            --bg-canvas: #f2fbf8;
+            --bg-surface: #ffffff;
+            --bg-subtle: #e2f5ee;
+            --bg-x-tint: #ecfeff;
+            --bg-o-tint: #fff7ed;
+            --bg-win-tint: #fef3c7;
+            --border-subtle: #cde8de;
+            --text-primary: #0f2922;
+            --text-secondary: #3b5e54;
+            --text-muted: #56796f;
+            --accent-primary: #0d9488;
+            --accent-primary-hover: #0f766e;
+            --accent-o: #ea580c;
+            --accent-win: #d97706;
+            --shadow-md: 0 6px 20px rgba(13, 148, 136, 0.09);
+        }
+
+        body.theme-night {
+            --bg-canvas: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-subtle: #283548;
+            --bg-x-tint: rgba(56, 189, 248, 0.14);
+            --bg-o-tint: rgba(251, 113, 133, 0.14);
+            --bg-win-tint: rgba(251, 191, 36, 0.18);
+            --border-subtle: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-primary: #38bdf8;
+            --accent-primary-hover: #0ea5e9;
+            --accent-o: #fb7185;
+            --accent-win: #fbbf24;
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -22,366 +81,539 @@
         }
 
         html, body {
+            height: 100%;
+            height: 100dvh;
+            width: 100%;
+            overflow: hidden;
             touch-action: manipulation;
+            background: var(--bg-canvas);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
-        body {
-            font-family: 'Courier New', monospace;
+        .app-shell {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            min-height: 100dvh;
-            background: #0a0e27;
-            color: #e0e0e0;
-            padding: calc(10px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));
-        }
-
-        .container {
-            background: linear-gradient(145deg, #12172e, #0d1124);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            flex-direction: column;
             width: 100%;
-            max-width: 380px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            position: relative;
+            height: 100%;
+            height: 100dvh;
+            background: var(--bg-canvas);
+            overflow: hidden;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-        }
-
-        header h1 {
-            font-size: 1.5rem;
-            color: #00ffff;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-        }
-
-        .sound-toggle {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 255, 255, 0.2);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            color: #00ffff;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
+        /* Compact Native Top Bar */
+        .top-bar {
+            flex-shrink: 0;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: calc(8px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 8px calc(16px + env(safe-area-inset-left));
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .brand-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .brand-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
         }
 
-        .sound-toggle:hover {
-            background: rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        .icon-btn:active {
+            transform: scale(0.94);
         }
 
-        .sound-toggle.muted {
-            background: rgba(100, 100, 100, 0.2);
-            color: #7a7a7a;
-            border-color: rgba(100, 100, 100, 0.3);
+        .icon-btn.muted {
+            color: var(--text-muted);
+            opacity: 0.72;
         }
 
-        .tabs {
+        .icon-btn:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        .cell:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Main Content Area - Fills remaining height cleanly with zero dead margins */
+        .main-workspace {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tab-panel {
+            display: none;
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 12px calc(16px + env(safe-area-inset-right)) 14px calc(16px + env(safe-area-inset-left));
+        }
+
+        .tab-panel.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Play Panel Layout */
+        #panel-play.active {
+            justify-content: space-between;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .scoreboard {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
-            margin-bottom: 15px;
+            grid-template-columns: 1fr 0.75fr 1fr;
+            gap: 8px;
+            flex-shrink: 0;
+            max-width: 460px;
+            width: 100%;
+            margin: 0 auto;
         }
 
-        .tabs button {
-            padding: 10px 3px;
-            min-height: 40px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            background: transparent;
-            color: #7a7a7a;
-            cursor: pointer;
-            font-size: 0.7rem;
+        .score-tile {
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+            min-width: 0;
+        }
+
+        .score-tile.turn-x {
+            border-color: var(--accent-primary);
+            background: var(--bg-x-tint);
+        }
+
+        .score-tile.turn-o {
+            border-color: var(--accent-o);
+            background: var(--bg-o-tint);
+        }
+
+        .score-label {
+            font-size: 0.75rem;
             font-weight: 600;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-family: 'Courier New', monospace;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
-        .tabs button:hover {
-            background: rgba(0, 255, 255, 0.1);
-            color: #00ffff;
+        .score-value {
+            font-size: 1.35rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+            margin-top: 2px;
         }
 
-        .tabs button.active {
-            background: rgba(0, 255, 255, 0.2);
-            color: #00ffff;
-            border-color: #00ffff;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        .score-value.x-color { color: var(--accent-primary); }
+        .score-value.o-color { color: var(--accent-o); }
+        .score-value.tie-color { color: var(--text-secondary); }
+
+        .turn-banner {
+            text-align: center;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
         }
 
-        .tab-content {
-            padding: 15px 0;
-        }
-
-        .tab-content h2 {
-            font-size: 1rem;
-            color: #00ffff;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        select, input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            min-height: 44px;
-            margin: 8px 0;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 6px;
-            font-size: 16px;
-            background: rgba(0, 0, 0, 0.3);
-            color: #e0e0e0;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
-        }
-
-        select:focus, input[type="text"]:focus {
-            outline: none;
-            border-color: #00ffff;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-        }
-
-        input::placeholder {
-            color: #555;
-        }
-
-        button#start-game-btn {
-            width: 100%;
-            padding: 12px;
-            min-height: 46px;
-            background: linear-gradient(135deg, #00ffff, #0099ff);
-            color: #0a0e27;
-            border: none;
-            border-radius: 6px;
+        .status-text {
             font-size: 1rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Courier New', monospace;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            color: var(--text-primary);
         }
 
-        button#start-game-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        .mode-subtext {
+            font-size: 0.78rem;
+            color: var(--text-muted);
         }
 
-        button#start-game-btn:active {
-            transform: translateY(0);
+        /* Responsive Board Container */
+        .board-stage {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
 
         .game-board {
+            width: min(100%, 44dvh, 380px);
+            aspect-ratio: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin: 20px 0;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+            padding: 12px;
+            background: var(--bg-subtle);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-md);
         }
 
         .cell {
-            aspect-ratio: 1;
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            border-radius: 8px;
-            font-size: 2.5rem;
-            font-weight: 700;
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-subtle);
+            border-radius: var(--radius-md);
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
             user-select: none;
             -webkit-user-select: none;
+            min-width: 44px;
+            min-height: 44px;
+            padding: 16%;
+            transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease;
         }
 
-        .cell:hover:not(.x):not(.o) {
-            background: rgba(0, 255, 255, 0.1);
-            border-color: #00ffff;
-            transform: scale(1.05);
+        .cell:hover:not(.occupied) {
+            border-color: var(--accent-primary);
+            transform: scale(1.02);
+        }
+
+        .cell:active:not(.occupied) {
+            transform: scale(0.95);
         }
 
         .cell.x {
-            color: #00ffff;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-            animation: glow 0.5s ease-in-out;
+            background: var(--bg-x-tint);
+            border-color: rgba(37, 99, 235, 0.35);
         }
 
         .cell.o {
-            color: #ff0099;
-            text-shadow: 0 0 20px rgba(255, 0, 153, 0.8);
-            animation: glow 0.5s ease-in-out;
+            background: var(--bg-o-tint);
+            border-color: rgba(225, 29, 72, 0.35);
         }
 
         .cell.winning {
-            animation: winPulse 0.6s ease-in-out 3;
-            background: rgba(255, 215, 0, 0.2);
+            background: var(--bg-win-tint);
+            border-color: var(--accent-win);
+            animation: winPop 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes glow {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        @keyframes winPulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
-            }
-        }
-
-        .status {
-            text-align: center;
-            margin: 15px 0;
-            min-height: 30px;
-        }
-
-        .status p {
-            font-size: 0.95rem;
-            color: #00ffff;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .score {
-            margin-top: 15px;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .score p {
-            margin: 6px 0;
-            font-size: 0.85rem;
-            color: #b0b0b0;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .score p span {
-            color: #00ffff;
-            font-weight: 700;
-        }
-
-        .score-actions {
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(0, 255, 255, 0.15);
-            display: flex;
-            gap: 8px;
-        }
-
-        .secondary-btn {
+        .cell svg {
             width: 100%;
-            padding: 8px 10px;
-            min-height: 38px;
-            background: rgba(0, 255, 255, 0.1);
-            border: 1px solid rgba(0, 255, 255, 0.35);
-            color: #00ffff;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-family: 'Courier New', monospace;
-            transition: all 0.2s ease;
-        }
-
-        .secondary-btn:hover {
-            background: rgba(0, 255, 255, 0.2);
-        }
-
-        .difficulty-select {
-            margin: 12px 0;
-        }
-
-        .difficulty-select label {
+            height: 100%;
             display: block;
-            margin-bottom: 6px;
-            color: #b0b0b0;
+            animation: markPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes markPop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes winPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+
+        .play-actions {
+            flex-shrink: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            max-width: 460px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .btn {
+            min-height: 46px;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
             font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
+            font-family: inherit;
+            cursor: pointer;
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
         }
 
-        .info-content {
-            font-size: 0.85rem;
-            line-height: 1.7;
-            color: #b0b0b0;
+        .btn:active {
+            transform: scale(0.98);
         }
 
-        .info-content h3 {
-            color: #00ffff;
-            font-size: 0.95rem;
-            margin: 14px 0 6px 0;
-            text-transform: uppercase;
+        .btn-primary {
+            background: var(--accent-primary);
+            color: #ffffff;
         }
 
-        .info-content p {
-            margin: 6px 0;
+        .btn-primary:hover {
+            background: var(--accent-primary-hover);
         }
 
-        .info-content strong {
-            color: #00ffff;
+        .btn-secondary {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            border-color: var(--border-subtle);
         }
 
-        .info-actions {
+        .btn-secondary:hover {
+            background: var(--bg-subtle);
+        }
+
+        /* Setup & Info Panels */
+        .panel-stack {
+            max-width: 520px;
+            width: 100%;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-top: 14px;
+            gap: 16px;
         }
 
-        .privacy-link {
-            display: block;
-            text-align: center;
-            padding: 9px 12px;
-            border: 1px solid rgba(0, 255, 255, 0.35);
-            border-radius: 6px;
-            color: #00ffff;
-            text-decoration: none;
-            font-size: 0.78rem;
+        .section-group {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .section-title {
+            font-size: 0.95rem;
             font-weight: 700;
-            text-transform: uppercase;
-            background: rgba(0, 255, 255, 0.08);
+            color: var(--text-primary);
         }
 
-        .privacy-link:hover {
-            background: rgba(0, 255, 255, 0.18);
+        .field-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
         }
 
+        .segmented {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px;
+            padding: 4px;
+            background: var(--bg-subtle);
+            border-radius: var(--radius-md);
+        }
+
+        .segmented.three-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .segmented button {
+            min-height: 40px;
+            padding: 8px 10px;
+            border: none;
+            border-radius: 9px;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .segmented button.active {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            min-height: 46px;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            background: var(--bg-canvas);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        input[type="text"]:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        /* Info & Legal Rows */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.88rem;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-row-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .info-row-value {
+            color: var(--text-primary);
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .info-row-value a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .legal-btn {
+            width: 100%;
+            min-height: 48px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-canvas);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 600;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .legal-btn:hover {
+            background: var(--bg-subtle);
+        }
+
+        .copyright-note {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 4px 0 8px;
+            line-height: 1.5;
+        }
+
+        /* Bottom Native Tab Bar (Mobile Thumb Zone) */
+        .bottom-nav {
+            flex-shrink: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-subtle);
+            padding: 4px calc(8px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));
+        }
+
+        .nav-tab {
+            min-height: 50px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            white-space: nowrap;
+            border-radius: 10px;
+            transition: color 0.15s ease;
+        }
+
+        .nav-tab.active {
+            color: var(--accent-primary);
+        }
+
+        .nav-tab svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Modal / Native Bottom Sheet */
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.72);
+            background: rgba(15, 23, 42, 0.55);
             display: none;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
             padding: 16px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
             z-index: 100;
         }
 
@@ -389,300 +621,348 @@
             display: flex;
         }
 
-        .modal-card {
-            background: #12172e;
-            border: 1px solid #00ffff;
-            border-radius: 10px;
+        .modal-sheet {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
             padding: 20px;
-            max-width: 340px;
+            max-width: 480px;
             width: 100%;
-            color: #e0e0e0;
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+            max-height: 80dvh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .modal-card h3 {
-            color: #00ffff;
-            margin-bottom: 10px;
-            font-size: 1rem;
-            text-transform: uppercase;
+        .modal-sheet h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
-        .modal-card p {
-            font-size: 0.85rem;
+        .modal-sheet p {
+            font-size: 0.88rem;
             line-height: 1.6;
-            margin-bottom: 14px;
-            color: #c7d1e6;
+            color: var(--text-secondary);
         }
 
-        /* Light mode */
-        .light-mode {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
         }
 
-        .light-mode .container {
-            background: #fff;
-            border-color: rgba(0, 123, 255, 0.2);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        .modal-actions .btn,
+        .modal-actions a {
+            flex: 1;
+            text-decoration: none;
         }
 
-        .light-mode header {
-            border-bottom-color: rgba(0, 123, 255, 0.2);
-        }
-
-        .light-mode header h1 {
-            color: #007bff;
-            text-shadow: none;
-        }
-
-        .light-mode .tab-content h2,
-        .light-mode .status p,
-        .light-mode .score p span,
-        .light-mode .info-content h3,
-        .light-mode .info-content strong {
-            color: #007bff;
-        }
-
-        .light-mode .tabs button {
-            border-color: rgba(0, 123, 255, 0.3);
-            color: #666;
-        }
-
-        .light-mode .tabs button.active {
-            background: rgba(0, 123, 255, 0.1);
-            color: #007bff;
-            border-color: #007bff;
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
-        }
-
-        .light-mode select,
-        .light-mode input[type="text"] {
-            background: #f8f9fa;
-            color: #333;
-            border-color: #ddd;
-        }
-
-        .light-mode select:focus,
-        .light-mode input[type="text"]:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
-        }
-
-        .light-mode .cell {
-            background: #f8f9fa;
-            border-color: #ddd;
-        }
-
-        .light-mode .cell:hover:not(.x):not(.o) {
-            background: rgba(0, 123, 255, 0.1);
-            border-color: #007bff;
-        }
-
-        .light-mode .cell.x {
-            color: #007bff;
-            text-shadow: none;
-        }
-
-        .light-mode .cell.o {
-            color: #dc3545;
-            text-shadow: none;
-        }
-
-        .light-mode .cell.winning {
-            background: rgba(255, 215, 0, 0.3);
-        }
-
-        .light-mode .score,
-        .light-mode .info-content {
-            background: #f8f9fa;
-            border-color: #ddd;
-            color: #666;
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        .light-mode .score p {
-            color: #666;
-        }
-
-        .light-mode .score-actions {
-            border-top-color: #e2e6ea;
-        }
-
-        .light-mode .secondary-btn,
-        .light-mode .privacy-link {
-            background: rgba(0, 123, 255, 0.08);
-            border-color: rgba(0, 123, 255, 0.35);
-            color: #007bff;
-        }
-
-        .light-mode .difficulty-select label {
-            color: #666;
-        }
-
-        .light-mode .sound-toggle {
-            background: rgba(0, 123, 255, 0.2);
-            border-color: rgba(0, 123, 255, 0.3);
-            color: #007bff;
-        }
-
-        .light-mode .sound-toggle:hover {
-            background: rgba(0, 123, 255, 0.3);
-        }
-
-        .light-mode .sound-toggle.muted {
-            background: rgba(100, 100, 100, 0.2);
-            color: #7a7a7a;
-            border-color: rgba(100, 100, 100, 0.3);
-        }
-
-        .light-mode .modal-card {
-            background: #fff;
-            border-color: #007bff;
-            color: #333;
-        }
-
-        .light-mode .modal-card h3 {
-            color: #007bff;
-        }
-
-        .light-mode .modal-card p {
-            color: #555;
-        }
-
-        @media (max-width: 360px) {
-            .container {
-                padding: 15px;
+        /* Responsive Landscape Phone Compact Mode */
+        @media (max-height: 540px) and (orientation: landscape) {
+            .top-bar {
+                padding-top: calc(4px + env(safe-area-inset-top));
+                padding-bottom: 4px;
             }
-            header h1 {
-                font-size: 1.3rem;
+            .scoreboard {
+                gap: 6px;
             }
-            .tabs button {
-                font-size: 0.6rem;
-                padding: 8px 2px;
+            .score-tile {
+                flex-direction: row;
+                gap: 8px;
+                padding: 4px 10px;
             }
-            .cell {
-                font-size: 2rem;
+            .score-value {
+                font-size: 1.05rem;
+                margin-top: 0;
+            }
+            .game-board {
+                width: min(46dvh, 240px);
+                gap: 6px;
+                padding: 8px;
+            }
+            .bottom-nav {
+                padding-top: 2px;
+                padding-bottom: calc(2px + env(safe-area-inset-bottom));
+            }
+            .nav-tab {
+                min-height: 44px;
+                flex-direction: row;
+                gap: 6px;
+            }
+        }
+
+        /* Tablet / Desktop Expanded Workspace */
+        @media (min-width: 900px) and (min-height: 600px) {
+            .bottom-nav {
+                display: none;
+            }
+
+            .main-workspace {
+                max-width: 1120px;
+                width: 100%;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 1.15fr 0.85fr;
+                gap: 24px;
+                padding: 20px 24px;
+                align-items: stretch;
+            }
+
+            #panel-play {
+                display: flex !important;
+                background: var(--bg-surface);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-lg);
+                padding: 20px;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .desktop-side {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                min-height: 0;
+                overflow-y: auto;
+            }
+
+            #panel-setup,
+            #panel-info {
+                display: flex !important;
+                flex: none;
+                padding: 0;
+                overflow: visible;
+            }
+
+            .game-board {
+                width: min(100%, 46dvh, 400px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="sound-toggle" id="sound-toggle" title="Toggle Sound" aria-label="Toggle Sound">🔊</button>
-
-        <header>
-            <h1>TIC TAC TOE</h1>
+    <div class="app-shell">
+        <header class="top-bar">
+            <div class="brand">
+                <img class="brand-mark" src="/icons/icon.svg" alt="Tic Tac Toe Pro" referrerPolicy="no-referrer">
+                <span class="brand-title">Tic Tac Toe Pro</span>
+            </div>
+            <div class="top-actions">
+                <button type="button" class="icon-btn" id="theme-quick-btn" title="Switch Color Theme" aria-label="Switch Color Theme">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                </button>
+                <button type="button" class="icon-btn" id="sound-toggle" title="Toggle Sound" aria-label="Toggle Sound">
+                    <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                    </svg>
+                    <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <line x1="22" y1="9" x2="16" y2="15"/>
+                        <line x1="16" y1="9" x2="22" y2="15"/>
+                    </svg>
+                </button>
+            </div>
         </header>
 
-        <div class="tabs">
-            <button class="active" id="game-mode-tab">Mode</button>
-            <button id="player-tab">Players</button>
-            <button id="theme-tab">Theme</button>
-            <button id="info-tab">Info</button>
-            <button id="start-game-tab">Start</button>
-        </div>
-
-        <!-- Game Mode -->
-        <div id="game-settings" class="tab-content">
-            <h2>Game Mode</h2>
-            <select id="game-mode" aria-label="Game Mode">
-                <option value="human-vs-human">Human vs Human</option>
-                <option value="human-vs-computer">Human vs Computer</option>
-            </select>
-            <div class="difficulty-select" id="difficulty-container" style="display:none;">
-                <label for="difficulty">Difficulty</label>
-                <select id="difficulty">
-                    <option value="easy">Easy</option>
-                    <option value="hard">Hard (Unbeatable)</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Player Selection -->
-        <div id="player-settings" class="tab-content" style="display:none;">
-            <h2>Players</h2>
-            <input type="text" id="player1" placeholder="Player 1 Name (X)" maxlength="18">
-            <input type="text" id="player2" placeholder="Player 2 Name (O)" maxlength="18">
-        </div>
-
-        <!-- Theme Mode -->
-        <div id="theme-settings" class="tab-content" style="display:none;">
-            <h2>Theme</h2>
-            <select id="theme-select" aria-label="Theme">
-                <option value="dark">Dark (Gaming)</option>
-                <option value="light">Light</option>
-            </select>
-        </div>
-
-        <!-- Info Tab -->
-        <div id="info-settings" class="tab-content" style="display:none;">
-            <h2>About</h2>
-            <div class="info-content">
-                <h3>App Information</h3>
-                <p><strong>Name:</strong> Tic Tac Toe Pro</p>
-                <p><strong>Version:</strong> 2.1.0</p>
-                <p><strong>Type:</strong> Offline Strategy Game</p>
-
-                <h3>Credits</h3>
-                <p><strong>Company:</strong> CodeTech</p>
-                <p><strong>Lead Developer:</strong> Sachin Sheth</p>
-
-                <h3>Features</h3>
-                <p>• Human vs Human Mode</p>
-                <p>• Human vs Computer Mode</p>
-                <p>• Smart AI (Minimax Algorithm)</p>
-                <p>• Dark & Light Themes</p>
-                <p>• Persistent Score Tracking</p>
-                <p>• iOS & Offline Ready</p>
-
-                <div class="info-actions">
-                    <button type="button" class="secondary-btn" id="install-app-btn" style="display:none;">Install App</button>
-                    <a class="privacy-link" href="/privacy.html">Privacy Policy</a>
+        <main class="main-workspace">
+            <!-- PLAY PANEL (Default active screen - zero dead space) -->
+            <section id="panel-play" class="tab-panel active" aria-label="Game Board">
+                <div class="scoreboard">
+                    <div class="score-tile turn-x" id="tile-p1">
+                        <span class="score-label" id="p1-name">Player 1 (X)</span>
+                        <span class="score-value x-color" id="p1-score">0</span>
+                    </div>
+                    <div class="score-tile">
+                        <span class="score-label">Ties</span>
+                        <span class="score-value tie-color" id="tie-score">0</span>
+                    </div>
+                    <div class="score-tile" id="tile-p2">
+                        <span class="score-label" id="p2-name">Computer (O)</span>
+                        <span class="score-value o-color" id="p2-score">0</span>
+                    </div>
                 </div>
+
+                <div class="turn-banner">
+                    <p class="status-text" id="status-text">Player 1's Turn (X)</p>
+                    <p class="mode-subtext" id="mode-summary">Vs Computer · Medium · All Ages</p>
+                </div>
+
+                <div class="board-stage">
+                    <div class="game-board" id="game-board" role="grid" aria-label="Tic Tac Toe 3 by 3 board">
+                        <button type="button" class="cell" data-id="0" aria-label="Row 1 Column 1"></button>
+                        <button type="button" class="cell" data-id="1" aria-label="Row 1 Column 2"></button>
+                        <button type="button" class="cell" data-id="2" aria-label="Row 1 Column 3"></button>
+                        <button type="button" class="cell" data-id="3" aria-label="Row 2 Column 1"></button>
+                        <button type="button" class="cell" data-id="4" aria-label="Row 2 Column 2"></button>
+                        <button type="button" class="cell" data-id="5" aria-label="Row 2 Column 3"></button>
+                        <button type="button" class="cell" data-id="6" aria-label="Row 3 Column 1"></button>
+                        <button type="button" class="cell" data-id="7" aria-label="Row 3 Column 2"></button>
+                        <button type="button" class="cell" data-id="8" aria-label="Row 3 Column 3"></button>
+                    </div>
+                </div>
+
+                <div class="play-actions">
+                    <button type="button" class="btn btn-primary" id="new-round-btn">New Round</button>
+                    <button type="button" class="btn btn-secondary" id="reset-scores-btn">Reset Scores</button>
+                </div>
+            </section>
+
+            <!-- SETUP & INFO CONTAINER (Stacked on desktop, tabbed on mobile) -->
+            <div class="desktop-side">
+                <!-- SETUP PANEL -->
+                <section id="panel-setup" class="tab-panel" aria-label="Game Setup">
+                    <div class="panel-stack">
+                        <div class="section-group">
+                            <h2 class="section-title">Game Mode</h2>
+                            <div class="segmented" role="group" aria-label="Game Mode">
+                                <button type="button" class="active" data-mode="human-vs-computer">Vs Computer</button>
+                                <button type="button" data-mode="human-vs-human">2 Players</button>
+                            </div>
+
+                            <div id="difficulty-container">
+                                <span class="field-label">Computer Difficulty</span>
+                                <div class="segmented three-col" role="group" aria-label="Difficulty">
+                                    <button type="button" data-difficulty="easy">Easy</button>
+                                    <button type="button" class="active" data-difficulty="medium">Medium</button>
+                                    <button type="button" data-difficulty="hard">Unbeatable</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-group">
+                            <h2 class="section-title">Players</h2>
+                            <div>
+                                <label class="field-label" for="player1">Player 1 Name (X)</label>
+                                <input type="text" id="player1" placeholder="Player 1" maxlength="16">
+                            </div>
+                            <div>
+                                <label class="field-label" for="player2">Player 2 Name (O)</label>
+                                <input type="text" id="player2" placeholder="Computer" maxlength="16" disabled>
+                            </div>
+                        </div>
+
+                        <div class="section-group">
+                            <h2 class="section-title">Appearance</h2>
+                            <div class="segmented three-col" role="group" aria-label="Color Theme">
+                                <button type="button" class="active" data-theme="daylight">Daylight</button>
+                                <button type="button" data-theme="mint">Mint</button>
+                                <button type="button" data-theme="night">Night</button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary" id="apply-play-btn">Save &amp; Play</button>
+                    </div>
+                </section>
+
+                <!-- INFO & LEGAL PANEL -->
+                <section id="panel-info" class="tab-panel" aria-label="About and Legal Information">
+                    <div class="panel-stack">
+                        <div class="section-group">
+                            <h2 class="section-title">About Tic Tac Toe Pro</h2>
+                            <div class="info-row">
+                                <span class="info-row-label">Company</span>
+                                <span class="info-row-value">CodeTech App Store</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-row-label">Contact</span>
+                                <span class="info-row-value"><a href="mailto:codetech.appstore@gmail.com">codetech.appstore@gmail.com</a></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-row-label">Version</span>
+                                <span class="info-row-value">2.1.0</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-row-label">Age Rating</span>
+                                <span class="info-row-value">All Ages (4+ / Everyone)</span>
+                            </div>
+                        </div>
+
+                        <div class="section-group">
+                            <h2 class="section-title">Legal &amp; Compliance Notes</h2>
+                            <button type="button" class="legal-btn" data-legal="privacy">
+                                <span>Privacy Policy (Zero Data Collection)</span>
+                                <span aria-hidden="true">›</span>
+                            </button>
+                            <button type="button" class="legal-btn" data-legal="terms">
+                                <span>Terms of Use &amp; EULA</span>
+                                <span aria-hidden="true">›</span>
+                            </button>
+                            <button type="button" class="legal-btn" data-legal="safety">
+                                <span>All-Ages &amp; Offline Safety Notice</span>
+                                <span aria-hidden="true">›</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="install-app-btn" style="display:none;">Install App on Device</button>
+                        </div>
+
+                        <p class="copyright-note">
+                            &copy; 2026 CodeTech App Store. All rights reserved.<br>
+                            Designed for iOS, Android, and Web · 100% Offline Ready
+                        </p>
+                    </div>
+                </section>
             </div>
-        </div>
+        </main>
 
-        <!-- Start Game -->
-        <div id="start-game-settings" class="tab-content" style="display:none;">
-            <button id="start-game-btn">Start Game</button>
-        </div>
-
-        <!-- Game Board -->
-        <div class="game-board" id="game-board" style="display:none;">
-            <div class="cell" data-id="0" role="button" tabindex="0" aria-label="Cell 1"></div>
-            <div class="cell" data-id="1" role="button" tabindex="0" aria-label="Cell 2"></div>
-            <div class="cell" data-id="2" role="button" tabindex="0" aria-label="Cell 3"></div>
-            <div class="cell" data-id="3" role="button" tabindex="0" aria-label="Cell 4"></div>
-            <div class="cell" data-id="4" role="button" tabindex="0" aria-label="Cell 5"></div>
-            <div class="cell" data-id="5" role="button" tabindex="0" aria-label="Cell 6"></div>
-            <div class="cell" data-id="6" role="button" tabindex="0" aria-label="Cell 7"></div>
-            <div class="cell" data-id="7" role="button" tabindex="0" aria-label="Cell 8"></div>
-            <div class="cell" data-id="8" role="button" tabindex="0" aria-label="Cell 9"></div>
-        </div>
-
-        <div class="status">
-            <p id="status-text">Configure and start!</p>
-        </div>
-
-        <div class="score">
-            <p><span id="p1-name">Player 1</span> <span id="p1-score">0</span></p>
-            <p><span id="p2-name">Player 2</span> <span id="p2-score">0</span></p>
-            <p>Ties <span id="tie-score">0</span></p>
-            <div class="score-actions">
-                <button type="button" class="secondary-btn" id="play-again-btn" style="display:none;">Play Again</button>
-                <button type="button" class="secondary-btn" id="reset-scores-btn">Reset Scores</button>
-            </div>
-        </div>
+        <!-- Native Mobile Bottom Tab Bar -->
+        <nav class="bottom-nav" aria-label="Primary Navigation">
+            <button type="button" class="nav-tab active" data-tab="play">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="3"/>
+                    <line x1="9" y1="3" x2="9" y2="21"/>
+                    <line x1="15" y1="3" x2="15" y2="21"/>
+                    <line x1="3" y1="9" x2="21" y2="9"/>
+                    <line x1="3" y1="15" x2="21" y2="15"/>
+                </svg>
+                <span>Play</span>
+            </button>
+            <button type="button" class="nav-tab" data-tab="setup">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="21" x2="4" y2="14"/>
+                    <line x1="4" y1="10" x2="4" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12" y2="3"/>
+                    <line x1="20" y1="21" x2="20" y2="16"/>
+                    <line x1="20" y1="12" x2="20" y2="3"/>
+                    <line x1="1" y1="14" x2="7" y2="14"/>
+                    <line x1="9" y1="8" x2="15" y2="8"/>
+                    <line x1="17" y1="16" x2="23" y2="16"/>
+                </svg>
+                <span>Setup</span>
+            </button>
+            <button type="button" class="nav-tab" data-tab="info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="16" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                <span>Info</span>
+            </button>
+        </nav>
     </div>
 
-    <div class="modal-backdrop" id="ios-install-modal" role="dialog" aria-modal="true" aria-labelledby="ios-modal-title">
-        <div class="modal-card">
-            <h3 id="ios-modal-title">Install on iPhone / iPad</h3>
-            <p>
-                1. Tap the <strong>Share</strong> icon in the Safari toolbar.<br>
-                2. Scroll down and tap <strong>Add to Home Screen</strong>.
-            </p>
-            <button type="button" class="secondary-btn" id="close-ios-modal-btn">Close</button>
+    <!-- In-App Legal & iOS Install Sheet Modal -->
+    <div class="modal-backdrop" id="sheet-modal" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+        <div class="modal-sheet">
+            <h3 id="sheet-title">Information</h3>
+            <div id="sheet-body"></div>
+            <div class="modal-actions">
+                <a class="btn btn-secondary" id="sheet-external-link" href="/privacy.html" style="display:none;">Full Page</a>
+                <button type="button" class="btn btn-primary" id="sheet-close-btn">Close</button>
+            </div>
         </div>
     </div>
 
@@ -690,116 +970,126 @@
         (function() {
             'use strict';
 
-            const STORAGE_KEY = 'tictactoe_pro_state_v1';
+            const STORAGE_KEY = 'tictactoe_pro_state_v2';
+            const THEME_COLORS = {
+                daylight: '#f4f7fb',
+                mint: '#f2fbf8',
+                night: '#0f172a'
+            };
 
-            // Sound Manager - using Web Audio API with iOS unlock support
+            const $ = id => document.getElementById(id);
+            const cells = Array.from(document.querySelectorAll('.cell'));
+            const navTabs = Array.from(document.querySelectorAll('.nav-tab'));
+            const panels = {
+                play: $('panel-play'),
+                setup: $('panel-setup'),
+                info: $('panel-info')
+            };
+
+            // Native Capacitor Bridge (safe no-op on Web)
+            const NativeBridge = {
+                isNative: !!(window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()),
+                async triggerHaptic(kind) {
+                    try {
+                        const Haptics = window.Capacitor?.Plugins?.Haptics;
+                        if (!Haptics) return;
+                        if (kind === 'win') {
+                            await Haptics.notification({ type: 'SUCCESS' });
+                        } else if (kind === 'tie') {
+                            await Haptics.notification({ type: 'WARNING' });
+                        } else {
+                            await Haptics.impact({ style: 'LIGHT' });
+                        }
+                    } catch (e) {}
+                },
+                async syncStatusBar(theme) {
+                    try {
+                        const StatusBar = window.Capacitor?.Plugins?.StatusBar;
+                        if (!StatusBar) return;
+                        await StatusBar.setStyle({ style: theme === 'night' ? 'LIGHT' : 'DARK' });
+                        await StatusBar.setBackgroundColor({ color: THEME_COLORS[theme] || '#f4f7fb' });
+                    } catch (e) {}
+                },
+                async hideSplash() {
+                    try {
+                        await window.Capacitor?.Plugins?.SplashScreen?.hide();
+                    } catch (e) {}
+                }
+            };
+
+            // Web Audio API Sound Manager with iOS unlock
             const SoundManager = {
                 enabled: true,
                 context: null,
-
                 init() {
                     try {
                         const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                        if (AudioCtx) {
-                            this.context = new AudioCtx();
-                        }
-                    } catch (e) {
-                        console.log('Web Audio API not supported');
-                    }
+                        if (AudioCtx) this.context = new AudioCtx();
+                    } catch (e) {}
                 },
-
                 unlock() {
                     if (!this.context) this.init();
                     if (this.context && this.context.state === 'suspended') {
                         this.context.resume().catch(() => {});
                     }
                 },
-
-                playSound(frequency, duration, type = 'sine', volume = 0.3) {
+                playTone(freq, duration, type = 'sine', vol = 0.2) {
                     if (!this.enabled) return;
                     this.unlock();
                     if (!this.context) return;
-
-                    const oscillator = this.context.createOscillator();
-                    const gainNode = this.context.createGain();
-
-                    oscillator.connect(gainNode);
-                    gainNode.connect(this.context.destination);
-
-                    oscillator.frequency.value = frequency;
-                    oscillator.type = type;
-                    gainNode.gain.setValueAtTime(volume, this.context.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.001, this.context.currentTime + duration);
-
-                    oscillator.start(this.context.currentTime);
-                    oscillator.stop(this.context.currentTime + duration);
+                    const osc = this.context.createOscillator();
+                    const gain = this.context.createGain();
+                    osc.connect(gain);
+                    gain.connect(this.context.destination);
+                    osc.frequency.value = freq;
+                    osc.type = type;
+                    gain.gain.setValueAtTime(vol, this.context.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.context.currentTime + duration);
+                    osc.start(this.context.currentTime);
+                    osc.stop(this.context.currentTime + duration);
                 },
-
-                playMove() {
-                    this.playSound(440, 0.1, 'sine', 0.2);
-                },
-
+                playMove() { this.playTone(460, 0.09, 'sine', 0.16); },
                 playWin() {
-                    this.playSound(523, 0.15, 'sine', 0.25);
-                    setTimeout(() => this.playSound(659, 0.15, 'sine', 0.25), 150);
-                    setTimeout(() => this.playSound(784, 0.3, 'sine', 0.25), 300);
+                    this.playTone(523, 0.12, 'sine', 0.2);
+                    setTimeout(() => this.playTone(659, 0.12, 'sine', 0.2), 110);
+                    setTimeout(() => this.playTone(784, 0.24, 'sine', 0.22), 220);
                 },
-
                 playTie() {
-                    this.playSound(300, 0.2, 'square', 0.15);
-                    setTimeout(() => this.playSound(250, 0.2, 'square', 0.15), 200);
+                    this.playTone(320, 0.14, 'triangle', 0.14);
+                    setTimeout(() => this.playTone(280, 0.16, 'triangle', 0.14), 140);
                 },
-
-                playClick() {
-                    this.playSound(600, 0.05, 'square', 0.1);
-                }
+                playClick() { this.playTone(580, 0.04, 'sine', 0.08); }
             };
 
             SoundManager.init();
             document.addEventListener('pointerdown', () => SoundManager.unlock(), { once: true });
 
-            // DOM Elements
-            const $ = id => document.getElementById(id);
-            const tabs = {
-                gameMode: $('game-mode-tab'),
-                player: $('player-tab'),
-                theme: $('theme-tab'),
-                info: $('info-tab'),
-                startGame: $('start-game-tab')
-            };
+            // SVG Mark Generators for crisp vector X and O on every DPI
+            const X_SVG = `<svg viewBox="0 0 100 100" aria-hidden="true">
+                <line x1="22" y1="22" x2="78" y2="78" stroke="var(--accent-primary)" stroke-width="14" stroke-linecap="round"/>
+                <line x1="78" y1="22" x2="22" y2="78" stroke="var(--accent-primary)" stroke-width="14" stroke-linecap="round"/>
+            </svg>`;
+            const O_SVG = `<svg viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="30" fill="none" stroke="var(--accent-o)" stroke-width="14" stroke-linecap="round"/>
+            </svg>`;
 
-            const tabContents = {
-                gameSettings: $('game-settings'),
-                playerSettings: $('player-settings'),
-                themeSettings: $('theme-settings'),
-                infoSettings: $('info-settings'),
-                startGameSettings: $('start-game-settings')
-            };
-
-            const gameBoard = $('game-board');
-            const cells = document.querySelectorAll('.cell');
-            const statusText = $('status-text');
-            const soundToggle = $('sound-toggle');
-            const playAgainBtn = $('play-again-btn');
-            const resetScoresBtn = $('reset-scores-btn');
-            const themeColorMeta = $('theme-color-meta');
-            let roundResetTimer = null;
-
-            // Game state
             const state = {
                 board: Array(9).fill(''),
                 currentPlayer: 'X',
-                isActive: false,
+                isActive: true,
                 player1Name: 'Player 1',
-                player2Name: 'Player 2',
-                isVsComputer: false,
-                difficulty: 'easy',
-                theme: 'dark',
+                player2Name: 'Computer',
+                isVsComputer: true,
+                difficulty: 'medium',
+                theme: 'daylight',
                 scores: { X: 0, O: 0, ties: 0 },
                 winningCells: []
             };
 
-            const savePreferences = () => {
+            let aiTimer = null;
+            let autoResetTimer = null;
+
+            const saveState = () => {
                 try {
                     localStorage.setItem(STORAGE_KEY, JSON.stringify({
                         soundEnabled: SoundManager.enabled,
@@ -810,214 +1100,203 @@
                         theme: state.theme,
                         scores: state.scores
                     }));
-                } catch (e) {
-                    // Ignore storage quota / private mode errors
-                }
+                } catch (e) {}
             };
 
             const applyTheme = (theme) => {
-                state.theme = theme === 'light' ? 'light' : 'dark';
-                const isLight = state.theme === 'light';
-                document.body.classList.toggle('light-mode', isLight);
-                $('theme-select').value = state.theme;
-                if (themeColorMeta) {
-                    themeColorMeta.setAttribute('content', isLight ? '#f5f7fa' : '#0a0e27');
-                }
+                const valid = ['daylight', 'mint', 'night'].includes(theme) ? theme : 'daylight';
+                state.theme = valid;
+                document.body.classList.remove('theme-mint', 'theme-night');
+                if (valid === 'mint') document.body.classList.add('theme-mint');
+                if (valid === 'night') document.body.classList.add('theme-night');
+                $('theme-color-meta').setAttribute('content', THEME_COLORS[valid]);
+                document.querySelectorAll('[data-theme]').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.theme === valid);
+                });
+                NativeBridge.syncStatusBar(valid);
             };
 
-            const updateScoreUI = () => {
-                $('p1-name').textContent = state.player1Name;
-                $('p2-name').textContent = state.player2Name;
+            const updateSoundUI = () => {
+                const btn = $('sound-toggle');
+                btn.classList.toggle('muted', !SoundManager.enabled);
+                $('sound-icon-on').style.display = SoundManager.enabled ? 'block' : 'none';
+                $('sound-icon-off').style.display = SoundManager.enabled ? 'none' : 'block';
+            };
+
+            const updateHeaderAndScores = () => {
+                $('p1-name').textContent = `${state.player1Name} (X)`;
+                $('p2-name').textContent = `${state.player2Name} (O)`;
                 $('p1-score').textContent = state.scores.X;
                 $('p2-score').textContent = state.scores.O;
                 $('tie-score').textContent = state.scores.ties;
+
+                const diffLabels = { easy: 'Easy', medium: 'Medium', hard: 'Unbeatable' };
+                const modeText = state.isVsComputer
+                    ? `Vs Computer · ${diffLabels[state.difficulty] || 'Medium'} · All Ages`
+                    : '2 Players · Local Pass & Play · All Ages';
+                $('mode-summary').textContent = modeText;
+
+                $('tile-p1').classList.toggle('turn-x', state.isActive && state.currentPlayer === 'X');
+                $('tile-p2').classList.toggle('turn-o', state.isActive && state.currentPlayer === 'O');
             };
 
-            const loadPreferences = () => {
+            const syncSetupControls = () => {
+                const modeValue = state.isVsComputer ? 'human-vs-computer' : 'human-vs-human';
+                document.querySelectorAll('[data-mode]').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.mode === modeValue);
+                });
+                $('difficulty-container').style.display = state.isVsComputer ? 'block' : 'none';
+                document.querySelectorAll('[data-difficulty]').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.difficulty === state.difficulty);
+                });
+                $('player1').value = state.player1Name === 'Player 1' ? '' : state.player1Name;
+                if (state.isVsComputer) {
+                    $('player2').value = 'Computer';
+                    $('player2').disabled = true;
+                } else {
+                    $('player2').value = state.player2Name === 'Player 2' ? '' : state.player2Name;
+                    $('player2').disabled = false;
+                }
+            };
+
+            const loadState = () => {
                 try {
                     const raw = localStorage.getItem(STORAGE_KEY);
-                    if (!raw) return;
-                    const saved = JSON.parse(raw);
-                    if (typeof saved.soundEnabled === 'boolean') {
-                        SoundManager.enabled = saved.soundEnabled;
-                        soundToggle.textContent = SoundManager.enabled ? '🔊' : '🔇';
-                        soundToggle.classList.toggle('muted', !SoundManager.enabled);
-                    }
-                    if (saved.player1Name) {
-                        state.player1Name = saved.player1Name;
-                        $('player1').value = saved.player1Name === 'Player 1' ? '' : saved.player1Name;
-                    }
-                    if (saved.player2Name) {
-                        state.player2Name = saved.player2Name;
-                        $('player2').value = saved.player2Name === 'Player 2' ? '' : saved.player2Name;
-                    }
-                    if (typeof saved.isVsComputer === 'boolean') {
-                        state.isVsComputer = saved.isVsComputer;
-                        $('game-mode').value = state.isVsComputer ? 'human-vs-computer' : 'human-vs-human';
-                        $('difficulty-container').style.display = state.isVsComputer ? 'block' : 'none';
-                        $('player2').disabled = state.isVsComputer;
-                        if (state.isVsComputer) {
-                            $('player2').value = 'Computer';
-                            state.player2Name = 'Computer';
+                    if (raw) {
+                        const saved = JSON.parse(raw);
+                        if (typeof saved.soundEnabled === 'boolean') SoundManager.enabled = saved.soundEnabled;
+                        if (saved.player1Name) state.player1Name = saved.player1Name;
+                        if (typeof saved.isVsComputer === 'boolean') state.isVsComputer = saved.isVsComputer;
+                        if (saved.player2Name) state.player2Name = state.isVsComputer ? 'Computer' : saved.player2Name;
+                        if (['easy', 'medium', 'hard'].includes(saved.difficulty)) state.difficulty = saved.difficulty;
+                        if (saved.theme) state.theme = saved.theme;
+                        if (saved.scores) {
+                            state.scores = {
+                                X: Number(saved.scores.X) || 0,
+                                O: Number(saved.scores.O) || 0,
+                                ties: Number(saved.scores.ties) || 0
+                            };
                         }
                     }
-                    if (saved.difficulty === 'easy' || saved.difficulty === 'hard') {
-                        state.difficulty = saved.difficulty;
-                        $('difficulty').value = saved.difficulty;
-                    }
-                    if (saved.theme) {
-                        applyTheme(saved.theme);
-                    }
-                    if (saved.scores && typeof saved.scores.X === 'number') {
-                        state.scores = {
-                            X: saved.scores.X || 0,
-                            O: saved.scores.O || 0,
-                            ties: saved.scores.ties || 0
-                        };
-                    }
-                    updateScoreUI();
-                } catch (e) {
-                    // Ignore malformed saved state
-                }
+                } catch (e) {}
+                applyTheme(state.theme);
+                updateSoundUI();
+                syncSetupControls();
+                updateHeaderAndScores();
             };
 
-            loadPreferences();
+            const switchMobileTab = (tabName) => {
+                SoundManager.playClick();
+                navTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
+                Object.entries(panels).forEach(([name, el]) => {
+                    el.classList.toggle('active', name === tabName);
+                });
+            };
 
-            // Sound toggle
-            soundToggle.onclick = () => {
+            navTabs.forEach(tab => {
+                tab.onclick = () => switchMobileTab(tab.dataset.tab);
+            });
+
+            $('sound-toggle').onclick = () => {
                 SoundManager.enabled = !SoundManager.enabled;
-                soundToggle.textContent = SoundManager.enabled ? '🔊' : '🔇';
-                soundToggle.classList.toggle('muted', !SoundManager.enabled);
+                updateSoundUI();
                 SoundManager.playClick();
-                savePreferences();
+                saveState();
             };
 
-            // Tab switching
-            const switchTab = (activeTab, content) => {
+            $('theme-quick-btn').onclick = () => {
                 SoundManager.playClick();
-                Object.values(tabs).forEach(tab => tab.classList.remove('active'));
-                Object.values(tabContents).forEach(tc => tc.style.display = 'none');
-                activeTab.classList.add('active');
-                content.style.display = 'block';
+                const order = ['daylight', 'mint', 'night'];
+                const next = order[(order.indexOf(state.theme) + 1) % order.length];
+                applyTheme(next);
+                saveState();
             };
 
-            tabs.gameMode.onclick = () => switchTab(tabs.gameMode, tabContents.gameSettings);
-            tabs.player.onclick = () => switchTab(tabs.player, tabContents.playerSettings);
-            tabs.theme.onclick = () => switchTab(tabs.theme, tabContents.themeSettings);
-            tabs.info.onclick = () => switchTab(tabs.info, tabContents.infoSettings);
-            tabs.startGame.onclick = () => switchTab(tabs.startGame, tabContents.startGameSettings);
+            // Setup controls
+            document.querySelectorAll('[data-mode]').forEach(btn => {
+                btn.onclick = () => {
+                    SoundManager.playClick();
+                    state.isVsComputer = btn.dataset.mode === 'human-vs-computer';
+                    state.player2Name = state.isVsComputer ? 'Computer' : ($('player2').value.trim() === 'Computer' || !$('player2').value.trim() ? 'Player 2' : $('player2').value.trim());
+                    syncSetupControls();
+                };
+            });
 
-            // Theme toggle
-            $('theme-select').onchange = e => {
-                SoundManager.playClick();
-                applyTheme(e.target.value);
-                savePreferences();
-            };
+            document.querySelectorAll('[data-difficulty]').forEach(btn => {
+                btn.onclick = () => {
+                    SoundManager.playClick();
+                    state.difficulty = btn.dataset.difficulty;
+                    syncSetupControls();
+                };
+            });
 
-            // Game mode selection
-            $('game-mode').onchange = e => {
-                SoundManager.playClick();
-                state.isVsComputer = e.target.value === 'human-vs-computer';
-                $('difficulty-container').style.display = state.isVsComputer ? 'block' : 'none';
-                $('player2').value = state.isVsComputer ? 'Computer' : '';
-                $('player2').disabled = state.isVsComputer;
-                state.player2Name = state.isVsComputer ? 'Computer' : 'Player 2';
-                updateScoreUI();
-                savePreferences();
-            };
+            document.querySelectorAll('[data-theme]').forEach(btn => {
+                btn.onclick = () => {
+                    SoundManager.playClick();
+                    applyTheme(btn.dataset.theme);
+                    saveState();
+                };
+            });
 
-            // Difficulty selection
-            $('difficulty').onchange = e => {
-                SoundManager.playClick();
-                state.difficulty = e.target.value;
-                savePreferences();
-            };
-
-            // Start game
-            $('start-game-btn').onclick = () => {
-                SoundManager.playClick();
-                state.player1Name = $('player1').value.trim() || 'Player 1';
-                state.player2Name = $('player2').value.trim() || (state.isVsComputer ? 'Computer' : 'Player 2');
-
-                updateScoreUI();
-                savePreferences();
-                resetGame();
-                gameBoard.style.display = 'grid';
-                tabContents.startGameSettings.style.display = 'none';
-            };
-
-            // Reset game
-            const resetGame = () => {
-                if (roundResetTimer) {
-                    clearTimeout(roundResetTimer);
-                    roundResetTimer = null;
-                }
+            const resetRound = () => {
+                if (aiTimer) { clearTimeout(aiTimer); aiTimer = null; }
+                if (autoResetTimer) { clearTimeout(autoResetTimer); autoResetTimer = null; }
                 state.board.fill('');
                 state.currentPlayer = 'X';
                 state.isActive = true;
                 state.winningCells = [];
-                playAgainBtn.style.display = 'none';
                 cells.forEach(cell => {
-                    cell.textContent = '';
+                    cell.innerHTML = '';
                     cell.className = 'cell';
                 });
-                statusText.textContent = `${state.player1Name}'s Turn`;
+                $('status-text').textContent = `${state.player1Name}'s Turn (X)`;
+                updateHeaderAndScores();
             };
 
-            playAgainBtn.onclick = () => {
+            $('apply-play-btn').onclick = () => {
                 SoundManager.playClick();
-                resetGame();
+                state.player1Name = $('player1').value.trim() || 'Player 1';
+                state.player2Name = state.isVsComputer ? 'Computer' : ($('player2').value.trim() || 'Player 2');
+                saveState();
+                resetRound();
+                switchMobileTab('play');
             };
 
-            resetScoresBtn.onclick = () => {
+            $('new-round-btn').onclick = () => {
+                SoundManager.playClick();
+                resetRound();
+            };
+
+            $('reset-scores-btn').onclick = () => {
                 SoundManager.playClick();
                 state.scores = { X: 0, O: 0, ties: 0 };
-                updateScoreUI();
-                savePreferences();
+                saveState();
+                updateHeaderAndScores();
             };
 
-            // Check winner
-            const checkWinner = () => {
-                const patterns = [
-                    [0,1,2], [3,4,5], [6,7,8],
-                    [0,3,6], [1,4,7], [2,5,8],
-                    [0,4,8], [2,4,6]
-                ];
+            const WIN_PATTERNS = [
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
+            ];
 
-                for (const pattern of patterns) {
-                    const [a,b,c] = pattern;
-                    if (state.board[a] && state.board[a] === state.board[b] && state.board[a] === state.board[c]) {
-                        state.winningCells = pattern;
-                        return state.board[a];
-                    }
-                }
-                return state.board.includes('') ? null : 'tie';
-            };
-
-            // Helper function for minimax
-            const checkWinnerForAI = (board) => {
-                const patterns = [
-                    [0,1,2], [3,4,5], [6,7,8],
-                    [0,3,6], [1,4,7], [2,5,8],
-                    [0,4,8], [2,4,6]
-                ];
-
-                for (const [a,b,c] of patterns) {
+            const checkBoardWinner = (board) => {
+                for (const pattern of WIN_PATTERNS) {
+                    const [a, b, c] = pattern;
                     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                        return board[a];
+                        return { winner: board[a], pattern };
                     }
                 }
-                return board.includes('') ? null : 'tie';
+                return board.includes('') ? null : { winner: 'tie', pattern: [] };
             };
 
-            // Minimax algorithm
             const minimax = (board, depth, isMax) => {
-                const winner = checkWinnerForAI(board);
-
-                if (winner === 'O') return 10 - depth;
-                if (winner === 'X') return depth - 10;
-                if (winner === 'tie') return 0;
-
+                const res = checkBoardWinner(board);
+                if (res) {
+                    if (res.winner === 'O') return 10 - depth;
+                    if (res.winner === 'X') return depth - 10;
+                    return 0;
+                }
                 if (isMax) {
                     let best = -Infinity;
                     for (let i = 0; i < 9; i++) {
@@ -1041,167 +1320,223 @@
                 }
             };
 
-            // Computer move
-            const computerMove = () => {
+            const getBestMove = () => {
+                let bestScore = -Infinity;
+                let move;
+                for (let i = 0; i < 9; i++) {
+                    if (state.board[i] === '') {
+                        state.board[i] = 'O';
+                        const score = minimax([...state.board], 0, false);
+                        state.board[i] = '';
+                        if (score > bestScore) {
+                            bestScore = score;
+                            move = i;
+                        }
+                    }
+                }
+                return move;
+            };
+
+            const getRandomMove = () => {
+                const open = state.board.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+                return open[Math.floor(Math.random() * open.length)];
+            };
+
+            const finishTurnCheck = () => {
+                const res = checkBoardWinner(state.board);
+                if (!res) return false;
+
+                state.isActive = false;
+                if (res.winner === 'tie') {
+                    $('status-text').textContent = "It's a Tie!";
+                    state.scores.ties++;
+                    SoundManager.playTie();
+                    NativeBridge.triggerHaptic('tie');
+                } else {
+                    state.winningCells = res.pattern;
+                    res.pattern.forEach(idx => cells[idx].classList.add('winning'));
+                    const winnerName = res.winner === 'X' ? state.player1Name : state.player2Name;
+                    $('status-text').textContent = `${winnerName} Wins!`;
+                    state.scores[res.winner]++;
+                    SoundManager.playWin();
+                    NativeBridge.triggerHaptic('win');
+                }
+
+                saveState();
+                updateHeaderAndScores();
+                autoResetTimer = setTimeout(resetRound, 2000);
+                return true;
+            };
+
+            const placeMark = (index, player) => {
+                state.board[index] = player;
+                const cell = cells[index];
+                cell.classList.add('occupied', player.toLowerCase());
+                cell.innerHTML = player === 'X' ? X_SVG : O_SVG;
+                SoundManager.playMove();
+                NativeBridge.triggerHaptic('move');
+            };
+
+            const triggerComputerTurn = () => {
                 if (!state.isActive) return;
+                $('status-text').textContent = 'Computer is thinking...';
+                updateHeaderAndScores();
 
-                statusText.textContent = 'Computer is thinking...';
-
-                setTimeout(() => {
+                aiTimer = setTimeout(() => {
                     if (!state.isActive) return;
                     let move;
                     if (state.difficulty === 'hard') {
-                        let bestScore = -Infinity;
-                        for (let i = 0; i < 9; i++) {
-                            if (state.board[i] === '') {
-                                state.board[i] = 'O';
-                                const score = minimax([...state.board], 0, false);
-                                state.board[i] = '';
-                                if (score > bestScore) {
-                                    bestScore = score;
-                                    move = i;
-                                }
-                            }
-                        }
+                        move = getBestMove();
+                    } else if (state.difficulty === 'medium') {
+                        move = Math.random() < 0.65 ? getBestMove() : getRandomMove();
                     } else {
-                        const available = state.board.map((v,i) => v === '' ? i : null).filter(v => v !== null);
-                        move = available[Math.floor(Math.random() * available.length)];
+                        move = getRandomMove();
                     }
-
                     if (move === undefined) return;
-                    state.board[move] = 'O';
-                    cells[move].textContent = 'O';
-                    cells[move].classList.add('o');
-                    SoundManager.playMove();
-
-                    handleGameEnd();
-                    if (state.isActive) {
+                    placeMark(move, 'O');
+                    if (!finishTurnCheck()) {
                         state.currentPlayer = 'X';
-                        statusText.textContent = `${state.player1Name}'s Turn`;
+                        $('status-text').textContent = `${state.player1Name}'s Turn (X)`;
+                        updateHeaderAndScores();
                     }
-                }, 400);
-            };
-
-            // Handle game end
-            const handleGameEnd = () => {
-                const winner = checkWinner();
-
-                if (winner) {
-                    state.isActive = false;
-                    playAgainBtn.style.display = 'block';
-
-                    if (winner === 'tie') {
-                        statusText.textContent = "It's a Tie!";
-                        state.scores.ties++;
-                        $('tie-score').textContent = state.scores.ties;
-                        SoundManager.playTie();
-                    } else {
-                        state.winningCells.forEach(index => {
-                            cells[index].classList.add('winning');
-                        });
-
-                        const name = winner === 'X' ? state.player1Name : state.player2Name;
-                        statusText.textContent = `${name} Wins!`;
-                        state.scores[winner]++;
-                        $(winner === 'X' ? 'p1-score' : 'p2-score').textContent = state.scores[winner];
-                        SoundManager.playWin();
-                    }
-
-                    savePreferences();
-                    roundResetTimer = setTimeout(resetGame, 2200);
-                }
-            };
-
-            const handleCellSelect = (cell) => {
-                if (state.isVsComputer && state.currentPlayer === 'O') return;
-                const id = parseInt(cell.dataset.id, 10);
-
-                if (state.board[id] === '' && state.isActive) {
-                    state.board[id] = state.currentPlayer;
-                    cell.textContent = state.currentPlayer;
-                    cell.classList.add(state.currentPlayer.toLowerCase());
-                    SoundManager.playMove();
-
-                    handleGameEnd();
-
-                    if (state.isActive) {
-                        if (state.currentPlayer === 'X') {
-                            state.currentPlayer = 'O';
-                            if (state.isVsComputer) {
-                                computerMove();
-                            } else {
-                                statusText.textContent = `${state.player2Name}'s Turn`;
-                            }
-                        } else {
-                            state.currentPlayer = 'X';
-                            statusText.textContent = `${state.player1Name}'s Turn`;
-                        }
-                    }
-                }
+                }, 380);
             };
 
             cells.forEach(cell => {
-                cell.onclick = () => handleCellSelect(cell);
-                cell.onkeydown = (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleCellSelect(cell);
+                cell.onclick = () => {
+                    if (!state.isActive) return;
+                    if (state.isVsComputer && state.currentPlayer === 'O') return;
+                    const idx = parseInt(cell.dataset.id, 10);
+                    if (state.board[idx] !== '') return;
+
+                    placeMark(idx, state.currentPlayer);
+                    if (!finishTurnCheck()) {
+                        if (state.currentPlayer === 'X') {
+                            state.currentPlayer = 'O';
+                            if (state.isVsComputer) {
+                                triggerComputerTurn();
+                            } else {
+                                $('status-text').textContent = `${state.player2Name}'s Turn (O)`;
+                                updateHeaderAndScores();
+                            }
+                        } else {
+                            state.currentPlayer = 'X';
+                            $('status-text').textContent = `${state.player1Name}'s Turn (X)`;
+                            updateHeaderAndScores();
+                        }
                     }
                 };
             });
 
-            // PWA Install & Service Worker (automatically disabled inside native Capacitor shell)
-            const isCapacitorNative = !!(window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform());
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true || isCapacitorNative;
+            // Legal & Install Modal Sheet
+            const sheetModal = $('sheet-modal');
+            const sheetTitle = $('sheet-title');
+            const sheetBody = $('sheet-body');
+            const sheetExternalLink = $('sheet-external-link');
+
+            const LEGAL_CONTENT = {
+                privacy: {
+                    title: 'Privacy Policy',
+                    body: `
+                        <p><strong>Publisher:</strong> CodeTech App Store<br><strong>Contact:</strong> codetech.appstore@gmail.com</p>
+                        <p>Tic Tac Toe Pro does not collect, transmit, sell, or share any personal information, analytics, device identifiers, or location data.</p>
+                        <p>Player names, scores, theme, and sound preferences remain strictly in local storage on your device.</p>
+                    `,
+                    href: '/privacy.html'
+                },
+                terms: {
+                    title: 'Terms of Use & EULA',
+                    body: `
+                        <p><strong>Licensor:</strong> CodeTech App Store</p>
+                        <p>CodeTech App Store grants you a personal, non-exclusive, non-transferable license to play Tic Tac Toe Pro for personal, non-commercial entertainment.</p>
+                        <p>All app code, visual design, icons, and audio synthesis are copyright &copy; 2026 CodeTech App Store. All rights reserved.</p>
+                    `,
+                    href: '/terms.html'
+                },
+                safety: {
+                    title: 'All-Ages & Offline Safety Notice',
+                    body: `
+                        <p>Tic Tac Toe Pro is crafted for players of all ages (4+ / Everyone).</p>
+                        <p>The app contains <strong>zero advertisements</strong>, <strong>zero in-app purchases</strong>, <strong>zero third-party tracking SDKs</strong>, and <strong>zero chat or external social links</strong>. It operates 100% offline.</p>
+                    `,
+                    href: null
+                }
+            };
+
+            const openSheet = ({ title, body, href }) => {
+                sheetTitle.textContent = title;
+                sheetBody.innerHTML = body;
+                if (href) {
+                    sheetExternalLink.href = href;
+                    sheetExternalLink.style.display = 'inline-flex';
+                } else {
+                    sheetExternalLink.style.display = 'none';
+                }
+                sheetModal.classList.add('open');
+            };
+
+            document.querySelectorAll('[data-legal]').forEach(btn => {
+                btn.onclick = () => {
+                    SoundManager.playClick();
+                    const item = LEGAL_CONTENT[btn.dataset.legal];
+                    if (item) openSheet(item);
+                };
+            });
+
+            $('sheet-close-btn').onclick = () => {
+                SoundManager.playClick();
+                sheetModal.classList.remove('open');
+            };
+
+            sheetModal.onclick = (e) => {
+                if (e.target === sheetModal) sheetModal.classList.remove('open');
+            };
+
+            // PWA Install Flow (only shown in web browsers, hidden in standalone/native Capacitor)
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true || NativeBridge.isNative;
             const installBtn = $('install-app-btn');
-            const iosModal = $('ios-install-modal');
-            const closeIosModalBtn = $('close-ios-modal-btn');
             let deferredInstallPrompt = null;
 
             if (!isStandalone) {
-                const isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-                if (isIOS) {
-                    installBtn.style.display = 'block';
-                    installBtn.textContent = 'Install on iOS';
+                const isIOSWeb = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+                if (isIOSWeb) {
+                    installBtn.style.display = 'inline-flex';
+                    installBtn.textContent = 'Install on iPhone / iPad';
                     installBtn.onclick = () => {
                         SoundManager.playClick();
-                        iosModal.classList.add('open');
+                        openSheet({
+                            title: 'Install on iPhone / iPad',
+                            body: `<p>1. Tap the <strong>Share</strong> icon in Safari's toolbar.<br>2. Scroll down and tap <strong>Add to Home Screen</strong>.</p>`,
+                            href: null
+                        });
                     };
                 }
 
                 window.addEventListener('beforeinstallprompt', (e) => {
                     e.preventDefault();
                     deferredInstallPrompt = e;
-                    installBtn.style.display = 'block';
-                    installBtn.textContent = 'Install App';
+                    installBtn.style.display = 'inline-flex';
+                    installBtn.textContent = 'Install App on Device';
                     installBtn.onclick = async () => {
                         if (!deferredInstallPrompt) return;
                         SoundManager.playClick();
                         await deferredInstallPrompt.prompt();
                         const choice = await deferredInstallPrompt.userChoice;
-                        if (choice.outcome === 'accepted') {
-                            installBtn.style.display = 'none';
-                        }
+                        if (choice.outcome === 'accepted') installBtn.style.display = 'none';
                         deferredInstallPrompt = null;
                     };
                 });
-
-                window.addEventListener('appinstalled', () => {
-                    installBtn.style.display = 'none';
-                    deferredInstallPrompt = null;
-                });
             }
 
-            closeIosModalBtn.onclick = () => {
-                SoundManager.playClick();
-                iosModal.classList.remove('open');
-            };
-
-            if ('serviceWorker' in navigator && !isCapacitorNative && location.protocol.startsWith('http')) {
+            if ('serviceWorker' in navigator && !NativeBridge.isNative && location.protocol.startsWith('http')) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('/sw.js').catch(() => {});
                 });
             }
+
+            loadState();
+            resetRound();
+            NativeBridge.hideSplash();
         })();
     </script>
 </body>

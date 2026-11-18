@@ -28,5 +28,16 @@ ios/DerivedData/
 xcuserdata/
 *.xcuserstate
 
-# Capacitor synced web copies (regenerated via `npx cap sync ios`)
+# Android / Gradle build artifacts
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Capacitor synced web copies (regenerated via `npm run mobile:sync`)
 ios/App/App/public/
+android/app/src/main/assets/public/

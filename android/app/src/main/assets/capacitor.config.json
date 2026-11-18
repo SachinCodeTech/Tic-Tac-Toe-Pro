@@ -1,0 +1,28 @@
+{
+	"appId": "com.codetech.tictactoepro",
+	"appName": "Tic Tac Toe Pro",
+	"webDir": "www",
+	"server": {
+		"androidScheme": "https",
+		"iosScheme": "capacitor"
+	},
+	"ios": {
+		"contentInset": "never",
+		"backgroundColor": "#f4f7fb",
+		"preferredContentMode": "mobile"
+	},
+	"android": {
+		"backgroundColor": "#f4f7fb"
+	},
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 350,
+			"backgroundColor": "#f4f7fb",
+			"showSpinner": false
+		},
+		"StatusBar": {
+			"style": "DARK",
+			"backgroundColor": "#f4f7fb"
+		}
+	}
+}

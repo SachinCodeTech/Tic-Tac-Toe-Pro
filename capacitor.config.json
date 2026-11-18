@@ -7,8 +7,22 @@
     "iosScheme": "capacitor"
   },
   "ios": {
-    "contentInset": "automatic",
-    "backgroundColor": "#0a0e27",
+    "contentInset": "never",
+    "backgroundColor": "#f4f7fb",
     "preferredContentMode": "mobile"
+  },
+  "android": {
+    "backgroundColor": "#f4f7fb"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 350,
+      "backgroundColor": "#f4f7fb",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#f4f7fb"
+    }
   }
 }

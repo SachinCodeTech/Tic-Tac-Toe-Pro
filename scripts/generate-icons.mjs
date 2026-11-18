@@ -5,6 +5,7 @@ import sharp from 'sharp';
 const rootDir = process.cwd();
 const iconsDir = path.join(rootDir, 'www', 'icons');
 const iosAppIconDir = path.join(rootDir, 'ios', 'App', 'App', 'Assets.xcassets', 'AppIcon.appiconset');
+const androidResDir = path.join(rootDir, 'android', 'app', 'src', 'main', 'res');
 
 function buildIconSvg({ padded = false } = {}) {
   const scale = padded ? 0.74 : 1;
@@ -13,48 +14,48 @@ function buildIconSvg({ padded = false } = {}) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#12172e"/>
-      <stop offset="100%" stop-color="#070a1d"/>
+      <stop offset="0%" stop-color="#f8fbff"/>
+      <stop offset="100%" stop-color="#dfeaff"/>
     </linearGradient>
-    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00ffff"/>
-      <stop offset="100%" stop-color="#0099ff"/>
+    <linearGradient id="xGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
     </linearGradient>
-    <linearGradient id="pinkGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff2eb8"/>
-      <stop offset="100%" stop-color="#ff0077"/>
+    <linearGradient id="oGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#e11d48"/>
     </linearGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#bg)"/>
   <g transform="translate(${offset}, ${offset}) scale(${scale})">
-    <!-- Subtle neon grid -->
-    <g stroke="#00ffff" stroke-opacity="0.28" stroke-width="14" stroke-linecap="round">
-      <line x1="394" y1="164" x2="394" y2="860"/>
-      <line x1="630" y1="164" x2="630" y2="860"/>
-      <line x1="164" y1="394" x2="860" y2="394"/>
-      <line x1="164" y1="630" x2="860" y2="630"/>
+    <rect x="128" y="128" width="768" height="768" rx="96" fill="#ffffff" stroke="#cbd5e1" stroke-width="10"/>
+    <g stroke="#cbd5e1" stroke-width="14" stroke-linecap="round">
+      <line x1="384" y1="184" x2="384" y2="840"/>
+      <line x1="640" y1="184" x2="640" y2="840"/>
+      <line x1="184" y1="384" x2="840" y2="384"/>
+      <line x1="184" y1="640" x2="840" y2="640"/>
     </g>
     <!-- Top-left X -->
-    <g stroke="url(#cyanGlow)" stroke-width="34" stroke-linecap="round">
-      <line x1="210" y1="210" x2="340" y2="340"/>
-      <line x1="340" y1="210" x2="210" y2="340"/>
+    <g stroke="url(#xGrad)" stroke-width="34" stroke-linecap="round">
+      <line x1="216" y1="216" x2="328" y2="328"/>
+      <line x1="328" y1="216" x2="216" y2="328"/>
     </g>
     <!-- Center X -->
-    <g stroke="url(#cyanGlow)" stroke-width="34" stroke-linecap="round">
-      <line x1="447" y1="447" x2="577" y2="577"/>
-      <line x1="577" y1="447" x2="447" y2="577"/>
+    <g stroke="url(#xGrad)" stroke-width="34" stroke-linecap="round">
+      <line x1="456" y1="456" x2="568" y2="568"/>
+      <line x1="568" y1="456" x2="456" y2="568"/>
     </g>
     <!-- Bottom-right X -->
-    <g stroke="url(#cyanGlow)" stroke-width="34" stroke-linecap="round">
-      <line x1="684" y1="684" x2="814" y2="814"/>
-      <line x1="814" y1="684" x2="684" y2="814"/>
+    <g stroke="url(#xGrad)" stroke-width="34" stroke-linecap="round">
+      <line x1="696" y1="696" x2="808" y2="808"/>
+      <line x1="808" y1="696" x2="696" y2="808"/>
     </g>
     <!-- Top-right O -->
-    <circle cx="749" cy="275" r="68" fill="none" stroke="url(#pinkGlow)" stroke-width="32"/>
+    <circle cx="752" cy="272" r="58" fill="none" stroke="url(#oGrad)" stroke-width="32"/>
     <!-- Bottom-left O -->
-    <circle cx="275" cy="749" r="68" fill="none" stroke="url(#pinkGlow)" stroke-width="32"/>
-    <!-- Winning diagonal highlight -->
-    <line x1="196" y1="196" x2="828" y2="828" stroke="#ffd700" stroke-opacity="0.85" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="272" cy="752" r="58" fill="none" stroke="url(#oGrad)" stroke-width="32"/>
+    <!-- Winning diagonal line -->
+    <line x1="198" y1="198" x2="826" y2="826" stroke="#f59e0b" stroke-opacity="0.85" stroke-width="14" stroke-linecap="round"/>
   </g>
 </svg>`;
 }
@@ -71,21 +72,21 @@ async function generate() {
   const maskableBuf = Buffer.from(maskableSvg, 'utf8');
 
   // Web & PWA PNGs
-  await sharp(standardBuf).resize(180, 180).flatten({ background: '#0a0e27' }).png().toFile(path.join(iconsDir, 'apple-touch-icon.png'));
-  await sharp(standardBuf).resize(192, 192).flatten({ background: '#0a0e27' }).png().toFile(path.join(iconsDir, 'pwa-192x192.png'));
-  await sharp(standardBuf).resize(512, 512).flatten({ background: '#0a0e27' }).png().toFile(path.join(iconsDir, 'pwa-512x512.png'));
-  await sharp(maskableBuf).resize(512, 512).flatten({ background: '#0a0e27' }).png().toFile(path.join(iconsDir, 'pwa-maskable-512x512.png'));
+  await sharp(standardBuf).resize(180, 180).flatten({ background: '#f4f7fb' }).png().toFile(path.join(iconsDir, 'apple-touch-icon.png'));
+  await sharp(standardBuf).resize(192, 192).flatten({ background: '#f4f7fb' }).png().toFile(path.join(iconsDir, 'pwa-192x192.png'));
+  await sharp(standardBuf).resize(512, 512).flatten({ background: '#f4f7fb' }).png().toFile(path.join(iconsDir, 'pwa-512x512.png'));
+  await sharp(maskableBuf).resize(512, 512).flatten({ background: '#f4f7fb' }).png().toFile(path.join(iconsDir, 'pwa-maskable-512x512.png'));
 
   // App Store 1024x1024 opaque PNG (no alpha channel per Apple App Store Connect requirement)
   const appStoreIconPath = path.join(iconsDir, 'app-store-1024.png');
   await sharp(standardBuf)
     .resize(1024, 1024)
-    .flatten({ background: '#0a0e27' })
+    .flatten({ background: '#f4f7fb' })
     .removeAlpha()
     .png({ compressionLevel: 9 })
     .toFile(appStoreIconPath);
 
-  // If Capacitor iOS project exists, sync the 1024x1024 AppIcon directly into Xcode Asset Catalog
+  // Sync Xcode Asset Catalog if ios/ exists
   try {
     await fs.access(iosAppIconDir);
     await fs.copyFile(appStoreIconPath, path.join(iosAppIconDir, 'AppIcon-512@2x.png'));
@@ -106,10 +107,31 @@ async function generate() {
     await fs.writeFile(path.join(iosAppIconDir, 'Contents.json'), JSON.stringify(contentsJson, null, 2) + '\n', 'utf8');
     console.log('Synced 1024x1024 opaque AppIcon to ios/App/App/Assets.xcassets/AppIcon.appiconset');
   } catch {
-    // iOS folder not generated yet; will be synced after cap add ios
+    // iOS folder not present
   }
 
-  console.log('Generated all PWA and App Store icons in www/icons/');
+  // Sync Android launcher icons if android/ exists
+  try {
+    await fs.access(androidResDir);
+    const androidSizes = [
+      { dir: 'mipmap-mdpi', size: 48 },
+      { dir: 'mipmap-hdpi', size: 72 },
+      { dir: 'mipmap-xhdpi', size: 96 },
+      { dir: 'mipmap-xxhdpi', size: 144 },
+      { dir: 'mipmap-xxxhdpi', size: 192 }
+    ];
+    for (const { dir, size } of androidSizes) {
+      const targetDir = path.join(androidResDir, dir);
+      await fs.mkdir(targetDir, { recursive: true });
+      await sharp(standardBuf).resize(size, size).flatten({ background: '#f4f7fb' }).png().toFile(path.join(targetDir, 'ic_launcher.png'));
+      await sharp(maskableBuf).resize(size, size).flatten({ background: '#f4f7fb' }).png().toFile(path.join(targetDir, 'ic_launcher_round.png'));
+    }
+    console.log('Synced Android launcher icons to android/app/src/main/res/');
+  } catch {
+    // Android folder not yet generated
+  }
+
+  console.log('Generated all bright all-age PWA, iOS, and Android icons in www/icons/');
 }
 
 generate().catch((err) => {
