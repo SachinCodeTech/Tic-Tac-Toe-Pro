@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Tic Tac Toe Pro</string>
+    <string name="title_activity_main">Tic Tac Toe Pro</string>
+    <string name="package_name">com.codetech.tictactoepro</string>
+    <string name="custom_url_scheme">com.codetech.tictactoepro</string>
+</resources>

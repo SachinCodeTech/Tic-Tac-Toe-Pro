@@ -9,9 +9,18 @@ const webDir = path.join(__dirname, 'www');
 const app = express();
 const PORT = 3000;
 
-app.use(express.static(webDir));
+app.use(
+  express.static(webDir, {
+    setHeaders(res, filePath) {
+      if (filePath.endsWith('.html') || filePath.endsWith('sw.js') || filePath.endsWith('.webmanifest')) {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      }
+    }
+  })
+);
 
 app.use((req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(webDir, 'index.html'));
 });
 

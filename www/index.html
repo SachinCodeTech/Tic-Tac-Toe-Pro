@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="description" content="Tic Tac Toe Pro - Family-friendly strategy game for all ages by CodeTech App Store.">
     <meta name="theme-color" content="#f4f7fb" id="theme-color-meta">
     <meta name="mobile-web-app-capable" content="yes">
@@ -20,6 +20,7 @@
             --bg-surface: #ffffff;
             --bg-subtle: #eaf0f8;
             --border-hairline: #dce4f0;
+            --cell-border: rgba(37, 99, 235, 0.28);
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --text-muted: #64748b;
@@ -35,6 +36,10 @@
             --accent: #2563eb;
             --accent-hover: #1d4ed8;
             --accent-text: #ffffff;
+            --btn-bg: #eff6ff;
+            --btn-hover: #dbeafe;
+            --btn-border: #93c5fd;
+            --btn-text: #1d4ed8;
             --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
             --shadow-board: 0 8px 24px rgba(15, 23, 42, 0.07);
             --radius-lg: 16px;
@@ -46,6 +51,7 @@
             --bg-surface: #ffffff;
             --bg-subtle: #f1ebe1;
             --border-hairline: #e4dccf;
+            --cell-border: rgba(148, 125, 98, 0.36);
             --text-primary: #1e1b18;
             --text-secondary: #575049;
             --text-muted: #78716c;
@@ -57,6 +63,36 @@
             --o-border: #fecdd3;
             --accent: #0284c7;
             --accent-hover: #0369a1;
+            --btn-bg: #f0f9ff;
+            --btn-hover: #e0f2fe;
+            --btn-border: #7dd3fc;
+            --btn-text: #0369a1;
+        }
+
+        body.theme-kids {
+            --bg-canvas: #ffffff;
+            --bg-surface: #ffffff;
+            --bg-subtle: #f1f5f9;
+            --border-hairline: #e5e7eb;
+            --cell-border: rgba(66, 133, 244, 0.34);
+            --text-primary: #18181b;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --x-color: #4285f4;
+            --x-tint: #eff6ff;
+            --x-border: #bfdbfe;
+            --o-color: #ea4335;
+            --o-tint: #fef2f2;
+            --o-border: #fecaca;
+            --win-bg: #fef9c3;
+            --win-border: #fbbc05;
+            --win-text: #854d0e;
+            --accent: #34a853;
+            --accent-hover: #258e42;
+            --btn-bg: #ffffff;
+            --btn-hover: #f8fafc;
+            --btn-border: #93c5fd;
+            --btn-text: #1d4ed8;
         }
 
         body.theme-dark {
@@ -64,6 +100,7 @@
             --bg-surface: #1e293b;
             --bg-subtle: #283548;
             --border-hairline: #334155;
+            --cell-border: rgba(148, 163, 184, 0.35);
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
@@ -78,6 +115,10 @@
             --win-text: #fde68a;
             --accent: #3b82f6;
             --accent-hover: #2563eb;
+            --btn-bg: rgba(59, 130, 246, 0.18);
+            --btn-hover: rgba(59, 130, 246, 0.28);
+            --btn-border: rgba(96, 165, 250, 0.45);
+            --btn-text: #93c5fd;
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
             --shadow-board: 0 10px 28px rgba(0, 0, 0, 0.35);
         }
@@ -356,6 +397,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            isolation: isolate;
         }
 
         .game-board {
@@ -371,11 +413,35 @@
             border: 1px solid var(--border-hairline);
             border-radius: 22px;
             box-shadow: var(--shadow-board);
+            position: relative;
+            z-index: 1;
+        }
+
+        body.theme-kids .game-board {
+            border-radius: 26px;
+            border-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+        }
+
+        body.theme-kids .game-board::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border-radius: 32px;
+            background: conic-gradient(from 315deg, #ea4335 0deg, #fbbc05 90deg, #34a853 180deg, #4285f4 270deg, #ea4335 360deg);
+            filter: blur(16px);
+            opacity: 0.45;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body.theme-kids .cell {
+            background: #f8fafc;
         }
 
         .cell {
             background: var(--bg-canvas);
-            border: 1.5px solid var(--border-hairline);
+            border: 1px solid var(--cell-border);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -456,13 +522,41 @@
         }
 
         .btn-primary {
-            background: var(--accent);
-            color: var(--accent-text);
-            border: none;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: 1px solid var(--btn-border);
+            box-shadow: var(--shadow-sm);
         }
 
         .btn-primary:hover {
-            background: var(--accent-hover);
+            background: var(--btn-hover);
+        }
+
+        #apply-setup-btn {
+            width: 100%;
+            min-height: 50px;
+            border-radius: var(--radius-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        body.theme-kids #apply-setup-btn {
+            border-color: rgba(255, 255, 255, 0.95);
+            background: #ffffff;
+            color: #15803d;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+        }
+
+        body.theme-kids #apply-setup-btn::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 18px;
+            background: linear-gradient(90deg, #ea4335, #fbbc05, #34a853, #4285f4);
+            filter: blur(8px);
+            opacity: 0.35;
+            z-index: -1;
+            pointer-events: none;
         }
 
         .btn-secondary {
@@ -486,7 +580,13 @@
             min-height: 0;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            padding: 16px calc(16px + env(safe-area-inset-right)) 24px calc(16px + env(safe-area-inset-left));
+            overscroll-behavior-y: contain;
+            scrollbar-width: none;
+            padding: 12px calc(14px + env(safe-area-inset-right)) 18px calc(14px + env(safe-area-inset-left));
+        }
+
+        .scroll-view::-webkit-scrollbar {
+            display: none;
         }
 
         .scroll-inner {
@@ -495,22 +595,22 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 10px;
         }
 
         .card {
             background: var(--bg-surface);
             border: 1px solid var(--border-hairline);
             border-radius: var(--radius-lg);
-            padding: 16px;
+            padding: 14px;
             box-shadow: var(--shadow-sm);
         }
 
         .card-title {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .segmented {
@@ -534,11 +634,15 @@
             border-radius: 9px;
             background: transparent;
             color: var(--text-secondary);
-            font-size: 0.86rem;
+            font-size: 0.85rem;
             font-weight: 600;
             font-family: inherit;
             cursor: pointer;
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
             transition: background-color 0.15s ease, color 0.15s ease;
         }
 
@@ -546,6 +650,12 @@
             background: var(--bg-surface);
             color: var(--accent);
             box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+        }
+
+        .theme-preview {
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
         .field-group {
@@ -894,10 +1004,23 @@
 
                         <div class="card">
                             <h2 class="card-title">Appearance</h2>
-                            <div class="segmented three-col" role="group" aria-label="Select Theme">
-                                <button type="button" class="seg-btn active" data-theme="light">Sky Light</button>
-                                <button type="button" class="seg-btn" data-theme="cream">Warm Cream</button>
-                                <button type="button" class="seg-btn" data-theme="dark">Midnight</button>
+                            <div class="segmented" role="group" aria-label="Select Theme">
+                                <button type="button" class="seg-btn active" data-theme="light">
+                                    <span class="theme-preview"><span style="color:#2563eb">X</span><span style="color:#ea580c">O</span></span>
+                                    <span>Sky Light</span>
+                                </button>
+                                <button type="button" class="seg-btn" data-theme="cream">
+                                    <span class="theme-preview"><span style="color:#0284c7">X</span><span style="color:#e11d48">O</span></span>
+                                    <span>Warm Cream</span>
+                                </button>
+                                <button type="button" class="seg-btn" data-theme="kids">
+                                    <span class="theme-preview"><span style="color:#4285f4">X</span><span style="color:#ea4335">O</span></span>
+                                    <span>Kids Color</span>
+                                </button>
+                                <button type="button" class="seg-btn" data-theme="dark">
+                                    <span class="theme-preview"><span style="color:#60a5fa">X</span><span style="color:#fb923c">O</span></span>
+                                    <span>Midnight</span>
+                                </button>
                             </div>
                         </div>
 
@@ -1008,6 +1131,7 @@
             const THEME_COLORS = {
                 light: '#f4f7fb',
                 cream: '#faf7f2',
+                kids: '#ffffff',
                 dark: '#0f172a'
             };
 
@@ -1109,11 +1233,12 @@
             const state = {
                 board: Array(9).fill(''),
                 currentPlayer: 'X',
+                roundStarter: 'X',
                 isActive: true,
                 player1Name: 'Player 1',
                 player2Name: 'Player 2',
                 isVsComputer: false,
-                difficulty: 'easy',
+                difficulty: 'hard',
                 theme: 'light',
                 scores: { X: 0, O: 0, ties: 0 },
                 winningCells: []
@@ -1134,10 +1259,11 @@
             };
 
             const applyTheme = (theme) => {
-                const valid = ['light', 'cream', 'dark'].includes(theme) ? theme : 'light';
+                const valid = ['light', 'cream', 'kids', 'dark'].includes(theme) ? theme : 'light';
                 state.theme = valid;
-                document.body.classList.remove('theme-cream', 'theme-dark');
+                document.body.classList.remove('theme-cream', 'theme-kids', 'theme-dark');
                 if (valid === 'cream') document.body.classList.add('theme-cream');
+                if (valid === 'kids') document.body.classList.add('theme-kids');
                 if (valid === 'dark') document.body.classList.add('theme-dark');
 
                 themeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.theme === valid));
@@ -1229,7 +1355,7 @@
             };
 
             $('quick-theme-btn').onclick = () => {
-                const order = ['light', 'cream', 'dark'];
+                const order = ['light', 'cream', 'kids', 'dark'];
                 const next = order[(order.indexOf(state.theme) + 1) % order.length];
                 SoundManager.playClick();
                 applyTheme(next);
@@ -1247,6 +1373,7 @@
             $('mode-hvh-btn').onclick = () => {
                 SoundManager.playClick();
                 state.isVsComputer = false;
+                state.roundStarter = 'X';
                 updateSetupControlsUI();
                 updateScoreAndModeUI();
                 resetGame();
@@ -1256,6 +1383,7 @@
             $('mode-hvc-btn').onclick = () => {
                 SoundManager.playClick();
                 state.isVsComputer = true;
+                state.roundStarter = 'X';
                 updateSetupControlsUI();
                 updateScoreAndModeUI();
                 resetGame();
@@ -1266,6 +1394,7 @@
                 btn.onclick = () => {
                     SoundManager.playClick();
                     state.difficulty = btn.dataset.diff;
+                    state.roundStarter = 'X';
                     updateSetupControlsUI();
                     updateScoreAndModeUI();
                     resetGame();
@@ -1295,7 +1424,7 @@
                     aiMoveTimer = null;
                 }
                 state.board.fill('');
-                state.currentPlayer = 'X';
+                state.currentPlayer = state.isVsComputer ? state.roundStarter : 'X';
                 state.isActive = true;
                 state.winningCells = [];
                 newRoundBtn.textContent = 'New Round';
@@ -1303,8 +1432,15 @@
                     cell.textContent = '';
                     cell.className = 'cell';
                 });
-                statusText.textContent = `${state.player1Name}'s Turn (X)`;
-                updateTurnHighlight();
+
+                if (state.isVsComputer && state.currentPlayer === 'O') {
+                    statusText.textContent = 'Computer opens (O)...';
+                    updateTurnHighlight();
+                    computerMove();
+                } else {
+                    statusText.textContent = `${state.player1Name}'s Turn (X)`;
+                    updateTurnHighlight();
+                }
             };
 
             newRoundBtn.onclick = () => {
@@ -1325,6 +1461,9 @@
                 [0,4,8], [2,4,6]
             ];
 
+            const MOVE_PRIORITY = [4, 0, 2, 6, 8, 1, 3, 5, 7];
+            const POS_WEIGHTS = [3, 1, 3, 1, 4, 1, 3, 1, 3];
+
             const checkWinnerForBoard = (board) => {
                 for (const pattern of WIN_PATTERNS) {
                     const [a,b,c] = pattern;
@@ -1335,39 +1474,94 @@
                 return board.includes('') ? null : { winner: 'tie', pattern: [] };
             };
 
-            const minimax = (board, depth, isMax) => {
+            const countForkThreats = (board, mark) => {
+                const opp = mark === 'O' ? 'X' : 'O';
+                let twoInLine = 0;
+                for (const [a, b, c] of WIN_PATTERNS) {
+                    const line = [board[a], board[b], board[c]];
+                    if (!line.includes(opp) && line.filter(v => v === mark).length === 2) {
+                        twoInLine++;
+                    }
+                }
+                return twoInLine;
+            };
+
+            const alphaBeta = (board, depth, alpha, beta, isMax) => {
                 const res = checkWinnerForBoard(board);
                 if (res) {
-                    if (res.winner === 'O') return 10 - depth;
-                    if (res.winner === 'X') return depth - 10;
+                    if (res.winner === 'O') return 100 - depth;
+                    if (res.winner === 'X') return depth - 100;
                     return 0;
                 }
 
                 if (isMax) {
                     let best = -Infinity;
-                    for (let i = 0; i < 9; i++) {
+                    for (const i of MOVE_PRIORITY) {
                         if (board[i] === '') {
                             board[i] = 'O';
-                            best = Math.max(best, minimax(board, depth + 1, false));
+                            best = Math.max(best, alphaBeta(board, depth + 1, alpha, beta, false));
                             board[i] = '';
+                            alpha = Math.max(alpha, best);
+                            if (beta <= alpha) break;
                         }
                     }
                     return best;
                 } else {
                     let best = Infinity;
-                    for (let i = 0; i < 9; i++) {
+                    for (const i of MOVE_PRIORITY) {
                         if (board[i] === '') {
                             board[i] = 'X';
-                            best = Math.min(best, minimax(board, depth + 1, true));
+                            best = Math.min(best, alphaBeta(board, depth + 1, alpha, beta, true));
                             board[i] = '';
+                            beta = Math.min(beta, best);
+                            if (beta <= alpha) break;
                         }
                     }
                     return best;
                 }
             };
 
+            // Tie-breaker that steers equal-minimax draws into maximum-trap lines
+            const expectimaxTrapScore = (board, depth, isMax) => {
+                const res = checkWinnerForBoard(board);
+                if (res) {
+                    if (res.winner === 'O') return 100 - depth;
+                    if (res.winner === 'X') return depth - 100;
+                    return 0;
+                }
+
+                if (isMax) {
+                    let best = -Infinity;
+                    for (const i of MOVE_PRIORITY) {
+                        if (board[i] === '') {
+                            board[i] = 'O';
+                            const val = expectimaxTrapScore(board, depth + 1, false);
+                            board[i] = '';
+                            if (val > best) best = val;
+                        }
+                    }
+                    return best;
+                } else {
+                    let worst = Infinity;
+                    let sum = 0;
+                    let count = 0;
+                    for (const i of MOVE_PRIORITY) {
+                        if (board[i] === '') {
+                            board[i] = 'X';
+                            const val = expectimaxTrapScore(board, depth + 1, true);
+                            board[i] = '';
+                            if (val < worst) worst = val;
+                            sum += val;
+                            count++;
+                        }
+                    }
+                    const avg = count > 0 ? sum / count : 0;
+                    return worst * 0.65 + avg * 0.35;
+                }
+            };
+
             const findImmediateMove = (mark) => {
-                for (let i = 0; i < 9; i++) {
+                for (const i of MOVE_PRIORITY) {
                     if (state.board[i] === '') {
                         state.board[i] = mark;
                         const res = checkWinnerForBoard(state.board);
@@ -1378,11 +1572,27 @@
                 return null;
             };
 
+            const findForkMove = (mark) => {
+                for (const i of MOVE_PRIORITY) {
+                    if (state.board[i] === '') {
+                        state.board[i] = mark;
+                        const forks = countForkThreats(state.board, mark);
+                        state.board[i] = '';
+                        if (forks >= 2) return i;
+                    }
+                }
+                return null;
+            };
+
             const chooseComputerMove = () => {
-                const available = state.board.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+                const available = MOVE_PRIORITY.filter(i => state.board[i] === '');
                 if (available.length === 0) return undefined;
 
                 if (state.difficulty === 'easy') {
+                    const winMove = findImmediateMove('O');
+                    if (winMove !== null && Math.random() < 0.5) return winMove;
+                    const blockMove = findImmediateMove('X');
+                    if (blockMove !== null && Math.random() < 0.35) return blockMove;
                     return available[Math.floor(Math.random() * available.length)];
                 }
 
@@ -1390,23 +1600,70 @@
                     const winMove = findImmediateMove('O');
                     if (winMove !== null) return winMove;
                     const blockMove = findImmediateMove('X');
-                    if (blockMove !== null && Math.random() < 0.85) return blockMove;
-                    if (state.board[4] === '' && Math.random() < 0.6) return 4;
+                    if (blockMove !== null) return blockMove;
+                    const forkMove = findForkMove('O');
+                    if (forkMove !== null && Math.random() < 0.9) return forkMove;
+                    const blockFork = findForkMove('X');
+                    if (blockFork !== null && Math.random() < 0.85) return blockFork;
+                    if (state.board[4] === '') return 4;
+                    const corners = [0, 2, 6, 8].filter(i => state.board[i] === '');
+                    if (corners.length > 0 && Math.random() < 0.8) {
+                        return corners[Math.floor(Math.random() * corners.length)];
+                    }
                     return available[Math.floor(Math.random() * available.length)];
                 }
 
-                let bestScore = -Infinity;
-                let bestMove = available[0];
+                // HARD (UNBEATABLE): Instant win/block + Alpha-Beta + Expectimax Trap Engine
+                const immediateWin = findImmediateMove('O');
+                if (immediateWin !== null) return immediateWin;
+
+                const immediateBlock = findImmediateMove('X');
+                if (immediateBlock !== null) return immediateBlock;
+
+                // Aggressive corner opening when Computer starts on empty board (highest human error rate)
+                if (available.length === 9) {
+                    const traps = [0, 2, 6, 8];
+                    return traps[Math.floor(Math.random() * traps.length)];
+                }
+
+                const candidates = [];
+                let bestExact = -Infinity;
+
                 for (const i of available) {
                     state.board[i] = 'O';
-                    const score = minimax([...state.board], 0, false);
+                    const exactScore = alphaBeta([...state.board], 0, -Infinity, Infinity, false);
                     state.board[i] = '';
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestMove = i;
+
+                    if (exactScore > bestExact) {
+                        bestExact = exactScore;
+                        candidates.length = 0;
+                        candidates.push(i);
+                    } else if (exactScore === bestExact) {
+                        candidates.push(i);
                     }
                 }
-                return bestMove;
+
+                if (candidates.length === 1) return candidates[0];
+
+                let bestComposite = -Infinity;
+                let topMoves = [];
+
+                for (const i of candidates) {
+                    state.board[i] = 'O';
+                    const trapScore = expectimaxTrapScore([...state.board], 0, false);
+                    const forkBonus = countForkThreats(state.board, 'O') * 6 - countForkThreats(state.board, 'X') * 5;
+                    const composite = trapScore * 10 + forkBonus + POS_WEIGHTS[i];
+                    state.board[i] = '';
+
+                    if (composite > bestComposite + 1e-6) {
+                        bestComposite = composite;
+                        topMoves = [i];
+                    } else if (Math.abs(composite - bestComposite) <= 1e-6) {
+                        topMoves.push(i);
+                    }
+                }
+
+                return topMoves[Math.floor(Math.random() * topMoves.length)];
             };
 
             const handleGameEnd = () => {
@@ -1431,6 +1688,10 @@
                     state.scores[result.winner]++;
                     SoundManager.playWin();
                     triggerHaptic(24);
+                }
+
+                if (state.isVsComputer) {
+                    state.roundStarter = state.roundStarter === 'X' ? 'O' : 'X';
                 }
 
                 updateScoreAndModeUI();
@@ -1559,7 +1820,20 @@
 
             if ('serviceWorker' in navigator && !isCapacitorNative && location.protocol.startsWith('http')) {
                 window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                    if ('caches' in window) {
+                        caches.keys().then((keys) => {
+                            keys.forEach((k) => {
+                                if (k.startsWith('tic-tac-toe-pro-') && k !== 'tic-tac-toe-pro-v2.7.0') {
+                                    caches.delete(k);
+                                }
+                            });
+                        }).catch(() => {});
+                    }
+                    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' })
+                        .then((reg) => {
+                            reg.update().catch(() => {});
+                        })
+                        .catch(() => {});
                 });
             }
         })();

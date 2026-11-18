@@ -9,9 +9,12 @@
     "generate:icons": "node scripts/generate-icons.mjs",
     "build": "node scripts/generate-icons.mjs && node --check server.js",
     "lint": "node --check server.js && node --check scripts/generate-icons.mjs",
-    "ios:sync": "npm run build && npx cap sync ios"
+    "ios:sync": "npm run build && npx cap sync ios",
+    "android:sync": "npm run build && npx cap sync android",
+    "mobile:sync": "npm run build && npx cap sync"
   },
   "dependencies": {
+    "@capacitor/android": "^8.6.2",
     "@capacitor/cli": "^8.6.2",
     "@capacitor/core": "^8.6.2",
     "@capacitor/ios": "^8.6.2",

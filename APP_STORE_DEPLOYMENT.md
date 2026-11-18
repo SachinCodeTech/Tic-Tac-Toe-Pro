@@ -71,3 +71,18 @@ Xcode requires macOS. On your Mac:
    - Set **Privacy Policy URL** to your hosted `/privacy.html` URL.
    - Complete the App Privacy questionnaire (**Data Not Collected** — all scores & preferences stay on-device).
    - Submit for App Review.
+
+---
+
+## Optional: Android Studio / Google Play Build
+
+1. Sync web assets into Android:
+   ```bash
+   npm run android:sync
+   ```
+2. Open in Android Studio:
+   ```bash
+   npx cap open android
+   ```
+3. Use **Build → Generate Signed App Bundle / APK** to produce a release `.aab` for Google Play.
+
