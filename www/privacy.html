@@ -3,124 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Privacy Policy for Tic Tac Toe Pro by CodeTech App Store">
+    <meta name="description" content="Privacy Policy and Legal Notes for Tic Tac Toe Pro by CodeTech App Store">
     <meta name="theme-color" content="#f4f7fb">
-    <title>Privacy Policy - Tic Tac Toe Pro</title>
+    <title>Privacy Policy & Legal Notes - Tic Tac Toe Pro</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        html, body {
+            min-height: 100%;
             background: #f4f7fb;
-            color: #1e293b;
+            color: #0f172a;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .shell {
             min-height: 100dvh;
-            padding: calc(20px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
         }
-        .sheet {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            max-width: 640px;
-            width: 100%;
-            padding: 24px;
-            line-height: 1.65;
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
-        }
-        h1 {
-            color: #0f172a;
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .meta {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 18px;
-            padding-bottom: 14px;
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
-        }
-        h2 {
-            color: #0f172a;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 18px 0 6px;
-        }
-        p {
-            font-size: 0.92rem;
-            color: #475569;
-            margin-bottom: 10px;
-        }
-        a.email-link {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .actions {
-            margin-top: 22px;
+            padding: calc(12px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 12px calc(16px + env(safe-area-inset-left));
             display: flex;
+            align-items: center;
+            justify-content: space-between;
             gap: 12px;
-            flex-wrap: wrap;
         }
-        .btn-primary {
+        .topbar h1 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .back-link {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 44px;
-            padding: 10px 20px;
+            min-height: 40px;
+            padding: 0 14px;
             border-radius: 10px;
             background: #2563eb;
             color: #ffffff;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             font-weight: 600;
         }
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 44px;
-            padding: 10px 20px;
-            border-radius: 10px;
-            background: #f1f5f9;
-            color: #1e293b;
-            text-decoration: none;
-            font-size: 0.9rem;
+        .content {
+            flex: 1;
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px calc(16px + env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
+        }
+        .section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .meta {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 12px;
+        }
+        h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 14px 0 6px;
+        }
+        h2:first-child {
+            margin-top: 0;
+        }
+        p {
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+        a.mail {
+            color: #2563eb;
             font-weight: 600;
+            text-decoration: none;
+        }
+        a.mail:hover {
+            text-decoration: underline;
+        }
+        .footer-note {
+            text-align: center;
+            font-size: 0.82rem;
+            color: #64748b;
+            padding: 8px 0;
         }
     </style>
 </head>
 <body>
-    <main class="sheet">
-        <h1>Privacy Policy</h1>
-        <p class="meta">Tic Tac Toe Pro · CodeTech App Store · Effective November 2026</p>
+    <div class="shell">
+        <header class="topbar">
+            <h1>Privacy Policy & Legal Notes</h1>
+            <a class="back-link" href="/">Back to Game</a>
+        </header>
 
-        <p>CodeTech App Store built Tic Tac Toe Pro as an offline, family-friendly strategy game designed for all ages. Your privacy and child safety are fundamental to how the app works.</p>
+        <main class="content">
+            <section class="section">
+                <p class="meta">Publisher: CodeTech App Store &middot; Version 2.1.0 &middot; Effective November 2026</p>
 
-        <h2>1. Zero Data Collection</h2>
-        <p>Tic Tac Toe Pro does not collect, store on external servers, sell, or share any personal information, usage telemetry, advertising identifiers (IDFA/AAID), device identifiers, or location data.</p>
+                <h2>1. Privacy Commitment & Zero Data Collection</h2>
+                <p>Tic Tac Toe Pro is published by <strong>CodeTech App Store</strong> as a safe, family-friendly game designed for all ages. We do not collect, transmit, store on external servers, sell, or share any personal information, usage analytics, device identifiers, or location data.</p>
 
-        <h2>2. On-Device Storage Only</h2>
-        <p>Optional player nicknames, scoreboard totals, theme choice, game mode, difficulty, and audio preferences are stored strictly inside your device's local storage. You can reset scores or clear app data at any time.</p>
+                <h2>2. On-Device Local Storage</h2>
+                <p>Player names, match scores, selected difficulty, visual theme, and sound preferences are saved strictly on your device using local storage. You may clear stored scores at any time using the Reset Scores button inside the app.</p>
 
-        <h2>3. All Ages &amp; Children's Privacy</h2>
-        <p>Tic Tac Toe Pro is safe for players of all ages (4+ / Everyone). Because the app collects zero personal data, contains no advertisements, includes no in-app purchases, and connects to no social or chat networks, it complies with COPPA and GDPR-K standards.</p>
+                <h2>3. Children's & All-Ages Privacy</h2>
+                <p>Tic Tac Toe Pro is rated for all ages and contains no advertisements, no in-app purchases, no external social feeds, and no tracking SDKs, complying with global child and family privacy standards (including COPPA and GDPR-K).</p>
 
-        <h2>4. Third-Party Services &amp; Offline Operation</h2>
-        <p>This app runs 100% offline and does not embed third-party analytics SDKs, ad networks, or tracking cookies.</p>
+                <h2>4. Offline Operation & Third-Party Services</h2>
+                <p>All gameplay logic, AI moves, and synthesized sound effects run locally on your device. No third-party ad networks, analytics SDKs, or external tracking cookies are used.</p>
+            </section>
 
-        <h2>5. Contact Us</h2>
-        <p>If you have questions about this Privacy Policy or our apps, contact <strong>CodeTech App Store</strong> at <a class="email-link" href="mailto:codetech.appstore@gmail.com">codetech.appstore@gmail.com</a>.</p>
+            <section class="section">
+                <h2>5. Terms of Use & Software Notice</h2>
+                <p>Tic Tac Toe Pro is provided for personal, non-commercial entertainment. By using this application, you agree that the software is provided "as is" without warranties of any kind. All trademarks, visual assets, and game code are owned by CodeTech App Store.</p>
 
-        <div class="actions">
-            <a class="btn-primary" href="/">Back to Game</a>
-            <a class="btn-secondary" href="/terms.html">Terms of Use</a>
-        </div>
-    </main>
+                <h2>6. Support & Contact</h2>
+                <p>For questions, feedback, or privacy requests, please contact CodeTech App Store at <a class="mail" href="mailto:codetech.appstore@gmail.com">codetech.appstore@gmail.com</a>.</p>
+            </section>
+
+            <p class="footer-note">&copy; 2026 CodeTech App Store. All rights reserved.</p>
+        </main>
+    </div>
 </body>
 </html>

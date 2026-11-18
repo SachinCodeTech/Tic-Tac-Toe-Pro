@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Tic Tac Toe Pro",
   "short_name": "TicTacToePro",
-  "description": "All-ages offline Tic Tac Toe game with smart AI, pass-and-play multiplayer, and tactile feedback by CodeTech App Store.",
+  "description": "Family-friendly Tic Tac Toe strategy game for all ages by CodeTech App Store.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

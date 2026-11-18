@@ -3,7 +3,6 @@ const ASSETS = [
   '/',
   '/index.html',
   '/privacy.html',
-  '/terms.html',
   '/manifest.webmanifest',
   '/icons/icon.svg',
   '/icons/apple-touch-icon.png',

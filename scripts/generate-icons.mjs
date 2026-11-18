@@ -5,7 +5,6 @@ import sharp from 'sharp';
 const rootDir = process.cwd();
 const iconsDir = path.join(rootDir, 'www', 'icons');
 const iosAppIconDir = path.join(rootDir, 'ios', 'App', 'App', 'Assets.xcassets', 'AppIcon.appiconset');
-const androidResDir = path.join(rootDir, 'android', 'app', 'src', 'main', 'res');
 
 function buildIconSvg({ padded = false } = {}) {
   const scale = padded ? 0.74 : 1;
@@ -14,48 +13,47 @@ function buildIconSvg({ padded = false } = {}) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f8fbff"/>
-      <stop offset="100%" stop-color="#dfeaff"/>
+      <stop offset="0%" stop-color="#EFF6FF"/>
+      <stop offset="100%" stop-color="#DBEAFE"/>
     </linearGradient>
     <linearGradient id="xGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2563eb"/>
-      <stop offset="100%" stop-color="#1d4ed8"/>
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
     </linearGradient>
     <linearGradient id="oGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f43f5e"/>
-      <stop offset="100%" stop-color="#e11d48"/>
+      <stop offset="0%" stop-color="#FB923C"/>
+      <stop offset="100%" stop-color="#EA580C"/>
     </linearGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#bg)"/>
   <g transform="translate(${offset}, ${offset}) scale(${scale})">
-    <rect x="128" y="128" width="768" height="768" rx="96" fill="#ffffff" stroke="#cbd5e1" stroke-width="10"/>
-    <g stroke="#cbd5e1" stroke-width="14" stroke-linecap="round">
-      <line x1="384" y1="184" x2="384" y2="840"/>
-      <line x1="640" y1="184" x2="640" y2="840"/>
-      <line x1="184" y1="384" x2="840" y2="384"/>
-      <line x1="184" y1="640" x2="840" y2="640"/>
+    <rect x="112" y="112" width="800" height="800" rx="140" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="14"/>
+    <!-- Tactile board grid -->
+    <g stroke="#CBD5E1" stroke-width="16" stroke-linecap="round">
+      <line x1="404" y1="184" x2="404" y2="840"/>
+      <line x1="620" y1="184" x2="620" y2="840"/>
+      <line x1="184" y1="404" x2="840" y2="404"/>
+      <line x1="184" y1="620" x2="840" y2="620"/>
     </g>
     <!-- Top-left X -->
     <g stroke="url(#xGrad)" stroke-width="34" stroke-linecap="round">
-      <line x1="216" y1="216" x2="328" y2="328"/>
-      <line x1="328" y1="216" x2="216" y2="328"/>
+      <line x1="230" y1="230" x2="350" y2="350"/>
+      <line x1="350" y1="230" x2="230" y2="350"/>
     </g>
     <!-- Center X -->
     <g stroke="url(#xGrad)" stroke-width="34" stroke-linecap="round">
-      <line x1="456" y1="456" x2="568" y2="568"/>
-      <line x1="568" y1="456" x2="456" y2="568"/>
+      <line x1="452" y1="452" x2="572" y2="572"/>
+      <line x1="572" y1="452" x2="452" y2="572"/>
     </g>
     <!-- Bottom-right X -->
     <g stroke="url(#xGrad)" stroke-width="34" stroke-linecap="round">
-      <line x1="696" y1="696" x2="808" y2="808"/>
-      <line x1="808" y1="696" x2="696" y2="808"/>
+      <line x1="674" y1="674" x2="794" y2="794"/>
+      <line x1="794" y1="674" x2="674" y2="794"/>
     </g>
     <!-- Top-right O -->
-    <circle cx="752" cy="272" r="58" fill="none" stroke="url(#oGrad)" stroke-width="32"/>
+    <circle cx="734" cy="290" r="64" fill="none" stroke="url(#oGrad)" stroke-width="34"/>
     <!-- Bottom-left O -->
-    <circle cx="272" cy="752" r="58" fill="none" stroke="url(#oGrad)" stroke-width="32"/>
-    <!-- Winning diagonal line -->
-    <line x1="198" y1="198" x2="826" y2="826" stroke="#f59e0b" stroke-opacity="0.85" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="290" cy="734" r="64" fill="none" stroke="url(#oGrad)" stroke-width="34"/>
   </g>
 </svg>`;
 }
@@ -72,21 +70,21 @@ async function generate() {
   const maskableBuf = Buffer.from(maskableSvg, 'utf8');
 
   // Web & PWA PNGs
-  await sharp(standardBuf).resize(180, 180).flatten({ background: '#f4f7fb' }).png().toFile(path.join(iconsDir, 'apple-touch-icon.png'));
-  await sharp(standardBuf).resize(192, 192).flatten({ background: '#f4f7fb' }).png().toFile(path.join(iconsDir, 'pwa-192x192.png'));
-  await sharp(standardBuf).resize(512, 512).flatten({ background: '#f4f7fb' }).png().toFile(path.join(iconsDir, 'pwa-512x512.png'));
-  await sharp(maskableBuf).resize(512, 512).flatten({ background: '#f4f7fb' }).png().toFile(path.join(iconsDir, 'pwa-maskable-512x512.png'));
+  await sharp(standardBuf).resize(180, 180).flatten({ background: '#EFF6FF' }).png().toFile(path.join(iconsDir, 'apple-touch-icon.png'));
+  await sharp(standardBuf).resize(192, 192).flatten({ background: '#EFF6FF' }).png().toFile(path.join(iconsDir, 'pwa-192x192.png'));
+  await sharp(standardBuf).resize(512, 512).flatten({ background: '#EFF6FF' }).png().toFile(path.join(iconsDir, 'pwa-512x512.png'));
+  await sharp(maskableBuf).resize(512, 512).flatten({ background: '#EFF6FF' }).png().toFile(path.join(iconsDir, 'pwa-maskable-512x512.png'));
 
   // App Store 1024x1024 opaque PNG (no alpha channel per Apple App Store Connect requirement)
   const appStoreIconPath = path.join(iconsDir, 'app-store-1024.png');
   await sharp(standardBuf)
     .resize(1024, 1024)
-    .flatten({ background: '#f4f7fb' })
+    .flatten({ background: '#EFF6FF' })
     .removeAlpha()
     .png({ compressionLevel: 9 })
     .toFile(appStoreIconPath);
 
-  // Sync Xcode Asset Catalog if ios/ exists
+  // Sync the 1024x1024 AppIcon directly into Xcode Asset Catalog if present
   try {
     await fs.access(iosAppIconDir);
     await fs.copyFile(appStoreIconPath, path.join(iosAppIconDir, 'AppIcon-512@2x.png'));
@@ -107,31 +105,10 @@ async function generate() {
     await fs.writeFile(path.join(iosAppIconDir, 'Contents.json'), JSON.stringify(contentsJson, null, 2) + '\n', 'utf8');
     console.log('Synced 1024x1024 opaque AppIcon to ios/App/App/Assets.xcassets/AppIcon.appiconset');
   } catch {
-    // iOS folder not present
+    // iOS folder not generated yet
   }
 
-  // Sync Android launcher icons if android/ exists
-  try {
-    await fs.access(androidResDir);
-    const androidSizes = [
-      { dir: 'mipmap-mdpi', size: 48 },
-      { dir: 'mipmap-hdpi', size: 72 },
-      { dir: 'mipmap-xhdpi', size: 96 },
-      { dir: 'mipmap-xxhdpi', size: 144 },
-      { dir: 'mipmap-xxxhdpi', size: 192 }
-    ];
-    for (const { dir, size } of androidSizes) {
-      const targetDir = path.join(androidResDir, dir);
-      await fs.mkdir(targetDir, { recursive: true });
-      await sharp(standardBuf).resize(size, size).flatten({ background: '#f4f7fb' }).png().toFile(path.join(targetDir, 'ic_launcher.png'));
-      await sharp(maskableBuf).resize(size, size).flatten({ background: '#f4f7fb' }).png().toFile(path.join(targetDir, 'ic_launcher_round.png'));
-    }
-    console.log('Synced Android launcher icons to android/app/src/main/res/');
-  } catch {
-    // Android folder not yet generated
-  }
-
-  console.log('Generated all bright all-age PWA, iOS, and Android icons in www/icons/');
+  console.log('Generated all PWA and App Store icons in www/icons/');
 }
 
 generate().catch((err) => {

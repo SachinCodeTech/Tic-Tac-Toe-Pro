@@ -2,100 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Tic Tac Toe Pro by CodeTech App Store - A bright, playful offline strategy game for kids and all ages.">
-    <meta name="theme-color" content="#eff6ff" id="theme-color-meta">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Tic Tac Toe Pro - Family-friendly strategy game for all ages by CodeTech App Store.">
+    <meta name="theme-color" content="#f4f7fb" id="theme-color-meta">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="TicTacToePro">
+    <meta name="format-detection" content="telephone=no">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
     <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
     <title>Tic Tac Toe Pro</title>
     <style>
         :root {
-            --bg-canvas: linear-gradient(160deg, #eff6ff 0%, #fefce8 55%, #fdf2f8 100%);
-            --bg-solid: #eff6ff;
+            --bg-canvas: #f4f7fb;
             --bg-surface: #ffffff;
-            --bg-board: #e8f0fe;
-            --bg-subtle: #eef3fb;
-            --bg-x-tint: #dbeafe;
-            --bg-o-tint: #ffe4e6;
-            --bg-tie-tint: #fef3c7;
-            --bg-win-tint: #fef08a;
-            --border-subtle: #d6e2f5;
-            --tile-lip: #cddcf5;
-            --tile-lip-x: #93c5fd;
-            --tile-lip-o: #fda4af;
-            --tile-lip-win: #f59e0b;
+            --bg-subtle: #eaf0f8;
+            --border-hairline: #dce4f0;
             --text-primary: #0f172a;
-            --text-secondary: #334155;
+            --text-secondary: #475569;
             --text-muted: #64748b;
-            --accent-primary: #2563eb;
-            --accent-primary-hover: #1d4ed8;
-            --accent-primary-lip: #1e40af;
-            --accent-o: #e11d48;
-            --accent-win: #d97706;
-            --shadow-sm: 0 3px 10px rgba(37, 99, 235, 0.08);
-            --shadow-board: 0 12px 30px rgba(37, 99, 235, 0.12), 0 4px 10px rgba(15, 23, 42, 0.05);
-            --radius-xl: 24px;
-            --radius-lg: 18px;
-            --radius-md: 14px;
-            --radius-sm: 10px;
+            --x-color: #2563eb;
+            --x-tint: #eff6ff;
+            --x-border: #bfdbfe;
+            --o-color: #ea580c;
+            --o-tint: #fff7ed;
+            --o-border: #fed7aa;
+            --win-bg: #fef3c7;
+            --win-border: #d97706;
+            --win-text: #92400e;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-text: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+            --shadow-board: 0 8px 24px rgba(15, 23, 42, 0.07);
+            --radius-lg: 16px;
+            --radius-md: 12px;
         }
 
-        body.theme-meadow {
-            --bg-canvas: linear-gradient(160deg, #ecfdf5 0%, #f0fdfa 55%, #fff7ed 100%);
-            --bg-solid: #ecfdf5;
+        body.theme-cream {
+            --bg-canvas: #faf7f2;
             --bg-surface: #ffffff;
-            --bg-board: #dff7ee;
-            --bg-subtle: #e6f7f1;
-            --bg-x-tint: #ccfbf1;
-            --bg-o-tint: #ffedd5;
-            --bg-tie-tint: #fef3c7;
-            --bg-win-tint: #fde68a;
-            --border-subtle: #c5eadc;
-            --tile-lip: #bce3d4;
-            --tile-lip-x: #5eead4;
-            --tile-lip-o: #fdba74;
-            --tile-lip-win: #f59e0b;
-            --text-primary: #0f2922;
-            --text-secondary: #2d554a;
-            --text-muted: #51796e;
-            --accent-primary: #0d9488;
-            --accent-primary-hover: #0f766e;
-            --accent-primary-lip: #115e59;
-            --accent-o: #ea580c;
-            --accent-win: #d97706;
-            --shadow-board: 0 12px 30px rgba(13, 148, 136, 0.12), 0 4px 10px rgba(15, 41, 34, 0.05);
+            --bg-subtle: #f1ebe1;
+            --border-hairline: #e4dccf;
+            --text-primary: #1e1b18;
+            --text-secondary: #575049;
+            --text-muted: #78716c;
+            --x-color: #0284c7;
+            --x-tint: #f0f9ff;
+            --x-border: #bae6fd;
+            --o-color: #e11d48;
+            --o-tint: #fff1f2;
+            --o-border: #fecdd3;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
         }
 
-        body.theme-starlight {
-            --bg-canvas: linear-gradient(160deg, #131c38 0%, #1a2447 55%, #231b3d 100%);
-            --bg-solid: #131c38;
-            --bg-surface: #1e2949;
-            --bg-board: #141d38;
-            --bg-subtle: #28365e;
-            --bg-x-tint: rgba(56, 189, 248, 0.18);
-            --bg-o-tint: rgba(251, 113, 133, 0.18);
-            --bg-tie-tint: rgba(251, 191, 36, 0.16);
-            --bg-win-tint: rgba(251, 191, 36, 0.28);
-            --border-subtle: #334473;
-            --tile-lip: #0d1429;
-            --tile-lip-x: #0284c7;
-            --tile-lip-o: #e11d48;
-            --tile-lip-win: #f59e0b;
+        body.theme-dark {
+            --bg-canvas: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-subtle: #283548;
+            --border-hairline: #334155;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
-            --accent-primary: #38bdf8;
-            --accent-primary-hover: #0ea5e9;
-            --accent-primary-lip: #0369a1;
-            --accent-o: #fb7185;
-            --accent-win: #fbbf24;
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
-            --shadow-board: 0 14px 32px rgba(0, 0, 0, 0.4);
+            --x-color: #60a5fa;
+            --x-tint: rgba(59, 130, 246, 0.16);
+            --x-border: rgba(96, 165, 250, 0.45);
+            --o-color: #fb923c;
+            --o-tint: rgba(251, 146, 60, 0.16);
+            --o-border: rgba(251, 146, 60, 0.45);
+            --win-bg: rgba(251, 191, 36, 0.2);
+            --win-border: #fbbf24;
+            --win-text: #fde68a;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+            --shadow-board: 0 10px 28px rgba(0, 0, 0, 0.35);
         }
 
         * {
@@ -106,41 +90,55 @@
         }
 
         html, body {
-            height: 100%;
-            height: 100dvh;
             width: 100%;
+            height: 100%;
             overflow: hidden;
+            overscroll-behavior: none;
             touch-action: manipulation;
-            background: var(--bg-solid);
-            background-image: var(--bg-canvas);
+            background: var(--bg-canvas);
             color: var(--text-primary);
-            font-family: "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
         }
 
+        input, textarea, .legal-selectable {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        button:focus-visible,
+        select:focus-visible,
+        input:focus-visible,
+        a:focus-visible,
+        .cell:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Full-viewport Native App Shell */
         .app-shell {
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             height: 100dvh;
             background: var(--bg-canvas);
             overflow: hidden;
-            position: relative;
         }
 
-        /* Compact Native Top Bar */
-        .top-bar {
+        /* Native Top Header */
+        .app-header {
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: calc(8px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 8px calc(16px + env(safe-area-inset-left));
+            padding: calc(10px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 10px calc(16px + env(safe-area-inset-left));
             background: var(--bg-surface);
-            border-bottom: 1px solid var(--border-subtle);
-            box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
-            z-index: 10;
+            border-bottom: 1px solid var(--border-hairline);
         }
 
         .brand {
@@ -156,494 +154,448 @@
             border-radius: 9px;
             flex-shrink: 0;
             display: block;
-            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
         }
 
         .brand-title {
-            font-size: 1.08rem;
-            font-weight: 800;
-            letter-spacing: -0.015em;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
             color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .top-actions {
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             flex-shrink: 0;
         }
 
         .icon-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            border: 1px solid var(--border-subtle);
-            border-bottom: 3px solid var(--tile-lip);
-            background: var(--bg-subtle);
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            border: 1px solid var(--border-hairline);
+            background: var(--bg-canvas);
             color: var(--text-primary);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
+            transition: transform 0.15s ease, background-color 0.15s ease;
         }
 
         .icon-btn:active {
-            transform: translateY(2px);
+            transform: scale(0.94);
         }
 
         .icon-btn.muted {
             color: var(--text-muted);
-            opacity: 0.72;
+            opacity: 0.7;
         }
 
-        .icon-btn:focus-visible,
-        button:focus-visible,
-        input:focus-visible {
-            outline: 2.5px solid var(--accent-primary);
-            outline-offset: 2px;
+        .icon-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
-        /* Main Workspace */
-        .main-workspace {
+        /* Main Viewport Body */
+        .app-main {
             flex: 1;
             min-height: 0;
+            position: relative;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        .desktop-side {
-            display: contents;
-        }
-
-        .tab-panel {
+        .view {
             display: none;
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 12px calc(16px + env(safe-area-inset-right)) 14px calc(16px + env(safe-area-inset-left));
+            width: 100%;
+            height: 100%;
         }
 
-        .tab-panel.active {
+        .view.active {
             display: flex;
             flex-direction: column;
         }
 
-        #panel-play.active {
+        /* PLAY VIEW — Zero-scroll edge-to-edge mobile layout */
+        .play-layout {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 12px calc(16px + env(safe-area-inset-right)) 12px calc(16px + env(safe-area-inset-left));
+            display: flex;
+            flex-direction: column;
             justify-content: space-between;
+            align-items: center;
             gap: 10px;
-            overflow: hidden;
         }
 
-        /* Tactile Player Scoreboard */
-        .scoreboard {
-            display: grid;
-            grid-template-columns: 1fr 0.72fr 1fr;
+        .play-hud {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
             gap: 8px;
             flex-shrink: 0;
-            max-width: 460px;
-            width: 100%;
-            margin: 0 auto;
         }
 
-        .score-tile {
+        /* Scoreboard Strip */
+        .scoreboard {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 8px;
             background: var(--bg-surface);
-            border: 1.5px solid var(--border-subtle);
-            border-bottom: 3px solid var(--tile-lip);
-            border-radius: var(--radius-md);
-            padding: 8px 8px 6px;
+            border: 1px solid var(--border-hairline);
+            border-radius: var(--radius-lg);
+            padding: 10px 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .score-col {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s ease, background-color 0.18s ease;
+            padding: 4px 6px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
             min-width: 0;
         }
 
-        .score-tile.turn-x {
-            border-color: var(--accent-primary);
-            border-bottom-color: var(--accent-primary);
-            background: var(--bg-x-tint);
-            transform: translateY(-2px);
+        .score-col.active-x {
+            background: var(--x-tint);
+            border-color: var(--x-border);
         }
 
-        .score-tile.turn-o {
-            border-color: var(--accent-o);
-            border-bottom-color: var(--accent-o);
-            background: var(--bg-o-tint);
-            transform: translateY(-2px);
-        }
-
-        .score-tile.ties-card {
-            background: var(--bg-surface);
-        }
-
-        .score-head {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            max-width: 100%;
-        }
-
-        .score-avatar {
-            width: 14px;
-            height: 14px;
-            flex-shrink: 0;
+        .score-col.active-o {
+            background: var(--o-tint);
+            border-color: var(--o-border);
         }
 
         .score-label {
-            font-size: 0.76rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 600;
             color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .mark-tag-x {
+            color: var(--x-color);
+            font-weight: 800;
+        }
+
+        .mark-tag-o {
+            color: var(--o-color);
+            font-weight: 800;
+        }
+
+        .score-value {
+            font-size: 1.35rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .score-ties {
+            padding: 4px 12px;
+            border-left: 1px solid var(--border-hairline);
+            border-right: 1px solid var(--border-hairline);
+            border-radius: 0;
+        }
+
+        /* Status Row */
+        .status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 2px 4px;
+        }
+
+        .status-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .score-value {
-            font-size: 1.4rem;
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
-            line-height: 1.15;
-            margin-top: 2px;
+        .mode-link {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            padding: 4px 2px;
+            font-family: inherit;
         }
 
-        .score-value.x-color { color: var(--accent-primary); }
-        .score-value.o-color { color: var(--accent-o); }
-        .score-value.tie-color { color: var(--accent-win); }
-
-        /* Turn Status Banner */
-        .turn-banner {
-            text-align: center;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .status-text {
-            font-size: 1.08rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
-
-        .status-text.win-state {
-            color: var(--accent-win);
-        }
-
-        .mode-subtext {
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-
-        /* Playful Tactile 3x3 Board */
+        /* Game Board Stage */
         .board-stage {
             flex: 1;
             min-height: 0;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            position: relative;
-        }
-
-        .board-frame {
-            position: relative;
-            width: min(100%, 44dvh, 380px);
-            aspect-ratio: 1;
-            padding: 12px;
-            background: var(--bg-board);
-            border-radius: var(--radius-xl);
-            border: 2px solid var(--border-subtle);
-            border-bottom: 5px solid var(--tile-lip);
-            box-shadow: var(--shadow-board);
         }
 
         .game-board {
-            width: 100%;
-            height: 100%;
+            width: min(100%, 400px, calc(100dvh - 320px));
+            min-width: 228px;
+            aspect-ratio: 1 / 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
-            gap: 10px;
+            gap: clamp(8px, 2.2vw, 12px);
+            padding: clamp(10px, 2.5vw, 14px);
+            background: var(--bg-surface);
+            border: 1px solid var(--border-hairline);
+            border-radius: 22px;
+            box-shadow: var(--shadow-board);
         }
 
         .cell {
-            background: var(--bg-surface);
-            border: 1.5px solid var(--border-subtle);
-            border-bottom: 4px solid var(--tile-lip);
-            border-radius: var(--radius-lg);
+            background: var(--bg-canvas);
+            border: 1.5px solid var(--border-hairline);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: clamp(2.2rem, 9vw, 3.3rem);
+            font-weight: 800;
             cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
-            min-width: 44px;
-            min-height: 44px;
-            padding: 17%;
             transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.16s ease, border-color 0.16s ease;
+            position: relative;
         }
 
-        .cell:hover:not(.occupied) {
-            border-color: var(--accent-primary);
-            transform: translateY(-1px);
+        .cell:active:not(.filled) {
+            transform: scale(0.94);
         }
 
-        .cell:active:not(.occupied) {
-            transform: translateY(2px);
+        @media (hover: hover) {
+            .cell:hover:not(.filled) {
+                background: var(--bg-subtle);
+                border-color: var(--accent);
+            }
         }
 
         .cell.x {
-            background: var(--bg-x-tint);
-            border-color: var(--tile-lip-x);
-            border-bottom: 4px solid var(--tile-lip-x);
+            color: var(--x-color);
+            background: var(--x-tint);
+            border-color: var(--x-border);
+            animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .cell.o {
-            background: var(--bg-o-tint);
-            border-color: var(--tile-lip-o);
-            border-bottom: 4px solid var(--tile-lip-o);
+            color: var(--o-color);
+            background: var(--o-tint);
+            border-color: var(--o-border);
+            animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .cell.winning {
-            background: var(--bg-win-tint);
-            border-color: var(--tile-lip-win);
-            border-bottom: 4px solid var(--tile-lip-win);
-            animation: winPop 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--win-bg);
+            border-color: var(--win-border);
+            color: var(--win-text);
+            transform: scale(1.03);
         }
 
-        .cell svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-            animation: markPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Winning Strike-Through Line Overlay */
-        .win-strike-svg {
-            position: absolute;
-            inset: 12px;
-            width: calc(100% - 24px);
-            height: calc(100% - 24px);
-            pointer-events: none;
-            z-index: 4;
-        }
-
-        .win-strike-line {
-            stroke: var(--accent-win);
-            stroke-width: 8;
-            stroke-linecap: round;
-            stroke-dasharray: 420;
-            stroke-dashoffset: 420;
-            opacity: 0;
-        }
-
-        .win-strike-line.active {
-            opacity: 0.92;
-            animation: drawStrike 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes drawStrike {
-            to { stroke-dashoffset: 0; }
-        }
-
-        @keyframes markPop {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.08); opacity: 1; }
+        @keyframes popIn {
+            0% { transform: scale(0.84); opacity: 0.6; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        @keyframes winPop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.06); }
-            100% { transform: scale(1); }
+        @media (prefers-reduced-motion: reduce) {
+            .cell.x, .cell.o { animation: none; }
+            .cell { transition: none; }
         }
 
-        /* Celebration Confetti Layer */
-        .confetti-layer {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 20;
-        }
-
-        .confetti-piece {
-            position: absolute;
-            width: 9px;
-            height: 9px;
-            border-radius: 3px;
-            opacity: 0;
-            animation: confettiFall 1.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes confettiFall {
-            0% { transform: translateY(-10px) rotate(0deg) scale(0.8); opacity: 1; }
-            100% { transform: translateY(220px) rotate(320deg) scale(1); opacity: 0; }
-        }
-
-        /* Action Buttons */
+        /* Action Controls in Thumb Zone */
         .play-actions {
-            flex-shrink: 0;
+            width: 100%;
+            max-width: 440px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            max-width: 460px;
-            width: 100%;
-            margin: 0 auto;
+            flex-shrink: 0;
         }
 
-        .btn {
+        .btn-primary,
+        .btn-secondary {
             min-height: 46px;
-            padding: 10px 16px;
+            padding: 10px 14px;
             border-radius: var(--radius-md);
             font-size: 0.92rem;
             font-weight: 700;
             font-family: inherit;
             cursor: pointer;
-            border: 1.5px solid transparent;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             white-space: nowrap;
-            transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
-        }
-
-        .btn:active {
-            transform: translateY(2px);
+            transition: transform 0.14s ease, background-color 0.15s ease;
         }
 
         .btn-primary {
-            background: var(--accent-primary);
-            border-bottom: 4px solid var(--accent-primary-lip);
-            color: #ffffff;
+            background: var(--accent);
+            color: var(--accent-text);
+            border: none;
         }
 
         .btn-primary:hover {
-            background: var(--accent-primary-hover);
+            background: var(--accent-hover);
         }
 
         .btn-secondary {
             background: var(--bg-surface);
             color: var(--text-primary);
-            border-color: var(--border-subtle);
-            border-bottom: 4px solid var(--tile-lip);
+            border: 1px solid var(--border-hairline);
         }
 
         .btn-secondary:hover {
             background: var(--bg-subtle);
         }
 
-        /* Setup & Info Cards */
-        .panel-stack {
-            max-width: 520px;
+        .btn-primary:active,
+        .btn-secondary:active {
+            transform: scale(0.97);
+        }
+
+        /* SCROLLABLE VIEWS (Setup & Info/Legal) */
+        .scroll-view {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 16px calc(16px + env(safe-area-inset-right)) 24px calc(16px + env(safe-area-inset-left));
+        }
+
+        .scroll-inner {
             width: 100%;
+            max-width: 680px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             gap: 14px;
         }
 
-        .section-group {
+        .card {
             background: var(--bg-surface);
-            border: 1.5px solid var(--border-subtle);
-            border-bottom: 3px solid var(--tile-lip);
+            border: 1px solid var(--border-hairline);
             border-radius: var(--radius-lg);
             padding: 16px;
             box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
         }
 
-        .section-title {
-            font-size: 0.96rem;
-            font-weight: 800;
-            color: var(--text-primary);
-        }
-
-        .field-label {
-            display: block;
-            font-size: 0.82rem;
+        .card-title {
+            font-size: 0.95rem;
             font-weight: 700;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
         }
 
         .segmented {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4px;
+            gap: 6px;
+            background: var(--bg-canvas);
             padding: 4px;
-            background: var(--bg-subtle);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            border: 1px solid var(--border-hairline);
         }
 
         .segmented.three-col {
             grid-template-columns: repeat(3, 1fr);
         }
 
-        .segmented button {
-            min-height: 40px;
-            padding: 8px 10px;
+        .seg-btn {
+            min-height: 42px;
+            padding: 8px 6px;
             border: none;
-            border-radius: 10px;
+            border-radius: 9px;
             background: transparent;
             color: var(--text-secondary);
-            font-size: 0.84rem;
-            font-weight: 700;
+            font-size: 0.86rem;
+            font-weight: 600;
             font-family: inherit;
             cursor: pointer;
             white-space: nowrap;
-            transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+            transition: background-color 0.15s ease, color 0.15s ease;
         }
 
-        .segmented button.active {
+        .seg-btn.active {
             background: var(--bg-surface);
-            color: var(--accent-primary);
-            box-shadow: var(--shadow-sm);
+            color: var(--accent);
+            box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
         }
 
-        input[type="text"] {
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .field-group:first-of-type {
+            margin-top: 0;
+        }
+
+        .field-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .text-input {
             width: 100%;
             min-height: 46px;
-            padding: 10px 14px;
-            border: 1.5px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            background: var(--bg-subtle);
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border-hairline);
+            background: var(--bg-canvas);
             color: var(--text-primary);
             font-size: 16px;
-            font-weight: 600;
             font-family: inherit;
         }
 
-        input[type="text"]:disabled {
+        .text-input:disabled {
             opacity: 0.65;
-            cursor: not-allowed;
         }
 
-        /* Info & Legal Rows */
+        /* Info & Legal Typography */
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         .info-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
             gap: 12px;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-subtle);
-            font-size: 0.88rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-hairline);
+            font-size: 0.9rem;
         }
 
         .info-row:last-child {
@@ -651,66 +603,64 @@
             padding-bottom: 0;
         }
 
-        .info-row-label {
+        .info-key {
             color: var(--text-secondary);
-            font-weight: 600;
+            font-weight: 500;
+            flex-shrink: 0;
         }
 
-        .info-row-value {
+        .info-val {
             color: var(--text-primary);
-            font-weight: 700;
+            font-weight: 600;
             text-align: right;
             word-break: break-word;
         }
 
-        .info-row-value a {
-            color: var(--accent-primary);
+        .info-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .info-link:hover {
+            text-decoration: underline;
+        }
+
+        .legal-copy {
+            font-size: 0.87rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .legal-copy:last-child {
+            margin-bottom: 0;
+        }
+
+        .legal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .legal-actions > * {
+            flex: 1 1 160px;
             text-decoration: none;
         }
 
-        .legal-btn {
-            width: 100%;
-            min-height: 48px;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            border: 1.5px solid var(--border-subtle);
-            background: var(--bg-subtle);
-            color: var(--text-primary);
-            font-size: 0.88rem;
-            font-weight: 700;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .legal-btn:hover {
-            border-color: var(--accent-primary);
-        }
-
-        .copyright-note {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 4px 0 8px;
-            line-height: 1.5;
-        }
-
-        /* Native Mobile Bottom Tab Bar */
+        /* Native Bottom Navigation Bar */
         .bottom-nav {
             flex-shrink: 0;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             background: var(--bg-surface);
-            border-top: 1px solid var(--border-subtle);
-            padding: 4px calc(8px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));
-            z-index: 10;
+            border-top: 1px solid var(--border-hairline);
+            padding: 6px calc(8px + env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));
         }
 
         .nav-tab {
-            min-height: 50px;
+            min-height: 48px;
             border: none;
             background: transparent;
             color: var(--text-muted);
@@ -719,359 +669,294 @@
             align-items: center;
             justify-content: center;
             gap: 3px;
-            font-size: 0.74rem;
-            font-weight: 700;
+            font-size: 0.72rem;
+            font-weight: 600;
             font-family: inherit;
             cursor: pointer;
-            white-space: nowrap;
             border-radius: 10px;
-            transition: color 0.15s ease;
-        }
-
-        .nav-tab.active {
-            color: var(--accent-primary);
+            transition: color 0.15s ease, background-color 0.15s ease;
         }
 
         .nav-tab svg {
-            width: 22px;
-            height: 22px;
+            width: 21px;
+            height: 21px;
         }
 
-        /* Modal Sheet */
+        .nav-tab.active {
+            color: var(--accent);
+        }
+
+        /* Modal */
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.55);
+            background: rgba(15, 23, 42, 0.52);
             display: none;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
-            padding: 16px;
-            padding-bottom: calc(16px + env(safe-area-inset-bottom));
-            z-index: 100;
+            padding: 20px;
+            z-index: 50;
         }
 
         .modal-backdrop.open {
             display: flex;
         }
 
-        .modal-sheet {
+        .modal-card {
             background: var(--bg-surface);
-            border: 1.5px solid var(--border-subtle);
-            border-radius: 22px;
+            border: 1px solid var(--border-hairline);
+            border-radius: 18px;
             padding: 20px;
-            max-width: 480px;
+            max-width: 340px;
             width: 100%;
-            max-height: 80dvh;
-            overflow-y: auto;
             box-shadow: var(--shadow-board);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
         }
 
-        .modal-sheet h3 {
-            font-size: 1.08rem;
-            font-weight: 800;
+        .modal-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
             color: var(--text-primary);
         }
 
-        .modal-sheet p {
+        .modal-card p {
             font-size: 0.9rem;
-            line-height: 1.6;
+            line-height: 1.55;
             color: var(--text-secondary);
+            margin-bottom: 16px;
         }
 
-        .modal-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 4px;
-        }
-
-        .modal-actions .btn,
-        .modal-actions a {
-            flex: 1;
-            text-decoration: none;
-        }
-
-        /* Compact Landscape Phones */
+        /* Landscape Phone Optimization */
         @media (max-height: 540px) and (orientation: landscape) {
-            .top-bar {
-                padding-top: calc(4px + env(safe-area-inset-top));
-                padding-bottom: 4px;
+            .play-layout {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                grid-template-rows: auto auto;
+                align-items: center;
+                justify-content: center;
+                gap: 10px 20px;
             }
-            .score-tile {
-                flex-direction: row;
-                gap: 8px;
-                padding: 4px 10px;
+            .play-hud {
+                grid-column: 1;
+                grid-row: 1;
             }
-            .score-value {
-                font-size: 1.05rem;
-                margin-top: 0;
+            .play-actions {
+                grid-column: 1;
+                grid-row: 2;
             }
-            .board-frame {
-                width: min(46dvh, 240px);
-                gap: 6px;
-                padding: 8px;
+            .board-stage {
+                grid-column: 2;
+                grid-row: 1 / span 2;
             }
             .game-board {
-                gap: 6px;
-            }
-            .bottom-nav {
-                padding-top: 2px;
-                padding-bottom: calc(2px + env(safe-area-inset-bottom));
-            }
-            .nav-tab {
-                min-height: 44px;
-                flex-direction: row;
-                gap: 6px;
+                width: min(52vw, calc(100dvh - 140px));
             }
         }
 
-        /* Tablet & Desktop Workspace */
-        @media (min-width: 900px) and (min-height: 600px) {
-            .bottom-nav {
-                display: none;
-            }
-
-            .main-workspace {
-                max-width: 1120px;
-                width: 100%;
-                margin: 0 auto;
+        /* Tablet & Desktop Split Arena (fills viewport cleanly without blank void) */
+        @media (min-width: 840px) and (min-height: 541px) {
+            .play-layout {
                 display: grid;
-                grid-template-columns: 1.15fr 0.85fr;
-                gap: 24px;
-                padding: 20px 24px;
-                align-items: stretch;
+                grid-template-columns: minmax(320px, 440px) minmax(280px, 340px);
+                grid-template-rows: 1fr auto;
+                align-content: center;
+                justify-content: center;
+                gap: 20px 36px;
+                padding: 24px 32px;
             }
-
-            #panel-play {
-                display: flex !important;
-                background: var(--bg-surface);
-                border: 1.5px solid var(--border-subtle);
-                border-bottom: 4px solid var(--tile-lip);
-                border-radius: var(--radius-xl);
-                padding: 22px;
-                box-shadow: var(--shadow-sm);
+            .board-stage {
+                grid-column: 1;
+                grid-row: 1 / span 2;
             }
-
-            .desktop-side {
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
-                min-height: 0;
-                overflow-y: auto;
+            .game-board {
+                width: min(100%, 420px, calc(100dvh - 200px));
             }
-
-            #panel-setup,
-            #panel-info {
-                display: flex !important;
-                flex: none;
-                padding: 0;
-                overflow: visible;
+            .play-hud {
+                grid-column: 2;
+                grid-row: 1;
+                align-self: end;
             }
-
-            .board-frame {
-                width: min(100%, 46dvh, 400px);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-            .confetti-layer {
-                display: none;
+            .play-actions {
+                grid-column: 2;
+                grid-row: 2;
+                align-self: start;
             }
         }
     </style>
 </head>
 <body>
     <div class="app-shell">
-        <header class="top-bar">
+        <header class="app-header">
             <div class="brand">
-                <img class="brand-mark" src="/icons/icon.svg" alt="Tic Tac Toe Pro" referrerPolicy="no-referrer">
-                <span class="brand-title">Tic Tac Toe Pro</span>
+                <img class="brand-mark" src="/icons/icon.svg" alt="" width="32" height="32">
+                <h1 class="brand-title">Tic Tac Toe Pro</h1>
             </div>
-            <div class="top-actions">
-                <button type="button" class="icon-btn" id="theme-quick-btn" title="Switch Color Theme" aria-label="Switch Color Theme">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="header-actions">
+                <button type="button" class="icon-btn" id="quick-theme-btn" aria-label="Switch Theme" title="Switch Theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <circle cx="12" cy="12" r="4"/>
                         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
                     </svg>
                 </button>
-                <button type="button" class="icon-btn" id="sound-toggle" title="Toggle Sound" aria-label="Toggle Sound">
-                    <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <button type="button" class="icon-btn" id="sound-toggle" aria-label="Toggle Sound" title="Toggle Sound">
+                    <svg id="sound-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
                         <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
                         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
                     </svg>
-                    <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <svg id="sound-icon-off" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                        <line x1="22" y1="9" x2="16" y2="15"/>
-                        <line x1="16" y1="9" x2="22" y2="15"/>
+                        <line x1="23" y1="9" x2="17" y2="15"/>
+                        <line x1="17" y1="9" x2="23" y2="15"/>
                     </svg>
                 </button>
             </div>
         </header>
 
-        <main class="main-workspace">
-            <section id="panel-play" class="tab-panel active" aria-label="Game Board">
-                <div class="scoreboard">
-                    <div class="score-tile turn-x" id="tile-p1">
-                        <div class="score-head">
-                            <svg class="score-avatar" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="3" stroke-linecap="round" aria-hidden="true">
-                                <line x1="5" y1="5" x2="19" y2="19"/>
-                                <line x1="19" y1="5" x2="5" y2="19"/>
-                            </svg>
-                            <span class="score-label" id="p1-name">Player 1</span>
+        <main class="app-main">
+            <!-- PLAY VIEW -->
+            <section id="view-play" class="view active" aria-label="Game Board">
+                <div class="play-layout">
+                    <div class="play-hud">
+                        <div class="scoreboard">
+                            <div class="score-col active-x" id="score-card-x">
+                                <span class="score-label"><span class="mark-tag-x">X</span> <span id="p1-name">Player 1</span></span>
+                                <span class="score-value" id="p1-score">0</span>
+                            </div>
+                            <div class="score-col score-ties">
+                                <span class="score-label">Ties</span>
+                                <span class="score-value" id="tie-score">0</span>
+                            </div>
+                            <div class="score-col" id="score-card-o">
+                                <span class="score-label"><span class="mark-tag-o">O</span> <span id="p2-name">Player 2</span></span>
+                                <span class="score-value" id="p2-score">0</span>
+                            </div>
                         </div>
-                        <span class="score-value x-color" id="p1-score">0</span>
-                    </div>
-                    <div class="score-tile ties-card">
-                        <div class="score-head">
-                            <span class="score-label">Ties</span>
+                        <div class="status-row">
+                            <p class="status-text" id="status-text" aria-live="polite">Player 1's Turn (X)</p>
+                            <button type="button" class="mode-link" id="mode-shortcut-btn">2 Players</button>
                         </div>
-                        <span class="score-value tie-color" id="tie-score">0</span>
                     </div>
-                    <div class="score-tile" id="tile-p2">
-                        <div class="score-head">
-                            <svg class="score-avatar" viewBox="0 0 24 24" fill="none" stroke="var(--accent-o)" stroke-width="3" aria-hidden="true">
-                                <circle cx="12" cy="12" r="7.5"/>
-                            </svg>
-                            <span class="score-label" id="p2-name">Computer</span>
-                        </div>
-                        <span class="score-value o-color" id="p2-score">0</span>
-                    </div>
-                </div>
 
-                <div class="turn-banner">
-                    <p class="status-text" id="status-text">Player 1's Turn (X)</p>
-                    <p class="mode-subtext" id="mode-summary">Vs Computer · Medium · Ages 4+</p>
-                </div>
-
-                <div class="board-stage">
-                    <div class="board-frame">
-                        <div class="game-board" id="game-board" role="grid" aria-label="Tic Tac Toe 3 by 3 board">
-                            <button type="button" class="cell" data-id="0" aria-label="Row 1 Column 1"></button>
-                            <button type="button" class="cell" data-id="1" aria-label="Row 1 Column 2"></button>
-                            <button type="button" class="cell" data-id="2" aria-label="Row 1 Column 3"></button>
-                            <button type="button" class="cell" data-id="3" aria-label="Row 2 Column 1"></button>
-                            <button type="button" class="cell" data-id="4" aria-label="Row 2 Column 2"></button>
-                            <button type="button" class="cell" data-id="5" aria-label="Row 2 Column 3"></button>
-                            <button type="button" class="cell" data-id="6" aria-label="Row 3 Column 1"></button>
-                            <button type="button" class="cell" data-id="7" aria-label="Row 3 Column 2"></button>
-                            <button type="button" class="cell" data-id="8" aria-label="Row 3 Column 3"></button>
+                    <div class="board-stage">
+                        <div class="game-board" id="game-board" role="grid" aria-label="Tic Tac Toe Grid">
+                            <div class="cell" data-id="0" role="button" tabindex="0" aria-label="Row 1, Column 1"></div>
+                            <div class="cell" data-id="1" role="button" tabindex="0" aria-label="Row 1, Column 2"></div>
+                            <div class="cell" data-id="2" role="button" tabindex="0" aria-label="Row 1, Column 3"></div>
+                            <div class="cell" data-id="3" role="button" tabindex="0" aria-label="Row 2, Column 1"></div>
+                            <div class="cell" data-id="4" role="button" tabindex="0" aria-label="Row 2, Column 2"></div>
+                            <div class="cell" data-id="5" role="button" tabindex="0" aria-label="Row 2, Column 3"></div>
+                            <div class="cell" data-id="6" role="button" tabindex="0" aria-label="Row 3, Column 1"></div>
+                            <div class="cell" data-id="7" role="button" tabindex="0" aria-label="Row 3, Column 2"></div>
+                            <div class="cell" data-id="8" role="button" tabindex="0" aria-label="Row 3, Column 3"></div>
                         </div>
-                        <svg class="win-strike-svg" viewBox="0 0 300 300" aria-hidden="true">
-                            <line id="win-strike-line" class="win-strike-line" x1="0" y1="0" x2="0" y2="0"/>
-                        </svg>
                     </div>
-                </div>
 
-                <div class="play-actions">
-                    <button type="button" class="btn btn-primary" id="new-round-btn">New Round</button>
-                    <button type="button" class="btn btn-secondary" id="reset-scores-btn">Reset Scores</button>
+                    <div class="play-actions">
+                        <button type="button" class="btn-primary" id="new-round-btn">New Round</button>
+                        <button type="button" class="btn-secondary" id="reset-scores-btn">Reset Scores</button>
+                    </div>
                 </div>
             </section>
 
-            <div class="desktop-side">
-                <section id="panel-setup" class="tab-panel" aria-label="Game Setup">
-                    <div class="panel-stack">
-                        <div class="section-group">
-                            <h2 class="section-title">Game Mode</h2>
-                            <div class="segmented" role="group" aria-label="Game Mode">
-                                <button type="button" class="active" data-mode="human-vs-computer">Vs Computer</button>
-                                <button type="button" data-mode="human-vs-human">2 Players</button>
+            <!-- SETUP VIEW -->
+            <section id="view-setup" class="view" aria-label="Game Setup">
+                <div class="scroll-view">
+                    <div class="scroll-inner">
+                        <div class="card">
+                            <h2 class="card-title">Game Mode</h2>
+                            <div class="segmented" role="group" aria-label="Select Game Mode">
+                                <button type="button" class="seg-btn active" id="mode-hvh-btn">2 Players</button>
+                                <button type="button" class="seg-btn" id="mode-hvc-btn">vs Computer</button>
                             </div>
 
-                            <div id="difficulty-container">
+                            <div class="field-group" id="difficulty-container" style="display:none;">
                                 <span class="field-label">Computer Difficulty</span>
-                                <div class="segmented three-col" role="group" aria-label="Difficulty">
-                                    <button type="button" data-difficulty="easy">Easy</button>
-                                    <button type="button" class="active" data-difficulty="medium">Medium</button>
-                                    <button type="button" data-difficulty="hard">Unbeatable</button>
+                                <div class="segmented three-col" role="group" aria-label="Select Difficulty">
+                                    <button type="button" class="seg-btn active" data-diff="easy">Easy</button>
+                                    <button type="button" class="seg-btn" data-diff="medium">Medium</button>
+                                    <button type="button" class="seg-btn" data-diff="hard">Unbeatable</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="section-group">
-                            <h2 class="section-title">Players</h2>
-                            <div>
-                                <label class="field-label" for="player1">Player 1 Name (X)</label>
-                                <input type="text" id="player1" placeholder="Player 1" maxlength="16">
+                        <div class="card">
+                            <h2 class="card-title">Players</h2>
+                            <div class="field-group">
+                                <label class="field-label" for="player1">Player 1 (X)</label>
+                                <input class="text-input" type="text" id="player1" placeholder="Player 1" maxlength="16">
                             </div>
-                            <div>
-                                <label class="field-label" for="player2">Player 2 Name (O)</label>
-                                <input type="text" id="player2" placeholder="Computer" maxlength="16" disabled>
-                            </div>
-                        </div>
-
-                        <div class="section-group">
-                            <h2 class="section-title">Color Theme</h2>
-                            <div class="segmented three-col" role="group" aria-label="Color Theme">
-                                <button type="button" class="active" data-theme="sunny">Sunny</button>
-                                <button type="button" data-theme="meadow">Meadow</button>
-                                <button type="button" data-theme="starlight">Starlight</button>
+                            <div class="field-group">
+                                <label class="field-label" for="player2">Player 2 (O)</label>
+                                <input class="text-input" type="text" id="player2" placeholder="Player 2" maxlength="16">
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary" id="apply-play-btn">Save &amp; Play</button>
+                        <div class="card">
+                            <h2 class="card-title">Appearance</h2>
+                            <div class="segmented three-col" role="group" aria-label="Select Theme">
+                                <button type="button" class="seg-btn active" data-theme="light">Sky Light</button>
+                                <button type="button" class="seg-btn" data-theme="cream">Warm Cream</button>
+                                <button type="button" class="seg-btn" data-theme="dark">Midnight</button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-primary" id="apply-setup-btn">Play Now</button>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section id="panel-info" class="tab-panel" aria-label="About and Legal Information">
-                    <div class="panel-stack">
-                        <div class="section-group">
-                            <h2 class="section-title">About Tic Tac Toe Pro</h2>
-                            <div class="info-row">
-                                <span class="info-row-label">Company</span>
-                                <span class="info-row-value">CodeTech App Store</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-row-label">Contact</span>
-                                <span class="info-row-value"><a href="mailto:codetech.appstore@gmail.com">codetech.appstore@gmail.com</a></span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-row-label">Version</span>
-                                <span class="info-row-value">2.1.0</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-row-label">Age Rating</span>
-                                <span class="info-row-value">All Ages (4+ / Everyone)</span>
+            <!-- INFO & LEGAL VIEW -->
+            <section id="view-info" class="view" aria-label="App Information and Legal Notes">
+                <div class="scroll-view">
+                    <div class="scroll-inner">
+                        <div class="card">
+                            <h2 class="card-title">Publisher & App Information</h2>
+                            <div class="info-list">
+                                <div class="info-row">
+                                    <span class="info-key">Application</span>
+                                    <span class="info-val">Tic Tac Toe Pro</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-key">Company</span>
+                                    <span class="info-val">CodeTech App Store</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-key">Contact</span>
+                                    <span class="info-val"><a class="info-link" href="mailto:codetech.appstore@gmail.com">codetech.appstore@gmail.com</a></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-key">Age Rating</span>
+                                    <span class="info-val">4+ &middot; Suitable for All Ages</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-key">Version</span>
+                                    <span class="info-val">2.1.0</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="section-group">
-                            <h2 class="section-title">Legal &amp; Compliance Notes</h2>
-                            <button type="button" class="legal-btn" data-legal="privacy">
-                                <span>Privacy Policy (Zero Data Collection)</span>
-                                <span aria-hidden="true">›</span>
-                            </button>
-                            <button type="button" class="legal-btn" data-legal="terms">
-                                <span>Terms of Use &amp; EULA</span>
-                                <span aria-hidden="true">›</span>
-                            </button>
-                            <button type="button" class="legal-btn" data-legal="safety">
-                                <span>All-Ages &amp; Offline Safety Notice</span>
-                                <span aria-hidden="true">›</span>
-                            </button>
-                            <button type="button" class="btn btn-secondary" id="install-app-btn" style="display:none;">Install App on Device</button>
-                        </div>
+                        <div class="card legal-selectable">
+                            <h2 class="card-title">Legal Notes & Privacy Policy</h2>
+                            <p class="legal-copy"><strong>Privacy Policy:</strong> Tic Tac Toe Pro operates 100% offline. No personal data, analytics, advertising identifiers, or location telemetry are collected or transmitted.</p>
+                            <p class="legal-copy"><strong>All-Ages Safety:</strong> Designed for kids, families, and adults with zero ads, zero in-app purchases, and full compliance with family privacy standards (COPPA &amp; GDPR-K).</p>
+                            <p class="legal-copy"><strong>Local Storage:</strong> Player names, scores, theme, and sound settings stay strictly on your device and can be cleared anytime via Reset Scores.</p>
+                            <p class="legal-copy"><strong>Terms & Copyright:</strong> Provided for personal, non-commercial entertainment "as is." &copy; 2026 CodeTech App Store. All rights reserved.</p>
 
-                        <p class="copyright-note">
-                            &copy; 2026 CodeTech App Store. All rights reserved.<br>
-                            Designed for iOS, Android, and Web · 100% Offline Ready
-                        </p>
+                            <div class="legal-actions">
+                                <a class="btn-secondary" href="/privacy.html">Full Privacy &amp; Legal Page</a>
+                                <button type="button" class="btn-primary" id="install-app-btn" style="display:none;">Install App</button>
+                            </div>
+                        </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </main>
 
-        <nav class="bottom-nav" aria-label="Primary Navigation">
-            <button type="button" class="nav-tab active" data-tab="play">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="4"/>
+        <nav class="bottom-nav" role="tablist" aria-label="Primary Navigation">
+            <button type="button" class="nav-tab active" id="nav-play" role="tab" aria-selected="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="3"/>
                     <line x1="9" y1="3" x2="9" y2="21"/>
                     <line x1="15" y1="3" x2="15" y2="21"/>
                     <line x1="3" y1="9" x2="21" y2="9"/>
@@ -1079,8 +964,8 @@
                 </svg>
                 <span>Play</span>
             </button>
-            <button type="button" class="nav-tab" data-tab="setup">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <button type="button" class="nav-tab" id="nav-setup" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <line x1="4" y1="21" x2="4" y2="14"/>
                     <line x1="4" y1="10" x2="4" y2="3"/>
                     <line x1="12" y1="21" x2="12" y2="12"/>
@@ -1093,27 +978,25 @@
                 </svg>
                 <span>Setup</span>
             </button>
-            <button type="button" class="nav-tab" data-tab="info">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <button type="button" class="nav-tab" id="nav-info" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"/>
                     <line x1="12" y1="16" x2="12" y2="12"/>
                     <line x1="12" y1="8" x2="12.01" y2="8"/>
                 </svg>
-                <span>Info</span>
+                <span>Info &amp; Legal</span>
             </button>
         </nav>
-
-        <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
     </div>
 
-    <div class="modal-backdrop" id="sheet-modal" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
-        <div class="modal-sheet">
-            <h3 id="sheet-title">Information</h3>
-            <div id="sheet-body"></div>
-            <div class="modal-actions">
-                <a class="btn btn-secondary" id="sheet-external-link" href="/privacy.html" style="display:none;">Full Page</a>
-                <button type="button" class="btn btn-primary" id="sheet-close-btn">Close</button>
-            </div>
+    <div class="modal-backdrop" id="ios-install-modal" role="dialog" aria-modal="true" aria-labelledby="ios-modal-title">
+        <div class="modal-card">
+            <h3 id="ios-modal-title">Install on iPhone / iPad</h3>
+            <p>
+                1. Tap the <strong>Share</strong> icon in the Safari toolbar.<br>
+                2. Scroll down and tap <strong>Add to Home Screen</strong>.
+            </p>
+            <button type="button" class="btn-primary" style="width:100%;" id="close-ios-modal-btn">Got It</button>
         </div>
     </div>
 
@@ -1121,135 +1004,122 @@
         (function() {
             'use strict';
 
-            const STORAGE_KEY = 'tictactoe_pro_state_v3';
+            const STORAGE_KEY = 'tictactoe_pro_state_v2';
             const THEME_COLORS = {
-                sunny: '#eff6ff',
-                meadow: '#ecfdf5',
-                starlight: '#131c38'
-            };
-
-            const $ = id => document.getElementById(id);
-            const cells = Array.from(document.querySelectorAll('.cell'));
-            const navTabs = Array.from(document.querySelectorAll('.nav-tab'));
-            const strikeLine = $('win-strike-line');
-            const confettiLayer = $('confetti-layer');
-            const panels = {
-                play: $('panel-play'),
-                setup: $('panel-setup'),
-                info: $('panel-info')
-            };
-
-            const NativeBridge = {
-                isNative: !!(window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()),
-                async triggerHaptic(kind) {
-                    try {
-                        const Haptics = window.Capacitor?.Plugins?.Haptics;
-                        if (!Haptics) return;
-                        if (kind === 'win') {
-                            await Haptics.notification({ type: 'SUCCESS' });
-                        } else if (kind === 'tie') {
-                            await Haptics.notification({ type: 'WARNING' });
-                        } else {
-                            await Haptics.impact({ style: 'LIGHT' });
-                        }
-                    } catch (e) {}
-                },
-                async syncStatusBar(theme) {
-                    try {
-                        const StatusBar = window.Capacitor?.Plugins?.StatusBar;
-                        if (!StatusBar) return;
-                        await StatusBar.setStyle({ style: theme === 'starlight' ? 'LIGHT' : 'DARK' });
-                        await StatusBar.setBackgroundColor({ color: THEME_COLORS[theme] || '#eff6ff' });
-                    } catch (e) {}
-                },
-                async hideSplash() {
-                    try {
-                        await window.Capacitor?.Plugins?.SplashScreen?.hide();
-                    } catch (e) {}
-                }
+                light: '#f4f7fb',
+                cream: '#faf7f2',
+                dark: '#0f172a'
             };
 
             const SoundManager = {
                 enabled: true,
                 context: null,
+
                 init() {
                     try {
                         const AudioCtx = window.AudioContext || window.webkitAudioContext;
                         if (AudioCtx) this.context = new AudioCtx();
-                    } catch (e) {}
+                    } catch (e) {
+                        // Web Audio unavailable
+                    }
                 },
+
                 unlock() {
                     if (!this.context) this.init();
                     if (this.context && this.context.state === 'suspended') {
                         this.context.resume().catch(() => {});
                     }
                 },
-                playTone(freq, duration, type = 'sine', vol = 0.2) {
+
+                playSound(frequency, duration, type = 'sine', volume = 0.22) {
                     if (!this.enabled) return;
                     this.unlock();
                     if (!this.context) return;
+
                     const osc = this.context.createOscillator();
                     const gain = this.context.createGain();
                     osc.connect(gain);
                     gain.connect(this.context.destination);
-                    osc.frequency.value = freq;
+
+                    osc.frequency.value = frequency;
                     osc.type = type;
-                    gain.gain.setValueAtTime(vol, this.context.currentTime);
+                    gain.gain.setValueAtTime(volume, this.context.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.001, this.context.currentTime + duration);
+
                     osc.start(this.context.currentTime);
                     osc.stop(this.context.currentTime + duration);
                 },
-                playMove() { this.playTone(480, 0.09, 'sine', 0.16); },
+
+                playMove(player) {
+                    this.playSound(player === 'X' ? 520 : 420, 0.09, 'triangle', 0.2);
+                },
+
                 playWin() {
-                    this.playTone(523, 0.12, 'sine', 0.2);
-                    setTimeout(() => this.playTone(659, 0.12, 'sine', 0.2), 110);
-                    setTimeout(() => this.playTone(784, 0.26, 'sine', 0.22), 220);
+                    this.playSound(523.25, 0.12, 'triangle', 0.24);
+                    setTimeout(() => this.playSound(659.25, 0.12, 'triangle', 0.24), 110);
+                    setTimeout(() => this.playSound(783.99, 0.26, 'triangle', 0.24), 220);
                 },
+
                 playTie() {
-                    this.playTone(340, 0.14, 'triangle', 0.14);
-                    setTimeout(() => this.playTone(290, 0.16, 'triangle', 0.14), 140);
+                    this.playSound(330, 0.14, 'sine', 0.18);
+                    setTimeout(() => this.playSound(294, 0.18, 'sine', 0.18), 140);
                 },
-                playClick() { this.playTone(580, 0.04, 'sine', 0.08); }
+
+                playClick() {
+                    this.playSound(640, 0.04, 'sine', 0.08);
+                }
+            };
+
+            const triggerHaptic = (ms = 10) => {
+                if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+                    try { navigator.vibrate(ms); } catch (e) {}
+                }
             };
 
             SoundManager.init();
             document.addEventListener('pointerdown', () => SoundManager.unlock(), { once: true });
 
-            const X_SVG = `<svg viewBox="0 0 100 100" aria-hidden="true">
-                <line x1="22" y1="22" x2="78" y2="78" stroke="var(--accent-primary)" stroke-width="15" stroke-linecap="round"/>
-                <line x1="78" y1="22" x2="22" y2="78" stroke="var(--accent-primary)" stroke-width="15" stroke-linecap="round"/>
-            </svg>`;
-            const O_SVG = `<svg viewBox="0 0 100 100" aria-hidden="true">
-                <circle cx="50" cy="50" r="30" fill="none" stroke="var(--accent-o)" stroke-width="15" stroke-linecap="round"/>
-            </svg>`;
-
-            const STRIKE_COORDS = {
-                '0,1,2': [26, 48, 274, 48],
-                '3,4,5': [26, 150, 274, 150],
-                '6,7,8': [26, 252, 274, 252],
-                '0,3,6': [48, 26, 48, 274],
-                '1,4,7': [150, 26, 150, 274],
-                '2,5,8': [252, 26, 252, 274],
-                '0,4,8': [30, 30, 270, 270],
-                '2,4,6': [270, 30, 30, 270]
+            const $ = id => document.getElementById(id);
+            const views = {
+                play: $('view-play'),
+                setup: $('view-setup'),
+                info: $('view-info')
             };
+            const navTabs = {
+                play: $('nav-play'),
+                setup: $('nav-setup'),
+                info: $('nav-info')
+            };
+
+            const cells = document.querySelectorAll('.cell');
+            const statusText = $('status-text');
+            const soundToggle = $('sound-toggle');
+            const soundIconOn = $('sound-icon-on');
+            const soundIconOff = $('sound-icon-off');
+            const newRoundBtn = $('new-round-btn');
+            const resetScoresBtn = $('reset-scores-btn');
+            const modeShortcutBtn = $('mode-shortcut-btn');
+            const themeColorMeta = $('theme-color-meta');
+            const statusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+            const diffButtons = document.querySelectorAll('[data-diff]');
+            const themeButtons = document.querySelectorAll('[data-theme]');
+            let roundResetTimer = null;
+            let aiMoveTimer = null;
 
             const state = {
                 board: Array(9).fill(''),
                 currentPlayer: 'X',
                 isActive: true,
                 player1Name: 'Player 1',
-                player2Name: 'Computer',
-                isVsComputer: true,
-                difficulty: 'medium',
-                theme: 'sunny',
-                scores: { X: 0, O: 0, ties: 0 }
+                player2Name: 'Player 2',
+                isVsComputer: false,
+                difficulty: 'easy',
+                theme: 'light',
+                scores: { X: 0, O: 0, ties: 0 },
+                winningCells: []
             };
 
-            let aiTimer = null;
-            let autoResetTimer = null;
-
-            const saveState = () => {
+            const savePreferences = () => {
                 try {
                     localStorage.setItem(STORAGE_KEY, JSON.stringify({
                         soundEnabled: SoundManager.enabled,
@@ -1264,204 +1134,189 @@
             };
 
             const applyTheme = (theme) => {
-                const valid = ['sunny', 'meadow', 'starlight'].includes(theme) ? theme : 'sunny';
+                const valid = ['light', 'cream', 'dark'].includes(theme) ? theme : 'light';
                 state.theme = valid;
-                document.body.classList.remove('theme-meadow', 'theme-starlight');
-                if (valid === 'meadow') document.body.classList.add('theme-meadow');
-                if (valid === 'starlight') document.body.classList.add('theme-starlight');
-                $('theme-color-meta').setAttribute('content', THEME_COLORS[valid]);
-                document.querySelectorAll('[data-theme]').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.theme === valid);
-                });
-                NativeBridge.syncStatusBar(valid);
+                document.body.classList.remove('theme-cream', 'theme-dark');
+                if (valid === 'cream') document.body.classList.add('theme-cream');
+                if (valid === 'dark') document.body.classList.add('theme-dark');
+
+                themeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.theme === valid));
+                if (themeColorMeta) themeColorMeta.setAttribute('content', THEME_COLORS[valid]);
+                if (statusBarMeta) statusBarMeta.setAttribute('content', valid === 'dark' ? 'black-translucent' : 'default');
             };
 
             const updateSoundUI = () => {
-                const btn = $('sound-toggle');
-                btn.classList.toggle('muted', !SoundManager.enabled);
-                $('sound-icon-on').style.display = SoundManager.enabled ? 'block' : 'none';
-                $('sound-icon-off').style.display = SoundManager.enabled ? 'none' : 'block';
+                soundToggle.classList.toggle('muted', !SoundManager.enabled);
+                soundIconOn.style.display = SoundManager.enabled ? 'block' : 'none';
+                soundIconOff.style.display = SoundManager.enabled ? 'none' : 'block';
+                soundToggle.setAttribute('aria-pressed', String(SoundManager.enabled));
             };
 
-            const updateHeaderAndScores = () => {
+            const updateTurnHighlight = () => {
+                const cardX = $('score-card-x');
+                const cardO = $('score-card-o');
+                cardX.classList.toggle('active-x', state.isActive && state.currentPlayer === 'X');
+                cardO.classList.toggle('active-o', state.isActive && state.currentPlayer === 'O');
+            };
+
+            const updateScoreAndModeUI = () => {
                 $('p1-name').textContent = state.player1Name;
-                $('p2-name').textContent = state.player2Name;
+                $('p2-name').textContent = state.isVsComputer ? 'Computer' : state.player2Name;
                 $('p1-score').textContent = state.scores.X;
                 $('p2-score').textContent = state.scores.O;
                 $('tie-score').textContent = state.scores.ties;
 
-                const diffLabels = { easy: 'Easy', medium: 'Medium', hard: 'Unbeatable' };
-                const modeText = state.isVsComputer
-                    ? `Vs Computer · ${diffLabels[state.difficulty] || 'Medium'} · Ages 4+`
-                    : '2 Players · Local Pass & Play · Ages 4+';
-                $('mode-summary').textContent = modeText;
-
-                $('tile-p1').classList.toggle('turn-x', state.isActive && state.currentPlayer === 'X');
-                $('tile-p2').classList.toggle('turn-o', state.isActive && state.currentPlayer === 'O');
+                const diffLabel = state.difficulty === 'hard' ? 'Unbeatable' : state.difficulty === 'medium' ? 'Medium' : 'Easy';
+                modeShortcutBtn.textContent = state.isVsComputer ? `vs Computer · ${diffLabel}` : '2 Players · Local';
             };
 
-            const syncSetupControls = () => {
-                const modeValue = state.isVsComputer ? 'human-vs-computer' : 'human-vs-human';
-                document.querySelectorAll('[data-mode]').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.mode === modeValue);
-                });
-                $('difficulty-container').style.display = state.isVsComputer ? 'block' : 'none';
-                document.querySelectorAll('[data-difficulty]').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.difficulty === state.difficulty);
-                });
+            const updateSetupControlsUI = () => {
+                $('mode-hvh-btn').classList.toggle('active', !state.isVsComputer);
+                $('mode-hvc-btn').classList.toggle('active', state.isVsComputer);
+                $('difficulty-container').style.display = state.isVsComputer ? 'flex' : 'none';
+                diffButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.diff === state.difficulty));
+
                 $('player1').value = state.player1Name === 'Player 1' ? '' : state.player1Name;
                 if (state.isVsComputer) {
                     $('player2').value = 'Computer';
                     $('player2').disabled = true;
                 } else {
-                    $('player2').value = state.player2Name === 'Player 2' ? '' : state.player2Name;
                     $('player2').disabled = false;
+                    $('player2').value = state.player2Name === 'Player 2' ? '' : state.player2Name;
                 }
             };
 
-            const loadState = () => {
+            const loadPreferences = () => {
                 try {
                     const raw = localStorage.getItem(STORAGE_KEY);
-                    if (raw) {
-                        const saved = JSON.parse(raw);
-                        if (typeof saved.soundEnabled === 'boolean') SoundManager.enabled = saved.soundEnabled;
-                        if (saved.player1Name) state.player1Name = saved.player1Name;
-                        if (typeof saved.isVsComputer === 'boolean') state.isVsComputer = saved.isVsComputer;
-                        if (saved.player2Name) state.player2Name = state.isVsComputer ? 'Computer' : saved.player2Name;
-                        if (['easy', 'medium', 'hard'].includes(saved.difficulty)) state.difficulty = saved.difficulty;
-                        if (saved.theme) state.theme = saved.theme;
-                        if (saved.scores) {
-                            state.scores = {
-                                X: Number(saved.scores.X) || 0,
-                                O: Number(saved.scores.O) || 0,
-                                ties: Number(saved.scores.ties) || 0
-                            };
-                        }
+                    if (!raw) return;
+                    const saved = JSON.parse(raw);
+                    if (typeof saved.soundEnabled === 'boolean') SoundManager.enabled = saved.soundEnabled;
+                    if (saved.player1Name) state.player1Name = saved.player1Name;
+                    if (saved.player2Name) state.player2Name = saved.player2Name;
+                    if (typeof saved.isVsComputer === 'boolean') state.isVsComputer = saved.isVsComputer;
+                    if (['easy', 'medium', 'hard'].includes(saved.difficulty)) state.difficulty = saved.difficulty;
+                    if (saved.theme) applyTheme(saved.theme);
+                    if (saved.scores) {
+                        state.scores = {
+                            X: Number(saved.scores.X) || 0,
+                            O: Number(saved.scores.O) || 0,
+                            ties: Number(saved.scores.ties) || 0
+                        };
                     }
                 } catch (e) {}
-                applyTheme(state.theme);
-                updateSoundUI();
-                syncSetupControls();
-                updateHeaderAndScores();
             };
 
-            const switchMobileTab = (tabName) => {
+            const switchView = (key) => {
                 SoundManager.playClick();
-                navTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
-                Object.entries(panels).forEach(([name, el]) => {
-                    el.classList.toggle('active', name === tabName);
+                Object.keys(views).forEach(k => {
+                    views[k].classList.toggle('active', k === key);
+                    navTabs[k].classList.toggle('active', k === key);
+                    navTabs[k].setAttribute('aria-selected', String(k === key));
                 });
             };
 
-            navTabs.forEach(tab => {
-                tab.onclick = () => switchMobileTab(tab.dataset.tab);
-            });
+            navTabs.play.onclick = () => switchView('play');
+            navTabs.setup.onclick = () => switchView('setup');
+            navTabs.info.onclick = () => switchView('info');
+            modeShortcutBtn.onclick = () => switchView('setup');
 
-            $('sound-toggle').onclick = () => {
+            soundToggle.onclick = () => {
                 SoundManager.enabled = !SoundManager.enabled;
                 updateSoundUI();
                 SoundManager.playClick();
-                saveState();
+                savePreferences();
             };
 
-            $('theme-quick-btn').onclick = () => {
-                SoundManager.playClick();
-                const order = ['sunny', 'meadow', 'starlight'];
+            $('quick-theme-btn').onclick = () => {
+                const order = ['light', 'cream', 'dark'];
                 const next = order[(order.indexOf(state.theme) + 1) % order.length];
+                SoundManager.playClick();
                 applyTheme(next);
-                saveState();
+                savePreferences();
             };
 
-            document.querySelectorAll('[data-mode]').forEach(btn => {
-                btn.onclick = () => {
-                    SoundManager.playClick();
-                    state.isVsComputer = btn.dataset.mode === 'human-vs-computer';
-                    state.player2Name = state.isVsComputer ? 'Computer' : ($('player2').value.trim() === 'Computer' || !$('player2').value.trim() ? 'Player 2' : $('player2').value.trim());
-                    syncSetupControls();
-                };
-            });
-
-            document.querySelectorAll('[data-difficulty]').forEach(btn => {
-                btn.onclick = () => {
-                    SoundManager.playClick();
-                    state.difficulty = btn.dataset.difficulty;
-                    syncSetupControls();
-                };
-            });
-
-            document.querySelectorAll('[data-theme]').forEach(btn => {
+            themeButtons.forEach(btn => {
                 btn.onclick = () => {
                     SoundManager.playClick();
                     applyTheme(btn.dataset.theme);
-                    saveState();
+                    savePreferences();
                 };
             });
 
-            const launchConfetti = () => {
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-                confettiLayer.innerHTML = '';
-                const colors = ['#2563eb', '#e11d48', '#f59e0b', '#10b981', '#8b5cf6'];
-                for (let i = 0; i < 20; i++) {
-                    const piece = document.createElement('span');
-                    piece.className = 'confetti-piece';
-                    piece.style.left = `${10 + Math.random() * 80}%`;
-                    piece.style.top = `${15 + Math.random() * 25}%`;
-                    piece.style.background = colors[i % colors.length];
-                    piece.style.animationDelay = `${Math.random() * 140}ms`;
-                    confettiLayer.appendChild(piece);
+            $('mode-hvh-btn').onclick = () => {
+                SoundManager.playClick();
+                state.isVsComputer = false;
+                updateSetupControlsUI();
+                updateScoreAndModeUI();
+                resetGame();
+                savePreferences();
+            };
+
+            $('mode-hvc-btn').onclick = () => {
+                SoundManager.playClick();
+                state.isVsComputer = true;
+                updateSetupControlsUI();
+                updateScoreAndModeUI();
+                resetGame();
+                savePreferences();
+            };
+
+            diffButtons.forEach(btn => {
+                btn.onclick = () => {
+                    SoundManager.playClick();
+                    state.difficulty = btn.dataset.diff;
+                    updateSetupControlsUI();
+                    updateScoreAndModeUI();
+                    resetGame();
+                    savePreferences();
+                };
+            });
+
+            $('apply-setup-btn').onclick = () => {
+                SoundManager.playClick();
+                state.player1Name = $('player1').value.trim() || 'Player 1';
+                if (!state.isVsComputer) {
+                    state.player2Name = $('player2').value.trim() || 'Player 2';
                 }
-                setTimeout(() => { confettiLayer.innerHTML = ''; }, 1400);
+                updateScoreAndModeUI();
+                savePreferences();
+                resetGame();
+                switchView('play');
             };
 
-            const showStrike = (pattern) => {
-                const coords = STRIKE_COORDS[pattern.join(',')];
-                if (!coords) return;
-                strikeLine.setAttribute('x1', coords[0]);
-                strikeLine.setAttribute('y1', coords[1]);
-                strikeLine.setAttribute('x2', coords[2]);
-                strikeLine.setAttribute('y2', coords[3]);
-                strikeLine.classList.remove('active');
-                void strikeLine.offsetWidth;
-                strikeLine.classList.add('active');
-            };
-
-            const resetRound = () => {
-                if (aiTimer) { clearTimeout(aiTimer); aiTimer = null; }
-                if (autoResetTimer) { clearTimeout(autoResetTimer); autoResetTimer = null; }
+            const resetGame = () => {
+                if (roundResetTimer) {
+                    clearTimeout(roundResetTimer);
+                    roundResetTimer = null;
+                }
+                if (aiMoveTimer) {
+                    clearTimeout(aiMoveTimer);
+                    aiMoveTimer = null;
+                }
                 state.board.fill('');
                 state.currentPlayer = 'X';
                 state.isActive = true;
-                strikeLine.classList.remove('active');
-                confettiLayer.innerHTML = '';
+                state.winningCells = [];
+                newRoundBtn.textContent = 'New Round';
                 cells.forEach(cell => {
-                    cell.innerHTML = '';
+                    cell.textContent = '';
                     cell.className = 'cell';
                 });
-                const statusEl = $('status-text');
-                statusEl.classList.remove('win-state');
-                statusEl.textContent = `${state.player1Name}'s Turn (X)`;
-                updateHeaderAndScores();
+                statusText.textContent = `${state.player1Name}'s Turn (X)`;
+                updateTurnHighlight();
             };
 
-            $('apply-play-btn').onclick = () => {
+            newRoundBtn.onclick = () => {
                 SoundManager.playClick();
-                state.player1Name = $('player1').value.trim() || 'Player 1';
-                state.player2Name = state.isVsComputer ? 'Computer' : ($('player2').value.trim() || 'Player 2');
-                saveState();
-                resetRound();
-                switchMobileTab('play');
+                resetGame();
             };
 
-            $('new-round-btn').onclick = () => {
-                SoundManager.playClick();
-                resetRound();
-            };
-
-            $('reset-scores-btn').onclick = () => {
+            resetScoresBtn.onclick = () => {
                 SoundManager.playClick();
                 state.scores = { X: 0, O: 0, ties: 0 };
-                saveState();
-                updateHeaderAndScores();
+                updateScoreAndModeUI();
+                savePreferences();
             };
 
             const WIN_PATTERNS = [
@@ -1470,9 +1325,9 @@
                 [0,4,8], [2,4,6]
             ];
 
-            const checkBoardWinner = (board) => {
+            const checkWinnerForBoard = (board) => {
                 for (const pattern of WIN_PATTERNS) {
-                    const [a, b, c] = pattern;
+                    const [a,b,c] = pattern;
                     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
                         return { winner: board[a], pattern };
                     }
@@ -1481,12 +1336,13 @@
             };
 
             const minimax = (board, depth, isMax) => {
-                const res = checkBoardWinner(board);
+                const res = checkWinnerForBoard(board);
                 if (res) {
                     if (res.winner === 'O') return 10 - depth;
                     if (res.winner === 'X') return depth - 10;
                     return 0;
                 }
+
                 if (isMax) {
                     let best = -Infinity;
                     for (let i = 0; i < 9; i++) {
@@ -1510,196 +1366,166 @@
                 }
             };
 
-            const getBestMove = () => {
-                let bestScore = -Infinity;
-                let move;
+            const findImmediateMove = (mark) => {
                 for (let i = 0; i < 9; i++) {
                     if (state.board[i] === '') {
-                        state.board[i] = 'O';
-                        const score = minimax([...state.board], 0, false);
+                        state.board[i] = mark;
+                        const res = checkWinnerForBoard(state.board);
                         state.board[i] = '';
-                        if (score > bestScore) {
-                            bestScore = score;
-                            move = i;
-                        }
+                        if (res && res.winner === mark) return i;
                     }
                 }
-                return move;
+                return null;
             };
 
-            const getRandomMove = () => {
-                const open = state.board.map((v, i) => v === '' ? i : null).filter(v => v !== null);
-                return open[Math.floor(Math.random() * open.length)];
-            };
+            const chooseComputerMove = () => {
+                const available = state.board.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+                if (available.length === 0) return undefined;
 
-            const finishTurnCheck = () => {
-                const res = checkBoardWinner(state.board);
-                if (!res) return false;
-
-                state.isActive = false;
-                const statusEl = $('status-text');
-                if (res.winner === 'tie') {
-                    statusEl.textContent = "It's a Tie!";
-                    state.scores.ties++;
-                    SoundManager.playTie();
-                    NativeBridge.triggerHaptic('tie');
-                } else {
-                    res.pattern.forEach(idx => cells[idx].classList.add('winning'));
-                    showStrike(res.pattern);
-                    launchConfetti();
-                    const winnerName = res.winner === 'X' ? state.player1Name : state.player2Name;
-                    statusEl.classList.add('win-state');
-                    statusEl.textContent = `${winnerName} Wins!`;
-                    state.scores[res.winner]++;
-                    SoundManager.playWin();
-                    NativeBridge.triggerHaptic('win');
+                if (state.difficulty === 'easy') {
+                    return available[Math.floor(Math.random() * available.length)];
                 }
 
-                saveState();
-                updateHeaderAndScores();
-                autoResetTimer = setTimeout(resetRound, 2200);
+                if (state.difficulty === 'medium') {
+                    const winMove = findImmediateMove('O');
+                    if (winMove !== null) return winMove;
+                    const blockMove = findImmediateMove('X');
+                    if (blockMove !== null && Math.random() < 0.85) return blockMove;
+                    if (state.board[4] === '' && Math.random() < 0.6) return 4;
+                    return available[Math.floor(Math.random() * available.length)];
+                }
+
+                let bestScore = -Infinity;
+                let bestMove = available[0];
+                for (const i of available) {
+                    state.board[i] = 'O';
+                    const score = minimax([...state.board], 0, false);
+                    state.board[i] = '';
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMove = i;
+                    }
+                }
+                return bestMove;
+            };
+
+            const handleGameEnd = () => {
+                const result = checkWinnerForBoard(state.board);
+                if (!result) return false;
+
+                state.isActive = false;
+                updateTurnHighlight();
+                newRoundBtn.textContent = 'Play Again';
+
+                if (result.winner === 'tie') {
+                    statusText.textContent = "It's a Tie!";
+                    state.scores.ties++;
+                    SoundManager.playTie();
+                } else {
+                    state.winningCells = result.pattern;
+                    result.pattern.forEach(idx => cells[idx].classList.add('winning'));
+                    const winnerName = result.winner === 'X'
+                        ? state.player1Name
+                        : (state.isVsComputer ? 'Computer' : state.player2Name);
+                    statusText.textContent = `${winnerName} Wins! (${result.winner})`;
+                    state.scores[result.winner]++;
+                    SoundManager.playWin();
+                    triggerHaptic(24);
+                }
+
+                updateScoreAndModeUI();
+                savePreferences();
+                roundResetTimer = setTimeout(resetGame, 2600);
                 return true;
             };
 
-            const placeMark = (index, player) => {
-                state.board[index] = player;
-                const cell = cells[index];
-                cell.classList.add('occupied', player.toLowerCase());
-                cell.innerHTML = player === 'X' ? X_SVG : O_SVG;
-                SoundManager.playMove();
-                NativeBridge.triggerHaptic('move');
+            const computerMove = () => {
+                if (!state.isActive) return;
+                statusText.textContent = 'Computer is thinking...';
+                updateTurnHighlight();
+
+                aiMoveTimer = setTimeout(() => {
+                    if (!state.isActive) return;
+                    const move = chooseComputerMove();
+                    if (move === undefined) return;
+
+                    state.board[move] = 'O';
+                    cells[move].textContent = 'O';
+                    cells[move].classList.add('o', 'filled');
+                    SoundManager.playMove('O');
+                    triggerHaptic(8);
+
+                    if (!handleGameEnd()) {
+                        state.currentPlayer = 'X';
+                        statusText.textContent = `${state.player1Name}'s Turn (X)`;
+                        updateTurnHighlight();
+                    }
+                }, 360);
             };
 
-            const triggerComputerTurn = () => {
+            const handleCellSelect = (cell) => {
                 if (!state.isActive) return;
-                $('status-text').textContent = 'Computer is thinking...';
-                updateHeaderAndScores();
+                if (state.isVsComputer && state.currentPlayer === 'O') return;
+                const id = parseInt(cell.dataset.id, 10);
+                if (state.board[id] !== '') return;
 
-                aiTimer = setTimeout(() => {
-                    if (!state.isActive) return;
-                    let move;
-                    if (state.difficulty === 'hard') {
-                        move = getBestMove();
-                    } else if (state.difficulty === 'medium') {
-                        move = Math.random() < 0.65 ? getBestMove() : getRandomMove();
+                const mark = state.currentPlayer;
+                state.board[id] = mark;
+                cell.textContent = mark;
+                cell.classList.add(mark.toLowerCase(), 'filled');
+                SoundManager.playMove(mark);
+                triggerHaptic(10);
+
+                if (handleGameEnd()) return;
+
+                if (mark === 'X') {
+                    state.currentPlayer = 'O';
+                    if (state.isVsComputer) {
+                        computerMove();
                     } else {
-                        move = getRandomMove();
+                        statusText.textContent = `${state.player2Name}'s Turn (O)`;
+                        updateTurnHighlight();
                     }
-                    if (move === undefined) return;
-                    placeMark(move, 'O');
-                    if (!finishTurnCheck()) {
-                        state.currentPlayer = 'X';
-                        $('status-text').textContent = `${state.player1Name}'s Turn (X)`;
-                        updateHeaderAndScores();
-                    }
-                }, 380);
+                } else {
+                    state.currentPlayer = 'X';
+                    statusText.textContent = `${state.player1Name}'s Turn (X)`;
+                    updateTurnHighlight();
+                }
             };
 
             cells.forEach(cell => {
-                cell.onclick = () => {
-                    if (!state.isActive) return;
-                    if (state.isVsComputer && state.currentPlayer === 'O') return;
-                    const idx = parseInt(cell.dataset.id, 10);
-                    if (state.board[idx] !== '') return;
-
-                    placeMark(idx, state.currentPlayer);
-                    if (!finishTurnCheck()) {
-                        if (state.currentPlayer === 'X') {
-                            state.currentPlayer = 'O';
-                            if (state.isVsComputer) {
-                                triggerComputerTurn();
-                            } else {
-                                $('status-text').textContent = `${state.player2Name}'s Turn (O)`;
-                                updateHeaderAndScores();
-                            }
-                        } else {
-                            state.currentPlayer = 'X';
-                            $('status-text').textContent = `${state.player1Name}'s Turn (X)`;
-                            updateHeaderAndScores();
-                        }
+                cell.onclick = () => handleCellSelect(cell);
+                cell.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleCellSelect(cell);
                     }
                 };
             });
 
-            const sheetModal = $('sheet-modal');
-            const sheetTitle = $('sheet-title');
-            const sheetBody = $('sheet-body');
-            const sheetExternalLink = $('sheet-external-link');
+            // Initialize UI
+            loadPreferences();
+            updateSoundUI();
+            updateSetupControlsUI();
+            updateScoreAndModeUI();
+            resetGame();
 
-            const LEGAL_CONTENT = {
-                privacy: {
-                    title: 'Privacy Policy',
-                    body: `
-                        <p><strong>Publisher:</strong> CodeTech App Store<br><strong>Contact:</strong> codetech.appstore@gmail.com</p>
-                        <p>Tic Tac Toe Pro does not collect, transmit, sell, or share any personal information, analytics, device identifiers, or location data.</p>
-                        <p>Player names, scores, theme, and sound preferences remain strictly in local storage on your device.</p>
-                    `,
-                    href: '/privacy.html'
-                },
-                terms: {
-                    title: 'Terms of Use & EULA',
-                    body: `
-                        <p><strong>Licensor:</strong> CodeTech App Store</p>
-                        <p>CodeTech App Store grants you a personal, non-exclusive, non-transferable license to play Tic Tac Toe Pro for personal, non-commercial entertainment.</p>
-                        <p>All app code, visual design, icons, and audio synthesis are copyright &copy; 2026 CodeTech App Store. All rights reserved.</p>
-                    `,
-                    href: '/terms.html'
-                },
-                safety: {
-                    title: 'All-Ages & Offline Safety Notice',
-                    body: `
-                        <p>Tic Tac Toe Pro is crafted for kids and players of all ages (4+ / Everyone).</p>
-                        <p>The app contains <strong>zero advertisements</strong>, <strong>zero in-app purchases</strong>, <strong>zero third-party tracking SDKs</strong>, and <strong>zero chat or external social links</strong>. It operates 100% offline.</p>
-                    `,
-                    href: null
-                }
-            };
-
-            const openSheet = ({ title, body, href }) => {
-                sheetTitle.textContent = title;
-                sheetBody.innerHTML = body;
-                if (href) {
-                    sheetExternalLink.href = href;
-                    sheetExternalLink.style.display = 'inline-flex';
-                } else {
-                    sheetExternalLink.style.display = 'none';
-                }
-                sheetModal.classList.add('open');
-            };
-
-            document.querySelectorAll('[data-legal]').forEach(btn => {
-                btn.onclick = () => {
-                    SoundManager.playClick();
-                    const item = LEGAL_CONTENT[btn.dataset.legal];
-                    if (item) openSheet(item);
-                };
-            });
-
-            $('sheet-close-btn').onclick = () => {
-                SoundManager.playClick();
-                sheetModal.classList.remove('open');
-            };
-
-            sheetModal.onclick = (e) => {
-                if (e.target === sheetModal) sheetModal.classList.remove('open');
-            };
-
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true || NativeBridge.isNative;
+            // PWA Install & Service Worker (disabled inside native Capacitor runtime)
+            const isCapacitorNative = !!(window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform());
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true || isCapacitorNative;
             const installBtn = $('install-app-btn');
+            const iosModal = $('ios-install-modal');
+            const closeIosModalBtn = $('close-ios-modal-btn');
             let deferredInstallPrompt = null;
 
             if (!isStandalone) {
-                const isIOSWeb = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-                if (isIOSWeb) {
+                const isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+                if (isIOS) {
                     installBtn.style.display = 'inline-flex';
-                    installBtn.textContent = 'Install on iPhone / iPad';
+                    installBtn.textContent = 'Install on iOS';
                     installBtn.onclick = () => {
                         SoundManager.playClick();
-                        openSheet({
-                            title: 'Install on iPhone / iPad',
-                            body: `<p>1. Tap the <strong>Share</strong> icon in Safari's toolbar.<br>2. Scroll down and tap <strong>Add to Home Screen</strong>.</p>`,
-                            href: null
-                        });
+                        iosModal.classList.add('open');
                     };
                 }
 
@@ -1707,27 +1533,35 @@
                     e.preventDefault();
                     deferredInstallPrompt = e;
                     installBtn.style.display = 'inline-flex';
-                    installBtn.textContent = 'Install App on Device';
+                    installBtn.textContent = 'Install App';
                     installBtn.onclick = async () => {
                         if (!deferredInstallPrompt) return;
                         SoundManager.playClick();
                         await deferredInstallPrompt.prompt();
                         const choice = await deferredInstallPrompt.userChoice;
-                        if (choice.outcome === 'accepted') installBtn.style.display = 'none';
+                        if (choice.outcome === 'accepted') {
+                            installBtn.style.display = 'none';
+                        }
                         deferredInstallPrompt = null;
                     };
                 });
+
+                window.addEventListener('appinstalled', () => {
+                    installBtn.style.display = 'none';
+                    deferredInstallPrompt = null;
+                });
             }
 
-            if ('serviceWorker' in navigator && !NativeBridge.isNative && location.protocol.startsWith('http')) {
+            closeIosModalBtn.onclick = () => {
+                SoundManager.playClick();
+                iosModal.classList.remove('open');
+            };
+
+            if ('serviceWorker' in navigator && !isCapacitorNative && location.protocol.startsWith('http')) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('/sw.js').catch(() => {});
                 });
             }
-
-            loadState();
-            resetRound();
-            NativeBridge.hideSplash();
         })();
     </script>
 </body>
