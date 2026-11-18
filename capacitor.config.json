@@ -1,0 +1,14 @@
+{
+  "appId": "com.codetech.tictactoepro",
+  "appName": "Tic Tac Toe Pro",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "iosScheme": "capacitor"
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "backgroundColor": "#0a0e27",
+    "preferredContentMode": "mobile"
+  }
+}

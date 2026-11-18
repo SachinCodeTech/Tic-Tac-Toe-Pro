@@ -1,0 +1,21 @@
+{
+  "name": "tic-tac-toe-pro",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "build": "node scripts/generate-icons.mjs && node --check server.js",
+    "lint": "node --check server.js && node --check scripts/generate-icons.mjs",
+    "ios:sync": "npm run build && npx cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/ios": "^8.6.2",
+    "express": "^4.21.2",
+    "sharp": "^0.35.5"
+  }
+}

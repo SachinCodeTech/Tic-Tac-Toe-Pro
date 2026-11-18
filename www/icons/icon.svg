@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#12172e"/>
+      <stop offset="100%" stop-color="#070a1d"/>
+    </linearGradient>
+    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00ffff"/>
+      <stop offset="100%" stop-color="#0099ff"/>
+    </linearGradient>
+    <linearGradient id="pinkGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff2eb8"/>
+      <stop offset="100%" stop-color="#ff0077"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <g transform="translate(0, 0) scale(1)">
+    <!-- Subtle neon grid -->
+    <g stroke="#00ffff" stroke-opacity="0.28" stroke-width="14" stroke-linecap="round">
+      <line x1="394" y1="164" x2="394" y2="860"/>
+      <line x1="630" y1="164" x2="630" y2="860"/>
+      <line x1="164" y1="394" x2="860" y2="394"/>
+      <line x1="164" y1="630" x2="860" y2="630"/>
+    </g>
+    <!-- Top-left X -->
+    <g stroke="url(#cyanGlow)" stroke-width="34" stroke-linecap="round">
+      <line x1="210" y1="210" x2="340" y2="340"/>
+      <line x1="340" y1="210" x2="210" y2="340"/>
+    </g>
+    <!-- Center X -->
+    <g stroke="url(#cyanGlow)" stroke-width="34" stroke-linecap="round">
+      <line x1="447" y1="447" x2="577" y2="577"/>
+      <line x1="577" y1="447" x2="447" y2="577"/>
+    </g>
+    <!-- Bottom-right X -->
+    <g stroke="url(#cyanGlow)" stroke-width="34" stroke-linecap="round">
+      <line x1="684" y1="684" x2="814" y2="814"/>
+      <line x1="814" y1="684" x2="684" y2="814"/>
+    </g>
+    <!-- Top-right O -->
+    <circle cx="749" cy="275" r="68" fill="none" stroke="url(#pinkGlow)" stroke-width="32"/>
+    <!-- Bottom-left O -->
+    <circle cx="275" cy="749" r="68" fill="none" stroke="url(#pinkGlow)" stroke-width="32"/>
+    <!-- Winning diagonal highlight -->
+    <line x1="196" y1="196" x2="828" y2="828" stroke="#ffd700" stroke-opacity="0.85" stroke-width="14" stroke-linecap="round"/>
+  </g>
+</svg>
