@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Tic Tac Toe Pro by CodeTech App Store - An all-ages offline strategy game for iOS, Android, and Web.">
-    <meta name="theme-color" content="#f4f7fb" id="theme-color-meta">
+    <meta name="description" content="Tic Tac Toe Pro by CodeTech App Store - A bright, playful offline strategy game for kids and all ages.">
+    <meta name="theme-color" content="#eff6ff" id="theme-color-meta">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -15,62 +15,87 @@
     <title>Tic Tac Toe Pro</title>
     <style>
         :root {
-            --bg-canvas: #f4f7fb;
+            --bg-canvas: linear-gradient(160deg, #eff6ff 0%, #fefce8 55%, #fdf2f8 100%);
+            --bg-solid: #eff6ff;
             --bg-surface: #ffffff;
-            --bg-subtle: #eaf0f8;
-            --bg-x-tint: #eff6ff;
-            --bg-o-tint: #fff1f2;
-            --bg-win-tint: #fef3c7;
-            --border-subtle: #dbe4f0;
+            --bg-board: #e8f0fe;
+            --bg-subtle: #eef3fb;
+            --bg-x-tint: #dbeafe;
+            --bg-o-tint: #ffe4e6;
+            --bg-tie-tint: #fef3c7;
+            --bg-win-tint: #fef08a;
+            --border-subtle: #d6e2f5;
+            --tile-lip: #cddcf5;
+            --tile-lip-x: #93c5fd;
+            --tile-lip-o: #fda4af;
+            --tile-lip-win: #f59e0b;
             --text-primary: #0f172a;
-            --text-secondary: #475569;
+            --text-secondary: #334155;
             --text-muted: #64748b;
             --accent-primary: #2563eb;
             --accent-primary-hover: #1d4ed8;
+            --accent-primary-lip: #1e40af;
             --accent-o: #e11d48;
             --accent-win: #d97706;
-            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
-            --shadow-md: 0 6px 20px rgba(37, 99, 235, 0.08);
+            --shadow-sm: 0 3px 10px rgba(37, 99, 235, 0.08);
+            --shadow-board: 0 12px 30px rgba(37, 99, 235, 0.12), 0 4px 10px rgba(15, 23, 42, 0.05);
+            --radius-xl: 24px;
             --radius-lg: 18px;
-            --radius-md: 12px;
+            --radius-md: 14px;
             --radius-sm: 10px;
         }
 
-        body.theme-mint {
-            --bg-canvas: #f2fbf8;
+        body.theme-meadow {
+            --bg-canvas: linear-gradient(160deg, #ecfdf5 0%, #f0fdfa 55%, #fff7ed 100%);
+            --bg-solid: #ecfdf5;
             --bg-surface: #ffffff;
-            --bg-subtle: #e2f5ee;
-            --bg-x-tint: #ecfeff;
-            --bg-o-tint: #fff7ed;
-            --bg-win-tint: #fef3c7;
-            --border-subtle: #cde8de;
+            --bg-board: #dff7ee;
+            --bg-subtle: #e6f7f1;
+            --bg-x-tint: #ccfbf1;
+            --bg-o-tint: #ffedd5;
+            --bg-tie-tint: #fef3c7;
+            --bg-win-tint: #fde68a;
+            --border-subtle: #c5eadc;
+            --tile-lip: #bce3d4;
+            --tile-lip-x: #5eead4;
+            --tile-lip-o: #fdba74;
+            --tile-lip-win: #f59e0b;
             --text-primary: #0f2922;
-            --text-secondary: #3b5e54;
-            --text-muted: #56796f;
+            --text-secondary: #2d554a;
+            --text-muted: #51796e;
             --accent-primary: #0d9488;
             --accent-primary-hover: #0f766e;
+            --accent-primary-lip: #115e59;
             --accent-o: #ea580c;
             --accent-win: #d97706;
-            --shadow-md: 0 6px 20px rgba(13, 148, 136, 0.09);
+            --shadow-board: 0 12px 30px rgba(13, 148, 136, 0.12), 0 4px 10px rgba(15, 41, 34, 0.05);
         }
 
-        body.theme-night {
-            --bg-canvas: #0f172a;
-            --bg-surface: #1e293b;
-            --bg-subtle: #283548;
-            --bg-x-tint: rgba(56, 189, 248, 0.14);
-            --bg-o-tint: rgba(251, 113, 133, 0.14);
-            --bg-win-tint: rgba(251, 191, 36, 0.18);
-            --border-subtle: #334155;
+        body.theme-starlight {
+            --bg-canvas: linear-gradient(160deg, #131c38 0%, #1a2447 55%, #231b3d 100%);
+            --bg-solid: #131c38;
+            --bg-surface: #1e2949;
+            --bg-board: #141d38;
+            --bg-subtle: #28365e;
+            --bg-x-tint: rgba(56, 189, 248, 0.18);
+            --bg-o-tint: rgba(251, 113, 133, 0.18);
+            --bg-tie-tint: rgba(251, 191, 36, 0.16);
+            --bg-win-tint: rgba(251, 191, 36, 0.28);
+            --border-subtle: #334473;
+            --tile-lip: #0d1429;
+            --tile-lip-x: #0284c7;
+            --tile-lip-o: #e11d48;
+            --tile-lip-win: #f59e0b;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
             --accent-primary: #38bdf8;
             --accent-primary-hover: #0ea5e9;
+            --accent-primary-lip: #0369a1;
             --accent-o: #fb7185;
             --accent-win: #fbbf24;
-            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+            --shadow-board: 0 14px 32px rgba(0, 0, 0, 0.4);
         }
 
         * {
@@ -86,9 +111,10 @@
             width: 100%;
             overflow: hidden;
             touch-action: manipulation;
-            background: var(--bg-canvas);
+            background: var(--bg-solid);
+            background-image: var(--bg-canvas);
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -100,6 +126,7 @@
             height: 100dvh;
             background: var(--bg-canvas);
             overflow: hidden;
+            position: relative;
         }
 
         /* Compact Native Top Bar */
@@ -112,6 +139,8 @@
             padding: calc(8px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 8px calc(16px + env(safe-area-inset-left));
             background: var(--bg-surface);
             border-bottom: 1px solid var(--border-subtle);
+            box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
+            z-index: 10;
         }
 
         .brand {
@@ -122,17 +151,18 @@
         }
 
         .brand-mark {
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
             flex-shrink: 0;
             display: block;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
         }
 
         .brand-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
+            font-size: 1.08rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
             color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
@@ -142,26 +172,27 @@
         .top-actions {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             flex-shrink: 0;
         }
 
         .icon-btn {
             width: 44px;
             height: 44px;
-            border-radius: 10px;
+            border-radius: 12px;
             border: 1px solid var(--border-subtle);
+            border-bottom: 3px solid var(--tile-lip);
             background: var(--bg-subtle);
             color: var(--text-primary);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
+            transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
         }
 
         .icon-btn:active {
-            transform: scale(0.94);
+            transform: translateY(2px);
         }
 
         .icon-btn.muted {
@@ -171,20 +202,22 @@
 
         .icon-btn:focus-visible,
         button:focus-visible,
-        input:focus-visible,
-        select:focus-visible,
-        .cell:focus-visible {
-            outline: 2px solid var(--accent-primary);
+        input:focus-visible {
+            outline: 2.5px solid var(--accent-primary);
             outline-offset: 2px;
         }
 
-        /* Main Content Area - Fills remaining height cleanly with zero dead margins */
+        /* Main Workspace */
         .main-workspace {
             flex: 1;
             min-height: 0;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+        }
+
+        .desktop-side {
+            display: contents;
         }
 
         .tab-panel {
@@ -201,16 +234,16 @@
             flex-direction: column;
         }
 
-        /* Play Panel Layout */
         #panel-play.active {
             justify-content: space-between;
             gap: 10px;
             overflow: hidden;
         }
 
+        /* Tactile Player Scoreboard */
         .scoreboard {
             display: grid;
-            grid-template-columns: 1fr 0.75fr 1fr;
+            grid-template-columns: 1fr 0.72fr 1fr;
             gap: 8px;
             flex-shrink: 0;
             max-width: 460px;
@@ -221,49 +254,72 @@
         .score-tile {
             background: var(--bg-surface);
             border: 1.5px solid var(--border-subtle);
+            border-bottom: 3px solid var(--tile-lip);
             border-radius: var(--radius-md);
-            padding: 8px 10px;
+            padding: 8px 8px 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             box-shadow: var(--shadow-sm);
-            transition: border-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+            transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s ease, background-color 0.18s ease;
             min-width: 0;
         }
 
         .score-tile.turn-x {
             border-color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
             background: var(--bg-x-tint);
+            transform: translateY(-2px);
         }
 
         .score-tile.turn-o {
             border-color: var(--accent-o);
+            border-bottom-color: var(--accent-o);
             background: var(--bg-o-tint);
+            transform: translateY(-2px);
+        }
+
+        .score-tile.ties-card {
+            background: var(--bg-surface);
+        }
+
+        .score-head {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            max-width: 100%;
+        }
+
+        .score-avatar {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
         }
 
         .score-label {
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 0.76rem;
+            font-weight: 700;
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%;
         }
 
         .score-value {
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 800;
             font-variant-numeric: tabular-nums;
-            line-height: 1.2;
+            line-height: 1.15;
             margin-top: 2px;
         }
 
         .score-value.x-color { color: var(--accent-primary); }
         .score-value.o-color { color: var(--accent-o); }
-        .score-value.tie-color { color: var(--text-secondary); }
+        .score-value.tie-color { color: var(--accent-win); }
 
+        /* Turn Status Banner */
         .turn-banner {
             text-align: center;
             flex-shrink: 0;
@@ -274,17 +330,23 @@
         }
 
         .status-text {
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.08rem;
+            font-weight: 800;
             color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .status-text.win-state {
+            color: var(--accent-win);
         }
 
         .mode-subtext {
             font-size: 0.78rem;
+            font-weight: 500;
             color: var(--text-muted);
         }
 
-        /* Responsive Board Container */
+        /* Playful Tactile 3x3 Board */
         .board-stage {
             flex: 1;
             min-height: 0;
@@ -292,26 +354,35 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+            position: relative;
+        }
+
+        .board-frame {
+            position: relative;
+            width: min(100%, 44dvh, 380px);
+            aspect-ratio: 1;
+            padding: 12px;
+            background: var(--bg-board);
+            border-radius: var(--radius-xl);
+            border: 2px solid var(--border-subtle);
+            border-bottom: 5px solid var(--tile-lip);
+            box-shadow: var(--shadow-board);
         }
 
         .game-board {
-            width: min(100%, 44dvh, 380px);
-            aspect-ratio: 1;
+            width: 100%;
+            height: 100%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
             gap: 10px;
-            padding: 12px;
-            background: var(--bg-subtle);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-subtle);
-            box-shadow: var(--shadow-md);
         }
 
         .cell {
             background: var(--bg-surface);
             border: 1.5px solid var(--border-subtle);
-            border-radius: var(--radius-md);
+            border-bottom: 4px solid var(--tile-lip);
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -320,32 +391,35 @@
             -webkit-user-select: none;
             min-width: 44px;
             min-height: 44px;
-            padding: 16%;
-            transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease;
+            padding: 17%;
+            transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.16s ease, border-color 0.16s ease;
         }
 
         .cell:hover:not(.occupied) {
             border-color: var(--accent-primary);
-            transform: scale(1.02);
+            transform: translateY(-1px);
         }
 
         .cell:active:not(.occupied) {
-            transform: scale(0.95);
+            transform: translateY(2px);
         }
 
         .cell.x {
             background: var(--bg-x-tint);
-            border-color: rgba(37, 99, 235, 0.35);
+            border-color: var(--tile-lip-x);
+            border-bottom: 4px solid var(--tile-lip-x);
         }
 
         .cell.o {
             background: var(--bg-o-tint);
-            border-color: rgba(225, 29, 72, 0.35);
+            border-color: var(--tile-lip-o);
+            border-bottom: 4px solid var(--tile-lip-o);
         }
 
         .cell.winning {
             background: var(--bg-win-tint);
-            border-color: var(--accent-win);
+            border-color: var(--tile-lip-win);
+            border-bottom: 4px solid var(--tile-lip-win);
             animation: winPop 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -353,11 +427,40 @@
             width: 100%;
             height: 100%;
             display: block;
-            animation: markPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: markPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Winning Strike-Through Line Overlay */
+        .win-strike-svg {
+            position: absolute;
+            inset: 12px;
+            width: calc(100% - 24px);
+            height: calc(100% - 24px);
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .win-strike-line {
+            stroke: var(--accent-win);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 420;
+            stroke-dashoffset: 420;
+            opacity: 0;
+        }
+
+        .win-strike-line.active {
+            opacity: 0.92;
+            animation: drawStrike 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes drawStrike {
+            to { stroke-dashoffset: 0; }
         }
 
         @keyframes markPop {
-            0% { transform: scale(0.6); opacity: 0; }
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.08); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
 
@@ -367,6 +470,30 @@
             100% { transform: scale(1); }
         }
 
+        /* Celebration Confetti Layer */
+        .confetti-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 20;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            border-radius: 3px;
+            opacity: 0;
+            animation: confettiFall 1.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-10px) rotate(0deg) scale(0.8); opacity: 1; }
+            100% { transform: translateY(220px) rotate(320deg) scale(1); opacity: 0; }
+        }
+
+        /* Action Buttons */
         .play-actions {
             flex-shrink: 0;
             display: grid;
@@ -381,25 +508,26 @@
             min-height: 46px;
             padding: 10px 16px;
             border-radius: var(--radius-md);
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.92rem;
+            font-weight: 700;
             font-family: inherit;
             cursor: pointer;
-            border: 1px solid transparent;
+            border: 1.5px solid transparent;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             white-space: nowrap;
-            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
+            transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
         }
 
         .btn:active {
-            transform: scale(0.98);
+            transform: translateY(2px);
         }
 
         .btn-primary {
             background: var(--accent-primary);
+            border-bottom: 4px solid var(--accent-primary-lip);
             color: #ffffff;
         }
 
@@ -411,25 +539,27 @@
             background: var(--bg-surface);
             color: var(--text-primary);
             border-color: var(--border-subtle);
+            border-bottom: 4px solid var(--tile-lip);
         }
 
         .btn-secondary:hover {
             background: var(--bg-subtle);
         }
 
-        /* Setup & Info Panels */
+        /* Setup & Info Cards */
         .panel-stack {
             max-width: 520px;
             width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
         .section-group {
             background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
+            border: 1.5px solid var(--border-subtle);
+            border-bottom: 3px solid var(--tile-lip);
             border-radius: var(--radius-lg);
             padding: 16px;
             box-shadow: var(--shadow-sm);
@@ -439,15 +569,15 @@
         }
 
         .section-title {
-            font-size: 0.95rem;
-            font-weight: 700;
+            font-size: 0.96rem;
+            font-weight: 800;
             color: var(--text-primary);
         }
 
         .field-label {
             display: block;
             font-size: 0.82rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-secondary);
             margin-bottom: 6px;
         }
@@ -459,6 +589,7 @@
             padding: 4px;
             background: var(--bg-subtle);
             border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
         }
 
         .segmented.three-col {
@@ -469,11 +600,11 @@
             min-height: 40px;
             padding: 8px 10px;
             border: none;
-            border-radius: 9px;
+            border-radius: 10px;
             background: transparent;
             color: var(--text-secondary);
             font-size: 0.84rem;
-            font-weight: 600;
+            font-weight: 700;
             font-family: inherit;
             cursor: pointer;
             white-space: nowrap;
@@ -482,7 +613,7 @@
 
         .segmented button.active {
             background: var(--bg-surface);
-            color: var(--text-primary);
+            color: var(--accent-primary);
             box-shadow: var(--shadow-sm);
         }
 
@@ -492,9 +623,10 @@
             padding: 10px 14px;
             border: 1.5px solid var(--border-subtle);
             border-radius: var(--radius-sm);
-            background: var(--bg-canvas);
+            background: var(--bg-subtle);
             color: var(--text-primary);
             font-size: 16px;
+            font-weight: 600;
             font-family: inherit;
         }
 
@@ -521,12 +653,12 @@
 
         .info-row-label {
             color: var(--text-secondary);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .info-row-value {
             color: var(--text-primary);
-            font-weight: 600;
+            font-weight: 700;
             text-align: right;
             word-break: break-word;
         }
@@ -539,13 +671,13 @@
         .legal-btn {
             width: 100%;
             min-height: 48px;
-            padding: 10px 12px;
+            padding: 10px 14px;
             border-radius: var(--radius-sm);
-            border: 1px solid var(--border-subtle);
-            background: var(--bg-canvas);
+            border: 1.5px solid var(--border-subtle);
+            background: var(--bg-subtle);
             color: var(--text-primary);
             font-size: 0.88rem;
-            font-weight: 600;
+            font-weight: 700;
             font-family: inherit;
             display: flex;
             align-items: center;
@@ -555,7 +687,7 @@
         }
 
         .legal-btn:hover {
-            background: var(--bg-subtle);
+            border-color: var(--accent-primary);
         }
 
         .copyright-note {
@@ -566,7 +698,7 @@
             line-height: 1.5;
         }
 
-        /* Bottom Native Tab Bar (Mobile Thumb Zone) */
+        /* Native Mobile Bottom Tab Bar */
         .bottom-nav {
             flex-shrink: 0;
             display: grid;
@@ -574,6 +706,7 @@
             background: var(--bg-surface);
             border-top: 1px solid var(--border-subtle);
             padding: 4px calc(8px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));
+            z-index: 10;
         }
 
         .nav-tab {
@@ -586,8 +719,8 @@
             align-items: center;
             justify-content: center;
             gap: 3px;
-            font-size: 0.72rem;
-            font-weight: 600;
+            font-size: 0.74rem;
+            font-weight: 700;
             font-family: inherit;
             cursor: pointer;
             white-space: nowrap;
@@ -604,7 +737,7 @@
             height: 22px;
         }
 
-        /* Modal / Native Bottom Sheet */
+        /* Modal Sheet */
         .modal-backdrop {
             position: fixed;
             inset: 0;
@@ -623,27 +756,27 @@
 
         .modal-sheet {
             background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
+            border: 1.5px solid var(--border-subtle);
+            border-radius: 22px;
             padding: 20px;
             max-width: 480px;
             width: 100%;
             max-height: 80dvh;
             overflow-y: auto;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-board);
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
         .modal-sheet h3 {
-            font-size: 1.05rem;
-            font-weight: 700;
+            font-size: 1.08rem;
+            font-weight: 800;
             color: var(--text-primary);
         }
 
         .modal-sheet p {
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             color: var(--text-secondary);
         }
@@ -660,14 +793,11 @@
             text-decoration: none;
         }
 
-        /* Responsive Landscape Phone Compact Mode */
+        /* Compact Landscape Phones */
         @media (max-height: 540px) and (orientation: landscape) {
             .top-bar {
                 padding-top: calc(4px + env(safe-area-inset-top));
                 padding-bottom: 4px;
-            }
-            .scoreboard {
-                gap: 6px;
             }
             .score-tile {
                 flex-direction: row;
@@ -678,10 +808,13 @@
                 font-size: 1.05rem;
                 margin-top: 0;
             }
-            .game-board {
+            .board-frame {
                 width: min(46dvh, 240px);
                 gap: 6px;
                 padding: 8px;
+            }
+            .game-board {
+                gap: 6px;
             }
             .bottom-nav {
                 padding-top: 2px;
@@ -694,7 +827,7 @@
             }
         }
 
-        /* Tablet / Desktop Expanded Workspace */
+        /* Tablet & Desktop Workspace */
         @media (min-width: 900px) and (min-height: 600px) {
             .bottom-nav {
                 display: none;
@@ -714,9 +847,10 @@
             #panel-play {
                 display: flex !important;
                 background: var(--bg-surface);
-                border: 1px solid var(--border-subtle);
-                border-radius: var(--radius-lg);
-                padding: 20px;
+                border: 1.5px solid var(--border-subtle);
+                border-bottom: 4px solid var(--tile-lip);
+                border-radius: var(--radius-xl);
+                padding: 22px;
                 box-shadow: var(--shadow-sm);
             }
 
@@ -736,7 +870,7 @@
                 overflow: visible;
             }
 
-            .game-board {
+            .board-frame {
                 width: min(100%, 46dvh, 400px);
             }
         }
@@ -745,6 +879,9 @@
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
+            }
+            .confetti-layer {
+                display: none;
             }
         }
     </style>
@@ -758,18 +895,18 @@
             </div>
             <div class="top-actions">
                 <button type="button" class="icon-btn" id="theme-quick-btn" title="Switch Color Theme" aria-label="Switch Color Theme">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="4"/>
                         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
                     </svg>
                 </button>
                 <button type="button" class="icon-btn" id="sound-toggle" title="Toggle Sound" aria-label="Toggle Sound">
-                    <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
                         <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
                         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
                     </svg>
-                    <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
                         <line x1="22" y1="9" x2="16" y2="15"/>
                         <line x1="16" y1="9" x2="22" y2="15"/>
@@ -779,39 +916,56 @@
         </header>
 
         <main class="main-workspace">
-            <!-- PLAY PANEL (Default active screen - zero dead space) -->
             <section id="panel-play" class="tab-panel active" aria-label="Game Board">
                 <div class="scoreboard">
                     <div class="score-tile turn-x" id="tile-p1">
-                        <span class="score-label" id="p1-name">Player 1 (X)</span>
+                        <div class="score-head">
+                            <svg class="score-avatar" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+                                <line x1="5" y1="5" x2="19" y2="19"/>
+                                <line x1="19" y1="5" x2="5" y2="19"/>
+                            </svg>
+                            <span class="score-label" id="p1-name">Player 1</span>
+                        </div>
                         <span class="score-value x-color" id="p1-score">0</span>
                     </div>
-                    <div class="score-tile">
-                        <span class="score-label">Ties</span>
+                    <div class="score-tile ties-card">
+                        <div class="score-head">
+                            <span class="score-label">Ties</span>
+                        </div>
                         <span class="score-value tie-color" id="tie-score">0</span>
                     </div>
                     <div class="score-tile" id="tile-p2">
-                        <span class="score-label" id="p2-name">Computer (O)</span>
+                        <div class="score-head">
+                            <svg class="score-avatar" viewBox="0 0 24 24" fill="none" stroke="var(--accent-o)" stroke-width="3" aria-hidden="true">
+                                <circle cx="12" cy="12" r="7.5"/>
+                            </svg>
+                            <span class="score-label" id="p2-name">Computer</span>
+                        </div>
                         <span class="score-value o-color" id="p2-score">0</span>
                     </div>
                 </div>
 
                 <div class="turn-banner">
                     <p class="status-text" id="status-text">Player 1's Turn (X)</p>
-                    <p class="mode-subtext" id="mode-summary">Vs Computer · Medium · All Ages</p>
+                    <p class="mode-subtext" id="mode-summary">Vs Computer · Medium · Ages 4+</p>
                 </div>
 
                 <div class="board-stage">
-                    <div class="game-board" id="game-board" role="grid" aria-label="Tic Tac Toe 3 by 3 board">
-                        <button type="button" class="cell" data-id="0" aria-label="Row 1 Column 1"></button>
-                        <button type="button" class="cell" data-id="1" aria-label="Row 1 Column 2"></button>
-                        <button type="button" class="cell" data-id="2" aria-label="Row 1 Column 3"></button>
-                        <button type="button" class="cell" data-id="3" aria-label="Row 2 Column 1"></button>
-                        <button type="button" class="cell" data-id="4" aria-label="Row 2 Column 2"></button>
-                        <button type="button" class="cell" data-id="5" aria-label="Row 2 Column 3"></button>
-                        <button type="button" class="cell" data-id="6" aria-label="Row 3 Column 1"></button>
-                        <button type="button" class="cell" data-id="7" aria-label="Row 3 Column 2"></button>
-                        <button type="button" class="cell" data-id="8" aria-label="Row 3 Column 3"></button>
+                    <div class="board-frame">
+                        <div class="game-board" id="game-board" role="grid" aria-label="Tic Tac Toe 3 by 3 board">
+                            <button type="button" class="cell" data-id="0" aria-label="Row 1 Column 1"></button>
+                            <button type="button" class="cell" data-id="1" aria-label="Row 1 Column 2"></button>
+                            <button type="button" class="cell" data-id="2" aria-label="Row 1 Column 3"></button>
+                            <button type="button" class="cell" data-id="3" aria-label="Row 2 Column 1"></button>
+                            <button type="button" class="cell" data-id="4" aria-label="Row 2 Column 2"></button>
+                            <button type="button" class="cell" data-id="5" aria-label="Row 2 Column 3"></button>
+                            <button type="button" class="cell" data-id="6" aria-label="Row 3 Column 1"></button>
+                            <button type="button" class="cell" data-id="7" aria-label="Row 3 Column 2"></button>
+                            <button type="button" class="cell" data-id="8" aria-label="Row 3 Column 3"></button>
+                        </div>
+                        <svg class="win-strike-svg" viewBox="0 0 300 300" aria-hidden="true">
+                            <line id="win-strike-line" class="win-strike-line" x1="0" y1="0" x2="0" y2="0"/>
+                        </svg>
                     </div>
                 </div>
 
@@ -821,9 +975,7 @@
                 </div>
             </section>
 
-            <!-- SETUP & INFO CONTAINER (Stacked on desktop, tabbed on mobile) -->
             <div class="desktop-side">
-                <!-- SETUP PANEL -->
                 <section id="panel-setup" class="tab-panel" aria-label="Game Setup">
                     <div class="panel-stack">
                         <div class="section-group">
@@ -856,11 +1008,11 @@
                         </div>
 
                         <div class="section-group">
-                            <h2 class="section-title">Appearance</h2>
+                            <h2 class="section-title">Color Theme</h2>
                             <div class="segmented three-col" role="group" aria-label="Color Theme">
-                                <button type="button" class="active" data-theme="daylight">Daylight</button>
-                                <button type="button" data-theme="mint">Mint</button>
-                                <button type="button" data-theme="night">Night</button>
+                                <button type="button" class="active" data-theme="sunny">Sunny</button>
+                                <button type="button" data-theme="meadow">Meadow</button>
+                                <button type="button" data-theme="starlight">Starlight</button>
                             </div>
                         </div>
 
@@ -868,7 +1020,6 @@
                     </div>
                 </section>
 
-                <!-- INFO & LEGAL PANEL -->
                 <section id="panel-info" class="tab-panel" aria-label="About and Legal Information">
                     <div class="panel-stack">
                         <div class="section-group">
@@ -917,11 +1068,10 @@
             </div>
         </main>
 
-        <!-- Native Mobile Bottom Tab Bar -->
         <nav class="bottom-nav" aria-label="Primary Navigation">
             <button type="button" class="nav-tab active" data-tab="play">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="3"/>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="4"/>
                     <line x1="9" y1="3" x2="9" y2="21"/>
                     <line x1="15" y1="3" x2="15" y2="21"/>
                     <line x1="3" y1="9" x2="21" y2="9"/>
@@ -930,7 +1080,7 @@
                 <span>Play</span>
             </button>
             <button type="button" class="nav-tab" data-tab="setup">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="4" y1="21" x2="4" y2="14"/>
                     <line x1="4" y1="10" x2="4" y2="3"/>
                     <line x1="12" y1="21" x2="12" y2="12"/>
@@ -944,7 +1094,7 @@
                 <span>Setup</span>
             </button>
             <button type="button" class="nav-tab" data-tab="info">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"/>
                     <line x1="12" y1="16" x2="12" y2="12"/>
                     <line x1="12" y1="8" x2="12.01" y2="8"/>
@@ -952,9 +1102,10 @@
                 <span>Info</span>
             </button>
         </nav>
+
+        <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
     </div>
 
-    <!-- In-App Legal & iOS Install Sheet Modal -->
     <div class="modal-backdrop" id="sheet-modal" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
         <div class="modal-sheet">
             <h3 id="sheet-title">Information</h3>
@@ -970,23 +1121,24 @@
         (function() {
             'use strict';
 
-            const STORAGE_KEY = 'tictactoe_pro_state_v2';
+            const STORAGE_KEY = 'tictactoe_pro_state_v3';
             const THEME_COLORS = {
-                daylight: '#f4f7fb',
-                mint: '#f2fbf8',
-                night: '#0f172a'
+                sunny: '#eff6ff',
+                meadow: '#ecfdf5',
+                starlight: '#131c38'
             };
 
             const $ = id => document.getElementById(id);
             const cells = Array.from(document.querySelectorAll('.cell'));
             const navTabs = Array.from(document.querySelectorAll('.nav-tab'));
+            const strikeLine = $('win-strike-line');
+            const confettiLayer = $('confetti-layer');
             const panels = {
                 play: $('panel-play'),
                 setup: $('panel-setup'),
                 info: $('panel-info')
             };
 
-            // Native Capacitor Bridge (safe no-op on Web)
             const NativeBridge = {
                 isNative: !!(window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()),
                 async triggerHaptic(kind) {
@@ -1006,8 +1158,8 @@
                     try {
                         const StatusBar = window.Capacitor?.Plugins?.StatusBar;
                         if (!StatusBar) return;
-                        await StatusBar.setStyle({ style: theme === 'night' ? 'LIGHT' : 'DARK' });
-                        await StatusBar.setBackgroundColor({ color: THEME_COLORS[theme] || '#f4f7fb' });
+                        await StatusBar.setStyle({ style: theme === 'starlight' ? 'LIGHT' : 'DARK' });
+                        await StatusBar.setBackgroundColor({ color: THEME_COLORS[theme] || '#eff6ff' });
                     } catch (e) {}
                 },
                 async hideSplash() {
@@ -1017,7 +1169,6 @@
                 }
             };
 
-            // Web Audio API Sound Manager with iOS unlock
             const SoundManager = {
                 enabled: true,
                 context: null,
@@ -1048,15 +1199,15 @@
                     osc.start(this.context.currentTime);
                     osc.stop(this.context.currentTime + duration);
                 },
-                playMove() { this.playTone(460, 0.09, 'sine', 0.16); },
+                playMove() { this.playTone(480, 0.09, 'sine', 0.16); },
                 playWin() {
                     this.playTone(523, 0.12, 'sine', 0.2);
                     setTimeout(() => this.playTone(659, 0.12, 'sine', 0.2), 110);
-                    setTimeout(() => this.playTone(784, 0.24, 'sine', 0.22), 220);
+                    setTimeout(() => this.playTone(784, 0.26, 'sine', 0.22), 220);
                 },
                 playTie() {
-                    this.playTone(320, 0.14, 'triangle', 0.14);
-                    setTimeout(() => this.playTone(280, 0.16, 'triangle', 0.14), 140);
+                    this.playTone(340, 0.14, 'triangle', 0.14);
+                    setTimeout(() => this.playTone(290, 0.16, 'triangle', 0.14), 140);
                 },
                 playClick() { this.playTone(580, 0.04, 'sine', 0.08); }
             };
@@ -1064,14 +1215,24 @@
             SoundManager.init();
             document.addEventListener('pointerdown', () => SoundManager.unlock(), { once: true });
 
-            // SVG Mark Generators for crisp vector X and O on every DPI
             const X_SVG = `<svg viewBox="0 0 100 100" aria-hidden="true">
-                <line x1="22" y1="22" x2="78" y2="78" stroke="var(--accent-primary)" stroke-width="14" stroke-linecap="round"/>
-                <line x1="78" y1="22" x2="22" y2="78" stroke="var(--accent-primary)" stroke-width="14" stroke-linecap="round"/>
+                <line x1="22" y1="22" x2="78" y2="78" stroke="var(--accent-primary)" stroke-width="15" stroke-linecap="round"/>
+                <line x1="78" y1="22" x2="22" y2="78" stroke="var(--accent-primary)" stroke-width="15" stroke-linecap="round"/>
             </svg>`;
             const O_SVG = `<svg viewBox="0 0 100 100" aria-hidden="true">
-                <circle cx="50" cy="50" r="30" fill="none" stroke="var(--accent-o)" stroke-width="14" stroke-linecap="round"/>
+                <circle cx="50" cy="50" r="30" fill="none" stroke="var(--accent-o)" stroke-width="15" stroke-linecap="round"/>
             </svg>`;
+
+            const STRIKE_COORDS = {
+                '0,1,2': [26, 48, 274, 48],
+                '3,4,5': [26, 150, 274, 150],
+                '6,7,8': [26, 252, 274, 252],
+                '0,3,6': [48, 26, 48, 274],
+                '1,4,7': [150, 26, 150, 274],
+                '2,5,8': [252, 26, 252, 274],
+                '0,4,8': [30, 30, 270, 270],
+                '2,4,6': [270, 30, 30, 270]
+            };
 
             const state = {
                 board: Array(9).fill(''),
@@ -1081,9 +1242,8 @@
                 player2Name: 'Computer',
                 isVsComputer: true,
                 difficulty: 'medium',
-                theme: 'daylight',
-                scores: { X: 0, O: 0, ties: 0 },
-                winningCells: []
+                theme: 'sunny',
+                scores: { X: 0, O: 0, ties: 0 }
             };
 
             let aiTimer = null;
@@ -1104,11 +1264,11 @@
             };
 
             const applyTheme = (theme) => {
-                const valid = ['daylight', 'mint', 'night'].includes(theme) ? theme : 'daylight';
+                const valid = ['sunny', 'meadow', 'starlight'].includes(theme) ? theme : 'sunny';
                 state.theme = valid;
-                document.body.classList.remove('theme-mint', 'theme-night');
-                if (valid === 'mint') document.body.classList.add('theme-mint');
-                if (valid === 'night') document.body.classList.add('theme-night');
+                document.body.classList.remove('theme-meadow', 'theme-starlight');
+                if (valid === 'meadow') document.body.classList.add('theme-meadow');
+                if (valid === 'starlight') document.body.classList.add('theme-starlight');
                 $('theme-color-meta').setAttribute('content', THEME_COLORS[valid]);
                 document.querySelectorAll('[data-theme]').forEach(btn => {
                     btn.classList.toggle('active', btn.dataset.theme === valid);
@@ -1124,16 +1284,16 @@
             };
 
             const updateHeaderAndScores = () => {
-                $('p1-name').textContent = `${state.player1Name} (X)`;
-                $('p2-name').textContent = `${state.player2Name} (O)`;
+                $('p1-name').textContent = state.player1Name;
+                $('p2-name').textContent = state.player2Name;
                 $('p1-score').textContent = state.scores.X;
                 $('p2-score').textContent = state.scores.O;
                 $('tie-score').textContent = state.scores.ties;
 
                 const diffLabels = { easy: 'Easy', medium: 'Medium', hard: 'Unbeatable' };
                 const modeText = state.isVsComputer
-                    ? `Vs Computer · ${diffLabels[state.difficulty] || 'Medium'} · All Ages`
-                    : '2 Players · Local Pass & Play · All Ages';
+                    ? `Vs Computer · ${diffLabels[state.difficulty] || 'Medium'} · Ages 4+`
+                    : '2 Players · Local Pass & Play · Ages 4+';
                 $('mode-summary').textContent = modeText;
 
                 $('tile-p1').classList.toggle('turn-x', state.isActive && state.currentPlayer === 'X');
@@ -1206,13 +1366,12 @@
 
             $('theme-quick-btn').onclick = () => {
                 SoundManager.playClick();
-                const order = ['daylight', 'mint', 'night'];
+                const order = ['sunny', 'meadow', 'starlight'];
                 const next = order[(order.indexOf(state.theme) + 1) % order.length];
                 applyTheme(next);
                 saveState();
             };
 
-            // Setup controls
             document.querySelectorAll('[data-mode]').forEach(btn => {
                 btn.onclick = () => {
                     SoundManager.playClick();
@@ -1238,18 +1397,49 @@
                 };
             });
 
+            const launchConfetti = () => {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                confettiLayer.innerHTML = '';
+                const colors = ['#2563eb', '#e11d48', '#f59e0b', '#10b981', '#8b5cf6'];
+                for (let i = 0; i < 20; i++) {
+                    const piece = document.createElement('span');
+                    piece.className = 'confetti-piece';
+                    piece.style.left = `${10 + Math.random() * 80}%`;
+                    piece.style.top = `${15 + Math.random() * 25}%`;
+                    piece.style.background = colors[i % colors.length];
+                    piece.style.animationDelay = `${Math.random() * 140}ms`;
+                    confettiLayer.appendChild(piece);
+                }
+                setTimeout(() => { confettiLayer.innerHTML = ''; }, 1400);
+            };
+
+            const showStrike = (pattern) => {
+                const coords = STRIKE_COORDS[pattern.join(',')];
+                if (!coords) return;
+                strikeLine.setAttribute('x1', coords[0]);
+                strikeLine.setAttribute('y1', coords[1]);
+                strikeLine.setAttribute('x2', coords[2]);
+                strikeLine.setAttribute('y2', coords[3]);
+                strikeLine.classList.remove('active');
+                void strikeLine.offsetWidth;
+                strikeLine.classList.add('active');
+            };
+
             const resetRound = () => {
                 if (aiTimer) { clearTimeout(aiTimer); aiTimer = null; }
                 if (autoResetTimer) { clearTimeout(autoResetTimer); autoResetTimer = null; }
                 state.board.fill('');
                 state.currentPlayer = 'X';
                 state.isActive = true;
-                state.winningCells = [];
+                strikeLine.classList.remove('active');
+                confettiLayer.innerHTML = '';
                 cells.forEach(cell => {
                     cell.innerHTML = '';
                     cell.className = 'cell';
                 });
-                $('status-text').textContent = `${state.player1Name}'s Turn (X)`;
+                const statusEl = $('status-text');
+                statusEl.classList.remove('win-state');
+                statusEl.textContent = `${state.player1Name}'s Turn (X)`;
                 updateHeaderAndScores();
             };
 
@@ -1347,16 +1537,19 @@
                 if (!res) return false;
 
                 state.isActive = false;
+                const statusEl = $('status-text');
                 if (res.winner === 'tie') {
-                    $('status-text').textContent = "It's a Tie!";
+                    statusEl.textContent = "It's a Tie!";
                     state.scores.ties++;
                     SoundManager.playTie();
                     NativeBridge.triggerHaptic('tie');
                 } else {
-                    state.winningCells = res.pattern;
                     res.pattern.forEach(idx => cells[idx].classList.add('winning'));
+                    showStrike(res.pattern);
+                    launchConfetti();
                     const winnerName = res.winner === 'X' ? state.player1Name : state.player2Name;
-                    $('status-text').textContent = `${winnerName} Wins!`;
+                    statusEl.classList.add('win-state');
+                    statusEl.textContent = `${winnerName} Wins!`;
                     state.scores[res.winner]++;
                     SoundManager.playWin();
                     NativeBridge.triggerHaptic('win');
@@ -1364,7 +1557,7 @@
 
                 saveState();
                 updateHeaderAndScores();
-                autoResetTimer = setTimeout(resetRound, 2000);
+                autoResetTimer = setTimeout(resetRound, 2200);
                 return true;
             };
 
@@ -1428,7 +1621,6 @@
                 };
             });
 
-            // Legal & Install Modal Sheet
             const sheetModal = $('sheet-modal');
             const sheetTitle = $('sheet-title');
             const sheetBody = $('sheet-body');
@@ -1456,7 +1648,7 @@
                 safety: {
                     title: 'All-Ages & Offline Safety Notice',
                     body: `
-                        <p>Tic Tac Toe Pro is crafted for players of all ages (4+ / Everyone).</p>
+                        <p>Tic Tac Toe Pro is crafted for kids and players of all ages (4+ / Everyone).</p>
                         <p>The app contains <strong>zero advertisements</strong>, <strong>zero in-app purchases</strong>, <strong>zero third-party tracking SDKs</strong>, and <strong>zero chat or external social links</strong>. It operates 100% offline.</p>
                     `,
                     href: null
@@ -1492,7 +1684,6 @@
                 if (e.target === sheetModal) sheetModal.classList.remove('open');
             };
 
-            // PWA Install Flow (only shown in web browsers, hidden in standalone/native Capacitor)
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true || NativeBridge.isNative;
             const installBtn = $('install-app-btn');
             let deferredInstallPrompt = null;
