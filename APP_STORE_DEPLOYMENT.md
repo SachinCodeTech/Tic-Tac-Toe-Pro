@@ -4,9 +4,10 @@ This repository is configured as a Capacitor 8 iOS (Swift Package Manager) + PWA
 
 ## What Is Included
 
-- `www/`: Production offline-ready web bundle (`index.html`, `privacy.html`, `manifest.webmanifest`, `sw.js`, and generated PNG icons in `www/icons/`).
+- `www/`: Production offline-ready web bundle (`index.html`, `privacy.html`, `manifest.webmanifest`, `sw.js`, and generated PNG icons in `www/icons/`) with built-in **Offline Mode**, **Clear Cache**, and **Clear All Data** controls.
 - `capacitor.config.json`: Capacitor configuration pointing `webDir` to `www`.
-- `ios/App/`: Generated Xcode project (`App.xcodeproj` + `CapApp-SPM`) with `AppIcon.appiconset` (1024x1024 opaque RGB PNG), `Info.plist` (`ITSAppUsesNonExemptEncryption = false`), and Capacitor WKWebView integration.
+- `ios/App/`: Generated Xcode project (`App.xcodeproj` + `CapApp-SPM`) with `AppIcon.appiconset` (1024x1024 opaque RGB PNG), `Info.plist` (`ITSAppUsesNonExemptEncryption = false`), `PrivacyInfo.xcprivacy` (Apple Privacy Manifest), and Capacitor WKWebView integration.
+- `android/app/`: Generated Android Studio project (`versionName 2.1.0`) with synced adaptive launcher icons across all `mipmap-*` densities.
 - `.github/workflows/ci.yml`: Automated Node.js build & lint checks on push/PR.
 - `.github/workflows/ios-release.yml`: macOS GitHub Actions Xcode build/archive pipeline.
 

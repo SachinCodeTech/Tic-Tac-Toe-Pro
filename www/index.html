@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="description" content="Tic Tac Toe Pro - Family-friendly strategy game for all ages by CodeTech App Store.">
+    <meta property="og:title" content="Tic Tac Toe Pro">
+    <meta property="og:description" content="Family-friendly strategy game for all ages by CodeTech App Store. Works 100% offline.">
     <meta name="theme-color" content="#f4f7fb" id="theme-color-meta">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -368,6 +370,14 @@
             padding: 2px 4px;
         }
 
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+            flex: 1;
+        }
+
         .status-text {
             font-size: 0.95rem;
             font-weight: 700;
@@ -375,6 +385,40 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        .ai-diff-indicator {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 7px;
+            border: 1px solid var(--border-hairline);
+            background: var(--bg-surface);
+            color: var(--accent);
+            font-size: 0.74rem;
+            font-weight: 700;
+            font-family: inherit;
+            white-space: nowrap;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .ai-diff-indicator.visible {
+            display: inline-flex;
+        }
+
+        .ai-diff-indicator:hover {
+            background: var(--bg-subtle);
+            border-color: var(--accent);
+        }
+
+        .ai-diff-indicator svg {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
         }
 
         .mode-link {
@@ -385,6 +429,7 @@
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
+            flex-shrink: 0;
             padding: 4px 2px;
             font-family: inherit;
         }
@@ -482,16 +527,36 @@
             background: var(--win-bg);
             border-color: var(--win-border);
             color: var(--win-text);
-            transform: scale(1.03);
+            z-index: 2;
+            animation: winCelebrate 0.9s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
         }
+
+        .cell.winning.win-step-0 { animation-delay: 0ms; }
+        .cell.winning.win-step-1 { animation-delay: 90ms; }
+        .cell.winning.win-step-2 { animation-delay: 180ms; }
 
         @keyframes popIn {
             0% { transform: scale(0.84); opacity: 0.6; }
             100% { transform: scale(1); opacity: 1; }
         }
 
+        @keyframes winCelebrate {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.18);
+            }
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 6px 18px rgba(217, 119, 6, 0.34), 0 0 0 3px rgba(251, 191, 36, 0.28);
+            }
+            100% {
+                transform: scale(1.02);
+                box-shadow: 0 2px 10px rgba(217, 119, 6, 0.22);
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
-            .cell.x, .cell.o { animation: none; }
+            .cell.x, .cell.o, .cell.winning { animation: none; }
             .cell { transition: none; }
         }
 
@@ -836,6 +901,140 @@
             margin-bottom: 16px;
         }
 
+        .modal-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .history-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: -4px;
+            margin-bottom: 12px;
+        }
+
+        .history-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: var(--bg-canvas);
+            border: 1px solid var(--border-hairline);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .history-item-meta {
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .history-empty {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 18px 8px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            background: var(--bg-canvas);
+            border: 1px solid var(--border-hairline);
+        }
+
+        .btn-danger {
+            min-height: 46px;
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.92rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            transition: transform 0.14s ease, background-color 0.15s ease;
+        }
+
+        .btn-danger:hover {
+            background: #fee2e2;
+        }
+
+        .btn-danger:active {
+            transform: scale(0.97);
+        }
+
+        body.theme-dark .btn-danger {
+            background: rgba(239, 68, 68, 0.16);
+            color: #fca5a5;
+            border-color: rgba(248, 113, 113, 0.4);
+        }
+
+        body.theme-dark .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.26);
+        }
+
+        .offline-bar {
+            display: none;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 14px;
+            background: var(--win-bg);
+            color: var(--win-text);
+            border-bottom: 1px solid var(--win-border);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .offline-bar.visible {
+            display: flex;
+        }
+
+        .app-toast {
+            position: fixed;
+            left: 50%;
+            bottom: calc(74px + env(safe-area-inset-bottom));
+            transform: translateX(-50%) translateY(12px);
+            background: var(--text-primary);
+            color: var(--bg-surface);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            max-width: calc(100vw - 32px);
+            text-align: center;
+            box-shadow: var(--shadow-board);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 60;
+            transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .app-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* Landscape Phone Optimization */
         @media (max-height: 540px) and (orientation: landscape) {
             .play-layout {
@@ -902,6 +1101,12 @@
                 <h1 class="brand-title">Tic Tac Toe Pro</h1>
             </div>
             <div class="header-actions">
+                <button type="button" class="icon-btn" id="history-btn" aria-label="Game History" title="Game History">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"/>
+                        <polyline points="12 7 12 12 15.5 14"/>
+                    </svg>
+                </button>
                 <button type="button" class="icon-btn" id="quick-theme-btn" aria-label="Switch Theme" title="Switch Theme">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <circle cx="12" cy="12" r="4"/>
@@ -923,6 +1128,10 @@
             </div>
         </header>
 
+        <div class="offline-bar" id="offline-bar" role="status" aria-live="polite">
+            Offline Mode &middot; Playing locally without internet
+        </div>
+
         <main class="app-main">
             <!-- PLAY VIEW -->
             <section id="view-play" class="view active" aria-label="Game Board">
@@ -943,7 +1152,24 @@
                             </div>
                         </div>
                         <div class="status-row">
-                            <p class="status-text" id="status-text" aria-live="polite">Player 1's Turn (X)</p>
+                            <div class="status-left">
+                                <p class="status-text" id="status-text" aria-live="polite">Player 1's Turn (X)</p>
+                                <button type="button" class="ai-diff-indicator" id="ai-diff-indicator" aria-label="AI Difficulty Level" title="Change AI Difficulty">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <rect x="4" y="4" width="16" height="16" rx="3"/>
+                                        <rect x="9" y="9" width="6" height="6"/>
+                                        <line x1="9" y1="1" x2="9" y2="4"/>
+                                        <line x1="15" y1="1" x2="15" y2="4"/>
+                                        <line x1="9" y1="20" x2="9" y2="23"/>
+                                        <line x1="15" y1="20" x2="15" y2="23"/>
+                                        <line x1="20" y1="9" x2="23" y2="9"/>
+                                        <line x1="20" y1="14" x2="23" y2="14"/>
+                                        <line x1="1" y1="9" x2="4" y2="9"/>
+                                        <line x1="1" y1="14" x2="4" y2="14"/>
+                                    </svg>
+                                    <span id="ai-diff-label">Unbeatable</span>
+                                </button>
+                            </div>
                             <button type="button" class="mode-link" id="mode-shortcut-btn">2 Players</button>
                         </div>
                     </div>
@@ -1046,7 +1272,7 @@
                                 </div>
                                 <div class="info-row">
                                     <span class="info-key">Contact</span>
-                                    <span class="info-val"><a class="info-link" href="mailto:codetech.appstore@gmail.com">codetech.appstore@gmail.com</a></span>
+                                    <span class="info-val"><a class="info-link" href="mailto:support@codetechappstore.com">support@codetechappstore.com</a></span>
                                 </div>
                                 <div class="info-row">
                                     <span class="info-key">Age Rating</span>
@@ -1059,11 +1285,29 @@
                             </div>
                         </div>
 
+                        <div class="card">
+                            <h2 class="card-title">Offline &amp; Storage</h2>
+                            <div class="info-list">
+                                <div class="info-row">
+                                    <span class="info-key">Offline Support</span>
+                                    <span class="info-val" id="offline-status-val">Ready &middot; 100% Offline</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-key">Saved Data</span>
+                                    <span class="info-val" id="saved-data-val">Clean (Defaults)</span>
+                                </div>
+                            </div>
+                            <div class="legal-actions">
+                                <button type="button" class="btn-secondary" id="clear-cache-btn">Clear Cache</button>
+                                <button type="button" class="btn-danger" id="clear-data-btn">Clear All Data</button>
+                            </div>
+                        </div>
+
                         <div class="card legal-selectable">
                             <h2 class="card-title">Legal Notes & Privacy Policy</h2>
                             <p class="legal-copy"><strong>Privacy Policy:</strong> Tic Tac Toe Pro operates 100% offline. No personal data, analytics, advertising identifiers, or location telemetry are collected or transmitted.</p>
                             <p class="legal-copy"><strong>All-Ages Safety:</strong> Designed for kids, families, and adults with zero ads, zero in-app purchases, and full compliance with family privacy standards (COPPA &amp; GDPR-K).</p>
-                            <p class="legal-copy"><strong>Local Storage:</strong> Player names, scores, theme, and sound settings stay strictly on your device and can be cleared anytime via Reset Scores.</p>
+                            <p class="legal-copy"><strong>Local Storage:</strong> Player names, scores, theme, and sound settings stay strictly on your device and can be erased anytime via Clear All Data.</p>
                             <p class="legal-copy"><strong>Terms & Copyright:</strong> Provided for personal, non-commercial entertainment "as is." &copy; 2026 CodeTech App Store. All rights reserved.</p>
 
                             <div class="legal-actions">
@@ -1122,6 +1366,28 @@
             <button type="button" class="btn-primary" style="width:100%;" id="close-ios-modal-btn">Got It</button>
         </div>
     </div>
+
+    <div class="modal-backdrop" id="clear-data-modal" role="dialog" aria-modal="true" aria-labelledby="clear-data-title">
+        <div class="modal-card">
+            <h3 id="clear-data-title">Clear All Saved Data?</h3>
+            <p>This erases saved scores, player names, difficulty, theme, and sound settings, and resets the game to defaults.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="cancel-clear-data-btn">Cancel</button>
+                <button type="button" class="btn-danger" id="confirm-clear-data-btn">Clear Data</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="history-modal" role="dialog" aria-modal="true" aria-labelledby="history-modal-title">
+        <div class="modal-card">
+            <h3 id="history-modal-title">Game History</h3>
+            <p class="history-subtitle">Last 5 games in this session</p>
+            <div id="history-content"></div>
+            <button type="button" class="btn-primary" style="width:100%;" id="close-history-modal-btn">Close</button>
+        </div>
+    </div>
+
+    <div class="app-toast" id="app-toast" role="status" aria-live="polite"></div>
 
     <script>
         (function() {
@@ -1223,6 +1489,12 @@
             const newRoundBtn = $('new-round-btn');
             const resetScoresBtn = $('reset-scores-btn');
             const modeShortcutBtn = $('mode-shortcut-btn');
+            const aiDiffIndicator = $('ai-diff-indicator');
+            const aiDiffLabel = $('ai-diff-label');
+            const historyBtn = $('history-btn');
+            const historyModal = $('history-modal');
+            const historyContent = $('history-content');
+            const closeHistoryModalBtn = $('close-history-modal-btn');
             const themeColorMeta = $('theme-color-meta');
             const statusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
             const diffButtons = document.querySelectorAll('[data-diff]');
@@ -1241,7 +1513,9 @@
                 difficulty: 'hard',
                 theme: 'light',
                 scores: { X: 0, O: 0, ties: 0 },
-                winningCells: []
+                winningCells: [],
+                sessionGamesPlayed: 0,
+                sessionHistory: []
             };
 
             const savePreferences = () => {
@@ -1285,6 +1559,30 @@
                 cardO.classList.toggle('active-o', state.isActive && state.currentPlayer === 'O');
             };
 
+            const renderHistoryModal = () => {
+                if (!historyContent) return;
+                if (state.sessionHistory.length === 0) {
+                    historyContent.innerHTML = '<div class="history-empty">No games played yet in this session.</div>';
+                    return;
+                }
+                const ul = document.createElement('ul');
+                ul.className = 'history-list';
+                state.sessionHistory.forEach((entry) => {
+                    const li = document.createElement('li');
+                    li.className = 'history-item';
+                    const mainText = document.createElement('span');
+                    mainText.textContent = `Game ${entry.gameNumber}: ${entry.resultText}`;
+                    const metaText = document.createElement('span');
+                    metaText.className = 'history-item-meta';
+                    metaText.textContent = entry.modeLabel;
+                    li.appendChild(mainText);
+                    li.appendChild(metaText);
+                    ul.appendChild(li);
+                });
+                historyContent.innerHTML = '';
+                historyContent.appendChild(ul);
+            };
+
             const updateScoreAndModeUI = () => {
                 $('p1-name').textContent = state.player1Name;
                 $('p2-name').textContent = state.isVsComputer ? 'Computer' : state.player2Name;
@@ -1293,7 +1591,11 @@
                 $('tie-score').textContent = state.scores.ties;
 
                 const diffLabel = state.difficulty === 'hard' ? 'Unbeatable' : state.difficulty === 'medium' ? 'Medium' : 'Easy';
-                modeShortcutBtn.textContent = state.isVsComputer ? `vs Computer · ${diffLabel}` : '2 Players · Local';
+                if (aiDiffIndicator && aiDiffLabel) {
+                    aiDiffIndicator.classList.toggle('visible', state.isVsComputer);
+                    aiDiffLabel.textContent = diffLabel;
+                }
+                modeShortcutBtn.textContent = state.isVsComputer ? 'Setup' : '2 Players';
             };
 
             const updateSetupControlsUI = () => {
@@ -1674,20 +1976,40 @@
                 updateTurnHighlight();
                 newRoundBtn.textContent = 'Play Again';
 
+                state.sessionGamesPlayed += 1;
+                const diffShort = state.difficulty === 'hard' ? 'Unbeatable' : state.difficulty === 'medium' ? 'Medium' : 'Easy';
+                const modeLabel = state.isVsComputer ? `AI · ${diffShort}` : '2 Players';
+
                 if (result.winner === 'tie') {
                     statusText.textContent = "It's a Tie!";
                     state.scores.ties++;
+                    state.sessionHistory.push({
+                        gameNumber: state.sessionGamesPlayed,
+                        resultText: 'Tie',
+                        modeLabel
+                    });
                     SoundManager.playTie();
                 } else {
                     state.winningCells = result.pattern;
-                    result.pattern.forEach(idx => cells[idx].classList.add('winning'));
+                    result.pattern.forEach((idx, step) => {
+                        cells[idx].classList.add('winning', `win-step-${step}`);
+                    });
                     const winnerName = result.winner === 'X'
                         ? state.player1Name
                         : (state.isVsComputer ? 'Computer' : state.player2Name);
                     statusText.textContent = `${winnerName} Wins! (${result.winner})`;
                     state.scores[result.winner]++;
+                    state.sessionHistory.push({
+                        gameNumber: state.sessionGamesPlayed,
+                        resultText: `${winnerName} Won`,
+                        modeLabel
+                    });
                     SoundManager.playWin();
                     triggerHaptic(24);
+                }
+
+                if (state.sessionHistory.length > 5) {
+                    state.sessionHistory = state.sessionHistory.slice(-5);
                 }
 
                 if (state.isVsComputer) {
@@ -1764,11 +2086,219 @@
                 };
             });
 
+            const offlineBar = $('offline-bar');
+            const offlineStatusVal = $('offline-status-val');
+            const savedDataVal = $('saved-data-val');
+            const clearCacheBtn = $('clear-cache-btn');
+            const clearDataBtn = $('clear-data-btn');
+            const clearDataModal = $('clear-data-modal');
+            const cancelClearDataBtn = $('cancel-clear-data-btn');
+            const confirmClearDataBtn = $('confirm-clear-data-btn');
+            const appToast = $('app-toast');
+            let toastTimer = null;
+
+            const showToast = (message) => {
+                if (!appToast) return;
+                appToast.textContent = message;
+                appToast.classList.add('show');
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    appToast.classList.remove('show');
+                }, 2600);
+            };
+
+            const updateOfflineUI = () => {
+                const isOffline = typeof navigator !== 'undefined' && navigator.onLine === false;
+                if (offlineBar) offlineBar.classList.toggle('visible', isOffline);
+                if (offlineStatusVal) {
+                    offlineStatusVal.textContent = isOffline ? 'Active · Playing Offline' : 'Ready · 100% Offline';
+                }
+            };
+
+            const updateStorageSummaryUI = () => {
+                if (!savedDataVal) return;
+                try {
+                    const hasSaved = localStorage.getItem(STORAGE_KEY) !== null || localStorage.length > 0;
+                    savedDataVal.textContent = hasSaved ? 'Scores & Settings Saved' : 'Clean (Defaults)';
+                } catch (e) {
+                    savedDataVal.textContent = 'Unavailable';
+                }
+            };
+
+            window.addEventListener('online', updateOfflineUI);
+            window.addEventListener('offline', updateOfflineUI);
+
+            // Sync storage indicator whenever user interacts with controls
+            document.addEventListener('click', () => {
+                setTimeout(updateStorageSummaryUI, 0);
+            });
+
+            const OFFLINE_CORE_ASSETS = [
+                '/',
+                '/index.html',
+                '/privacy.html',
+                '/manifest.webmanifest',
+                '/icons/icon.svg',
+                '/icons/apple-touch-icon.png',
+                '/icons/pwa-192x192.png',
+                '/icons/pwa-512x512.png',
+                '/icons/pwa-maskable-512x512.png'
+            ];
+
+            const clearAppCache = async () => {
+                SoundManager.playClick();
+                clearCacheBtn.disabled = true;
+                clearCacheBtn.textContent = 'Clearing...';
+
+                let mode = 'cleared';
+                try {
+                    try { sessionStorage.clear(); } catch (e) {}
+
+                    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                        mode = await new Promise((resolve) => {
+                            const channel = new MessageChannel();
+                            const fallbackTimer = setTimeout(() => resolve('cleared'), 3500);
+                            channel.port1.onmessage = (event) => {
+                                clearTimeout(fallbackTimer);
+                                resolve((event.data && event.data.mode) || 'refreshed');
+                            };
+                            navigator.serviceWorker.controller.postMessage(
+                                { type: 'CLEAR_AND_RECACHE' },
+                                [channel.port2]
+                            );
+                        });
+                    } else if ('caches' in window) {
+                        const keys = await caches.keys();
+                        if (navigator.onLine !== false) {
+                            await Promise.all(keys.map((k) => caches.delete(k)));
+                            if (!isCapacitorNative && location.protocol.startsWith('http')) {
+                                const cache = await caches.open('tic-tac-toe-pro-v2.9.0');
+                                await cache.addAll(OFFLINE_CORE_ASSETS).catch(() => {});
+                            }
+                            mode = 'refreshed';
+                        } else {
+                            await Promise.all(
+                                keys
+                                    .filter((k) => k !== 'tic-tac-toe-pro-v2.9.0')
+                                    .map((k) => caches.delete(k))
+                            );
+                            mode = 'offline-safe';
+                        }
+                    }
+                } catch (e) {
+                    mode = 'cleared';
+                } finally {
+                    clearCacheBtn.disabled = false;
+                    clearCacheBtn.textContent = 'Clear Cache';
+                }
+
+                if (mode === 'offline-safe') {
+                    showToast('Offline: temporary cache cleared (core game kept)');
+                } else if (mode === 'refreshed') {
+                    showToast('Cache cleared & refreshed for offline play');
+                } else {
+                    showToast('App cache cleared');
+                }
+            };
+
+            const clearAllAppData = async () => {
+                SoundManager.playClick();
+                clearDataModal.classList.remove('open');
+
+                if (roundResetTimer) {
+                    clearTimeout(roundResetTimer);
+                    roundResetTimer = null;
+                }
+                if (aiMoveTimer) {
+                    clearTimeout(aiMoveTimer);
+                    aiMoveTimer = null;
+                }
+
+                try { localStorage.clear(); } catch (e) {}
+                try { sessionStorage.clear(); } catch (e) {}
+                try {
+                    if (window.indexedDB && typeof window.indexedDB.databases === 'function') {
+                        const dbs = await window.indexedDB.databases();
+                        dbs.forEach((db) => {
+                            if (db && db.name) window.indexedDB.deleteDatabase(db.name);
+                        });
+                    }
+                } catch (e) {}
+
+                SoundManager.enabled = true;
+                state.board = Array(9).fill('');
+                state.currentPlayer = 'X';
+                state.roundStarter = 'X';
+                state.isActive = true;
+                state.player1Name = 'Player 1';
+                state.player2Name = 'Player 2';
+                state.isVsComputer = false;
+                state.difficulty = 'hard';
+                state.scores = { X: 0, O: 0, ties: 0 };
+                state.winningCells = [];
+                state.sessionGamesPlayed = 0;
+                state.sessionHistory = [];
+
+                applyTheme('light');
+                updateSoundUI();
+                updateSetupControlsUI();
+                updateScoreAndModeUI();
+                resetGame();
+                updateStorageSummaryUI();
+                showToast('All saved data cleared');
+            };
+
+            clearCacheBtn.onclick = () => { clearAppCache(); };
+            clearDataBtn.onclick = () => {
+                SoundManager.playClick();
+                clearDataModal.classList.add('open');
+            };
+            cancelClearDataBtn.onclick = () => {
+                SoundManager.playClick();
+                clearDataModal.classList.remove('open');
+            };
+            confirmClearDataBtn.onclick = () => { clearAllAppData(); };
+            clearDataModal.onclick = (e) => {
+                if (e.target === clearDataModal) clearDataModal.classList.remove('open');
+            };
+
+            if (aiDiffIndicator) {
+                aiDiffIndicator.onclick = () => switchView('setup');
+            }
+            if (historyBtn) {
+                historyBtn.onclick = () => {
+                    SoundManager.playClick();
+                    renderHistoryModal();
+                    historyModal.classList.add('open');
+                };
+            }
+            if (closeHistoryModalBtn) {
+                closeHistoryModalBtn.onclick = () => {
+                    SoundManager.playClick();
+                    historyModal.classList.remove('open');
+                };
+            }
+            if (historyModal) {
+                historyModal.onclick = (e) => {
+                    if (e.target === historyModal) historyModal.classList.remove('open');
+                };
+            }
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (historyModal) historyModal.classList.remove('open');
+                    if (clearDataModal) clearDataModal.classList.remove('open');
+                    if (iosModal) iosModal.classList.remove('open');
+                }
+            });
+
             // Initialize UI
             loadPreferences();
+            applyTheme(state.theme);
             updateSoundUI();
             updateSetupControlsUI();
             updateScoreAndModeUI();
+            updateOfflineUI();
+            updateStorageSummaryUI();
             resetGame();
 
             // PWA Install & Service Worker (disabled inside native Capacitor runtime)
@@ -1817,13 +2347,16 @@
                 SoundManager.playClick();
                 iosModal.classList.remove('open');
             };
+            iosModal.onclick = (e) => {
+                if (e.target === iosModal) iosModal.classList.remove('open');
+            };
 
             if ('serviceWorker' in navigator && !isCapacitorNative && location.protocol.startsWith('http')) {
                 window.addEventListener('load', () => {
                     if ('caches' in window) {
                         caches.keys().then((keys) => {
                             keys.forEach((k) => {
-                                if (k.startsWith('tic-tac-toe-pro-') && k !== 'tic-tac-toe-pro-v2.7.0') {
+                                if (k.startsWith('tic-tac-toe-pro-') && k !== 'tic-tac-toe-pro-v2.9.0') {
                                     caches.delete(k);
                                 }
                             });

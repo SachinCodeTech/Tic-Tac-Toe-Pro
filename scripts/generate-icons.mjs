@@ -5,10 +5,11 @@ import sharp from 'sharp';
 const rootDir = process.cwd();
 const iconsDir = path.join(rootDir, 'www', 'icons');
 const iosAppIconDir = path.join(rootDir, 'ios', 'App', 'App', 'Assets.xcassets', 'AppIcon.appiconset');
+const androidResDir = path.join(rootDir, 'android', 'app', 'src', 'main', 'res');
 
-function buildIconSvg({ padded = false } = {}) {
-  const scale = padded ? 0.74 : 1;
-  const offset = padded ? 133 : 0;
+function buildIconSvg({ padded = false, transparentBg = false } = {}) {
+  const scale = padded ? 0.68 : 1;
+  const offset = padded ? 164 : 0;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <defs>
@@ -25,7 +26,7 @@ function buildIconSvg({ padded = false } = {}) {
       <stop offset="100%" stop-color="#EA580C"/>
     </linearGradient>
   </defs>
-  <rect width="1024" height="1024" fill="url(#bg)"/>
+  ${transparentBg ? '' : '<rect width="1024" height="1024" fill="url(#bg)"/>'}
   <g transform="translate(${offset}, ${offset}) scale(${scale})">
     <rect x="112" y="112" width="800" height="800" rx="140" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="14"/>
     <!-- Tactile board grid -->
@@ -63,11 +64,13 @@ async function generate() {
 
   const standardSvg = buildIconSvg({ padded: false });
   const maskableSvg = buildIconSvg({ padded: true });
+  const foregroundSvg = buildIconSvg({ padded: true, transparentBg: true });
 
   await fs.writeFile(path.join(iconsDir, 'icon.svg'), standardSvg, 'utf8');
 
   const standardBuf = Buffer.from(standardSvg, 'utf8');
   const maskableBuf = Buffer.from(maskableSvg, 'utf8');
+  const foregroundBuf = Buffer.from(foregroundSvg, 'utf8');
 
   // Web & PWA PNGs
   await sharp(standardBuf).resize(180, 180).flatten({ background: '#EFF6FF' }).png().toFile(path.join(iconsDir, 'apple-touch-icon.png'));
@@ -108,7 +111,47 @@ async function generate() {
     // iOS folder not generated yet
   }
 
-  console.log('Generated all PWA and App Store icons in www/icons/');
+  // Sync Android launcher icons across all density buckets if android/ is present
+  const androidBuckets = [
+    { dir: 'mipmap-mdpi', legacy: 48, fg: 108 },
+    { dir: 'mipmap-hdpi', legacy: 72, fg: 162 },
+    { dir: 'mipmap-xhdpi', legacy: 96, fg: 216 },
+    { dir: 'mipmap-xxhdpi', legacy: 144, fg: 324 },
+    { dir: 'mipmap-xxxhdpi', legacy: 192, fg: 432 }
+  ];
+
+  try {
+    await fs.access(androidResDir);
+    for (const bucket of androidBuckets) {
+      const targetDir = path.join(androidResDir, bucket.dir);
+      await fs.mkdir(targetDir, { recursive: true });
+      await sharp(standardBuf)
+        .resize(bucket.legacy, bucket.legacy)
+        .flatten({ background: '#EFF6FF' })
+        .png()
+        .toFile(path.join(targetDir, 'ic_launcher.png'));
+
+      const circleMask = Buffer.from(
+        `<svg width="${bucket.legacy}" height="${bucket.legacy}"><circle cx="${bucket.legacy / 2}" cy="${bucket.legacy / 2}" r="${bucket.legacy / 2}" fill="#fff"/></svg>`
+      );
+      await sharp(standardBuf)
+        .resize(bucket.legacy, bucket.legacy)
+        .flatten({ background: '#EFF6FF' })
+        .composite([{ input: circleMask, blend: 'dest-in' }])
+        .png()
+        .toFile(path.join(targetDir, 'ic_launcher_round.png'));
+
+      await sharp(foregroundBuf)
+        .resize(bucket.fg, bucket.fg)
+        .png()
+        .toFile(path.join(targetDir, 'ic_launcher_foreground.png'));
+    }
+    console.log('Synced Android mipmap launcher icons to android/app/src/main/res/mipmap-*');
+  } catch {
+    // Android folder not generated yet
+  }
+
+  console.log('Generated all PWA, iOS App Store, and Android Play Store icons');
 }
 
 generate().catch((err) => {
