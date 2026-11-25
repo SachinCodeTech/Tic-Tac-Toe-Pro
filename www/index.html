@@ -1788,78 +1788,213 @@
                 return twoInLine;
             };
 
-            const alphaBeta = (board, depth, alpha, beta, isMax) => {
+            // Grandmaster Exact Multi-Objective Game-Tree Solver with Transposition Table
+            // Guarantees 0 losses across every possible move sequence (human-first or AI-first)
+            // while maximizing multi-ply fork traps and forcing opponents into narrow only-move corridors.
+            const gmTable = new Map();
+
+            const compareGmCandidates = (a, b) => {
+                // 1. Absolute exact game-theoretic outcome (+1 forced win > 0 draw > -1 loss)
+                if (a.exact !== b.exact) return a.exact - b.exact;
+
+                // 2. If winning: checkmate in the fewest possible plies
+                if (a.exact === 1) {
+                    if (a.plies !== b.plies) return b.plies - a.plies;
+                }
+
+                // 3. If losing (only reachable from hypothetical custom states): resist longest, seek swindle traps
+                if (a.exact === -1) {
+                    if (a.plies !== b.plies) return a.plies - b.plies;
+                    if (Math.abs(a.gmTrapRate - b.gmTrapRate) > 1e-9) return a.gmTrapRate - b.gmTrapRate;
+                }
+
+                // 4. Prioritize subtle multi-ply fork traps (punishes strong/master players who always block 1-move threats)
+                if (a.subtleTraps !== b.subtleTraps) {
+                    return a.subtleTraps - b.subtleTraps;
+                }
+
+                // 5. Maximize Grandmaster-conditioned recursive trap probability (assumes opponent never misses 1-move blocks)
+                if (Math.abs(a.gmTrapRate - b.gmTrapRate) > 1e-9) {
+                    return a.gmTrapRate - b.gmTrapRate;
+                }
+
+                // 6. Maximize "only-move" squeeze pressure (fewest safe replies for opponent)
+                if (Math.abs(a.narrowEscape - b.narrowEscape) > 1e-9) {
+                    return a.narrowEscape - b.narrowEscape;
+                }
+
+                // 7. Maximize overall recursive blunder probability across all legal replies
+                if (Math.abs(a.trapRate - b.trapRate) > 1e-9) {
+                    return a.trapRate - b.trapRate;
+                }
+
+                // 8. Maximize total lethal replies on the very next turn
+                if (a.lethalReplies !== b.lethalReplies) {
+                    return a.lethalReplies - b.lethalReplies;
+                }
+
+                // 9. Tactical tie-breaker: double-threat pressure & positional strength
+                if (a.tactical !== b.tactical) {
+                    return a.tactical - b.tactical;
+                }
+
+                return 0;
+            };
+
+            const solveGrandmaster = (board, isMax) => {
+                const key = board.map(c => c || '.').join('') + (isMax ? 'O' : 'X');
+                const cached = gmTable.get(key);
+                if (cached) return cached;
+
                 const res = checkWinnerForBoard(board);
                 if (res) {
-                    if (res.winner === 'O') return 100 - depth;
-                    if (res.winner === 'X') return depth - 100;
-                    return 0;
+                    const terminal = res.winner === 'O'
+                        ? { exact: 1, plies: 0, trapRate: 1, gmTrapRate: 1, lethalReplies: 0, subtleTraps: 0, narrowEscape: 1 }
+                        : res.winner === 'X'
+                            ? { exact: -1, plies: 0, trapRate: 0, gmTrapRate: 0, lethalReplies: 0, subtleTraps: 0, narrowEscape: 0 }
+                            : { exact: 0, plies: 0, trapRate: 0, gmTrapRate: 0, lethalReplies: 0, subtleTraps: 0, narrowEscape: 0 };
+                    gmTable.set(key, terminal);
+                    return terminal;
                 }
 
                 if (isMax) {
-                    let best = -Infinity;
+                    let best = null;
                     for (const i of MOVE_PRIORITY) {
                         if (board[i] === '') {
                             board[i] = 'O';
-                            best = Math.max(best, alphaBeta(board, depth + 1, alpha, beta, false));
+                            const child = solveGrandmaster(board, false);
+                            const tactical = countForkThreats(board, 'O') * 6 - countForkThreats(board, 'X') * 5 + POS_WEIGHTS[i];
                             board[i] = '';
-                            alpha = Math.max(alpha, best);
-                            if (beta <= alpha) break;
+
+                            const candidate = {
+                                exact: child.exact,
+                                plies: child.exact === 0 ? 0 : child.plies + 1,
+                                trapRate: child.trapRate,
+                                gmTrapRate: child.gmTrapRate,
+                                lethalReplies: child.lethalReplies,
+                                subtleTraps: child.subtleTraps,
+                                narrowEscape: child.narrowEscape,
+                                tactical
+                            };
+
+                            if (!best || compareGmCandidates(candidate, best) > 0) {
+                                best = candidate;
+                            }
                         }
                     }
-                    return best;
+
+                    const solved = {
+                        exact: best.exact,
+                        plies: best.plies,
+                        trapRate: best.trapRate,
+                        gmTrapRate: best.gmTrapRate,
+                        lethalReplies: best.lethalReplies,
+                        subtleTraps: best.subtleTraps,
+                        narrowEscape: best.narrowEscape
+                    };
+                    gmTable.set(key, solved);
+                    return solved;
                 } else {
-                    let best = Infinity;
+                    let worstExact = Infinity;
+                    let maxWinPlies = 0;
+                    let minLossPlies = Infinity;
+                    let trapSum = 0;
+                    let replyCount = 0;
+                    let gmTrapSum = 0;
+                    let gmReplyCount = 0;
+                    let lethalReplies = 0;
+                    let subtleTraps = 0;
+                    let safeReplies = 0;
+
                     for (const i of MOVE_PRIORITY) {
                         if (board[i] === '') {
                             board[i] = 'X';
-                            best = Math.min(best, alphaBeta(board, depth + 1, alpha, beta, true));
+                            const child = solveGrandmaster(board, true);
                             board[i] = '';
-                            beta = Math.min(beta, best);
-                            if (beta <= alpha) break;
+
+                            replyCount++;
+                            trapSum += child.trapRate;
+
+                            // Grandmaster-conditioned pool: excludes obvious 1-ply misses (child.exact === 1 && child.plies === 1)
+                            if (!(child.exact === 1 && child.plies === 1)) {
+                                gmReplyCount++;
+                                gmTrapSum += child.gmTrapRate;
+                            }
+
+                            if (child.exact < worstExact) {
+                                worstExact = child.exact;
+                            }
+                            if (child.exact === 1) {
+                                lethalReplies++;
+                                if (child.plies >= 3) subtleTraps++;
+                                if (child.plies > maxWinPlies) maxWinPlies = child.plies;
+                            } else {
+                                safeReplies++;
+                                if (child.exact === -1 && child.plies < minLossPlies) {
+                                    minLossPlies = child.plies;
+                                }
+                            }
                         }
                     }
-                    return best;
+
+                    const solved = {
+                        exact: worstExact,
+                        plies: worstExact === 1
+                            ? maxWinPlies + 1
+                            : worstExact === -1
+                                ? minLossPlies + 1
+                                : 0,
+                        trapRate: replyCount > 0 ? trapSum / replyCount : 0,
+                        gmTrapRate: gmReplyCount > 0 ? gmTrapSum / gmReplyCount : (replyCount > 0 ? trapSum / replyCount : 0),
+                        lethalReplies,
+                        subtleTraps,
+                        narrowEscape: safeReplies === 0 ? 1 : 1 / safeReplies
+                    };
+                    gmTable.set(key, solved);
+                    return solved;
                 }
             };
 
-            // Tie-breaker that steers equal-minimax draws into maximum-trap lines
-            const expectimaxTrapScore = (board, depth, isMax) => {
-                const res = checkWinnerForBoard(board);
-                if (res) {
-                    if (res.winner === 'O') return 100 - depth;
-                    if (res.winner === 'X') return depth - 100;
-                    return 0;
+            const chooseGrandmasterMove = (boardSnapshot) => {
+                const board = [...boardSnapshot];
+                let bestCandidate = null;
+                let topMoves = [];
+
+                for (const i of MOVE_PRIORITY) {
+                    if (board[i] !== '') continue;
+                    board[i] = 'O';
+                    const child = solveGrandmaster(board, false);
+                    const tactical = countForkThreats(board, 'O') * 6 - countForkThreats(board, 'X') * 5 + POS_WEIGHTS[i];
+                    board[i] = '';
+
+                    const candidate = {
+                        move: i,
+                        exact: child.exact,
+                        plies: child.exact === 0 ? 0 : child.plies + 1,
+                        trapRate: child.trapRate,
+                        gmTrapRate: child.gmTrapRate,
+                        lethalReplies: child.lethalReplies,
+                        subtleTraps: child.subtleTraps,
+                        narrowEscape: child.narrowEscape,
+                        tactical
+                    };
+
+                    if (!bestCandidate) {
+                        bestCandidate = candidate;
+                        topMoves = [i];
+                    } else {
+                        const cmp = compareGmCandidates(candidate, bestCandidate);
+                        if (cmp > 0) {
+                            bestCandidate = candidate;
+                            topMoves = [i];
+                        } else if (cmp === 0) {
+                            topMoves.push(i);
+                        }
+                    }
                 }
 
-                if (isMax) {
-                    let best = -Infinity;
-                    for (const i of MOVE_PRIORITY) {
-                        if (board[i] === '') {
-                            board[i] = 'O';
-                            const val = expectimaxTrapScore(board, depth + 1, false);
-                            board[i] = '';
-                            if (val > best) best = val;
-                        }
-                    }
-                    return best;
-                } else {
-                    let worst = Infinity;
-                    let sum = 0;
-                    let count = 0;
-                    for (const i of MOVE_PRIORITY) {
-                        if (board[i] === '') {
-                            board[i] = 'X';
-                            const val = expectimaxTrapScore(board, depth + 1, true);
-                            board[i] = '';
-                            if (val < worst) worst = val;
-                            sum += val;
-                            count++;
-                        }
-                    }
-                    const avg = count > 0 ? sum / count : 0;
-                    return worst * 0.65 + avg * 0.35;
-                }
+                if (topMoves.length === 0) return undefined;
+                return topMoves[Math.floor(Math.random() * topMoves.length)];
             };
 
             const findImmediateMove = (mark) => {
@@ -1903,8 +2038,11 @@
                     if (winMove !== null) return winMove;
                     const blockMove = findImmediateMove('X');
                     if (blockMove !== null) return blockMove;
+                    if (Math.random() < 0.65) {
+                        return chooseGrandmasterMove(state.board);
+                    }
                     const forkMove = findForkMove('O');
-                    if (forkMove !== null && Math.random() < 0.9) return forkMove;
+                    if (forkMove !== null) return forkMove;
                     const blockFork = findForkMove('X');
                     if (blockFork !== null && Math.random() < 0.85) return blockFork;
                     if (state.board[4] === '') return 4;
@@ -1915,57 +2053,8 @@
                     return available[Math.floor(Math.random() * available.length)];
                 }
 
-                // HARD (UNBEATABLE): Instant win/block + Alpha-Beta + Expectimax Trap Engine
-                const immediateWin = findImmediateMove('O');
-                if (immediateWin !== null) return immediateWin;
-
-                const immediateBlock = findImmediateMove('X');
-                if (immediateBlock !== null) return immediateBlock;
-
-                // Aggressive corner opening when Computer starts on empty board (highest human error rate)
-                if (available.length === 9) {
-                    const traps = [0, 2, 6, 8];
-                    return traps[Math.floor(Math.random() * traps.length)];
-                }
-
-                const candidates = [];
-                let bestExact = -Infinity;
-
-                for (const i of available) {
-                    state.board[i] = 'O';
-                    const exactScore = alphaBeta([...state.board], 0, -Infinity, Infinity, false);
-                    state.board[i] = '';
-
-                    if (exactScore > bestExact) {
-                        bestExact = exactScore;
-                        candidates.length = 0;
-                        candidates.push(i);
-                    } else if (exactScore === bestExact) {
-                        candidates.push(i);
-                    }
-                }
-
-                if (candidates.length === 1) return candidates[0];
-
-                let bestComposite = -Infinity;
-                let topMoves = [];
-
-                for (const i of candidates) {
-                    state.board[i] = 'O';
-                    const trapScore = expectimaxTrapScore([...state.board], 0, false);
-                    const forkBonus = countForkThreats(state.board, 'O') * 6 - countForkThreats(state.board, 'X') * 5;
-                    const composite = trapScore * 10 + forkBonus + POS_WEIGHTS[i];
-                    state.board[i] = '';
-
-                    if (composite > bestComposite + 1e-6) {
-                        bestComposite = composite;
-                        topMoves = [i];
-                    } else if (Math.abs(composite - bestComposite) <= 1e-6) {
-                        topMoves.push(i);
-                    }
-                }
-
-                return topMoves[Math.floor(Math.random() * topMoves.length)];
+                // UNBEATABLE (GRANDMASTER): Exact Transposition-Table Multi-Objective Solver
+                return chooseGrandmasterMove(state.board);
             };
 
             const handleGameEnd = () => {
@@ -2023,14 +2112,19 @@
             };
 
             const computerMove = () => {
-                if (!state.isActive) return;
+                if (!state.isActive || !state.isVsComputer || state.currentPlayer !== 'O') return;
+                if (aiMoveTimer) {
+                    clearTimeout(aiMoveTimer);
+                    aiMoveTimer = null;
+                }
                 statusText.textContent = 'Computer is thinking...';
                 updateTurnHighlight();
 
                 aiMoveTimer = setTimeout(() => {
-                    if (!state.isActive) return;
+                    aiMoveTimer = null;
+                    if (!state.isActive || !state.isVsComputer || state.currentPlayer !== 'O') return;
                     const move = chooseComputerMove();
-                    if (move === undefined) return;
+                    if (move === undefined || state.board[move] !== '') return;
 
                     state.board[move] = 'O';
                     cells[move].textContent = 'O';
@@ -2043,7 +2137,7 @@
                         statusText.textContent = `${state.player1Name}'s Turn (X)`;
                         updateTurnHighlight();
                     }
-                }, 360);
+                }, 340);
             };
 
             const handleCellSelect = (cell) => {
@@ -2133,6 +2227,7 @@
                 setTimeout(updateStorageSummaryUI, 0);
             });
 
+            const APP_CACHE_NAME = 'tic-tac-toe-pro-v2.10.0';
             const OFFLINE_CORE_ASSETS = [
                 '/',
                 '/index.html',
@@ -2172,14 +2267,14 @@
                         if (navigator.onLine !== false) {
                             await Promise.all(keys.map((k) => caches.delete(k)));
                             if (!isCapacitorNative && location.protocol.startsWith('http')) {
-                                const cache = await caches.open('tic-tac-toe-pro-v2.9.0');
+                                const cache = await caches.open(APP_CACHE_NAME);
                                 await cache.addAll(OFFLINE_CORE_ASSETS).catch(() => {});
                             }
                             mode = 'refreshed';
                         } else {
                             await Promise.all(
                                 keys
-                                    .filter((k) => k !== 'tic-tac-toe-pro-v2.9.0')
+                                    .filter((k) => k !== APP_CACHE_NAME)
                                     .map((k) => caches.delete(k))
                             );
                             mode = 'offline-safe';
@@ -2356,7 +2451,7 @@
                     if ('caches' in window) {
                         caches.keys().then((keys) => {
                             keys.forEach((k) => {
-                                if (k.startsWith('tic-tac-toe-pro-') && k !== 'tic-tac-toe-pro-v2.9.0') {
+                                if (k.startsWith('tic-tac-toe-pro-') && k !== APP_CACHE_NAME) {
                                     caches.delete(k);
                                 }
                             });
