@@ -617,30 +617,27 @@
             .cell { transition: none; }
         }
 
-        /* Action Controls — Single-Line Thumb Row (Undo · Play Again · Reset Score) */
+        /* Action Controls — Always One Single Horizontal Line (Undo · Play Again · Reset Score) */
         .play-actions {
             width: 100%;
             max-width: 440px;
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: stretch;
             gap: 6px;
             flex-shrink: 0;
-            align-items: stretch;
         }
 
-        .play-actions.has-undo {
-            grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.075fr) minmax(0, 1.075fr);
-            gap: 6px;
+        .play-actions > button {
+            flex: 1.09 1 0;
+            min-width: 0;
         }
 
-        .btn-undo {
-            display: none;
+        .play-actions > .btn-undo {
+            flex: 0.82 1 0;
             gap: 4px;
             padding: 8px 6px;
-        }
-
-        .play-actions.has-undo .btn-undo {
-            display: inline-flex;
         }
 
         .btn-undo svg {
@@ -1858,12 +1855,10 @@
             };
 
             const updateUndoButtonUI = () => {
-                const showUndo = !state.isVsComputer;
-                if (playActions) {
-                    playActions.classList.toggle('has-undo', showUndo);
-                }
+                const canUndo = !state.isVsComputer && state.isActive && state.moveHistory.length > 0;
                 if (undoBtn) {
-                    undoBtn.disabled = !showUndo || !state.isActive || state.moveHistory.length === 0;
+                    undoBtn.disabled = !canUndo;
+                    undoBtn.title = state.isVsComputer ? 'Undo is available in 2 Players mode' : 'Undo last move';
                 }
             };
 
@@ -1918,7 +1913,6 @@
                 triggerHaptic(24);
                 updateScoreAndModeUI();
                 savePreferences();
-                roundResetTimer = setTimeout(resetGame, 2600);
             };
 
             const startTurnTimer = (reset = true) => {
@@ -2656,7 +2650,7 @@
                 setTimeout(updateStorageSummaryUI, 0);
             });
 
-            const APP_CACHE_NAME = 'tic-tac-toe-pro-v2.13.0';
+            const APP_CACHE_NAME = 'tic-tac-toe-pro-v2.14.0';
             const OFFLINE_CORE_ASSETS = [
                 '/',
                 '/index.html',
