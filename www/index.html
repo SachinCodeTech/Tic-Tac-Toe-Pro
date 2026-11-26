@@ -421,6 +421,50 @@
             flex-shrink: 0;
         }
 
+        .status-right {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .status-sep {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            user-select: none;
+        }
+
+        .turn-timer {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: color 0.15s ease;
+        }
+
+        .turn-timer svg {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+        }
+
+        .turn-timer.urgent {
+            color: #dc2626;
+        }
+
+        body.theme-dark .turn-timer.urgent {
+            color: #f87171;
+        }
+
+        .turn-timer.inactive {
+            color: var(--text-muted);
+        }
+
         .mode-link {
             background: none;
             border: none;
@@ -446,8 +490,8 @@
         }
 
         .game-board {
-            width: min(100%, 400px, calc(100dvh - 320px));
-            min-width: 228px;
+            width: min(100%, 392px, calc(100dvh - 360px));
+            min-width: 214px;
             aspect-ratio: 1 / 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -570,12 +614,33 @@
             flex-shrink: 0;
         }
 
+        .play-actions.has-undo {
+            grid-template-columns: auto 1fr 1fr;
+            gap: 8px;
+        }
+
+        .btn-undo {
+            display: none;
+            gap: 5px;
+            padding: 10px 12px;
+        }
+
+        .play-actions.has-undo .btn-undo {
+            display: inline-flex;
+        }
+
+        .btn-undo svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+        }
+
         .btn-primary,
         .btn-secondary {
             min-height: 46px;
-            padding: 10px 14px;
+            padding: 10px 12px;
             border-radius: var(--radius-md);
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             font-weight: 700;
             font-family: inherit;
             cursor: pointer;
@@ -583,7 +648,13 @@
             align-items: center;
             justify-content: center;
             white-space: nowrap;
-            transition: transform 0.14s ease, background-color 0.15s ease;
+            transition: transform 0.14s ease, background-color 0.15s ease, opacity 0.15s ease;
+        }
+
+        .btn-primary:disabled,
+        .btn-secondary:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
         }
 
         .btn-primary {
@@ -593,7 +664,7 @@
             box-shadow: var(--shadow-sm);
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             background: var(--btn-hover);
         }
 
@@ -630,13 +701,80 @@
             border: 1px solid var(--border-hairline);
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:hover:not(:disabled) {
             background: var(--bg-subtle);
         }
 
-        .btn-primary:active,
-        .btn-secondary:active {
+        .btn-primary:active:not(:disabled),
+        .btn-secondary:active:not(:disabled) {
             transform: scale(0.97);
+        }
+
+        /* Compact Non-Obstructive Move Log */
+        .move-log {
+            width: 100%;
+            max-width: 440px;
+            min-height: 36px;
+            padding: 6px 12px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-hairline);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .move-log-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            padding-right: 8px;
+            border-right: 1px solid var(--border-hairline);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .move-log-track {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            white-space: nowrap;
+            font-size: 0.78rem;
+            font-variant-numeric: tabular-nums;
+            color: var(--text-secondary);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .move-log-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .move-log-empty {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .move-log-entry {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .move-log-entry.latest {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .move-log-sep {
+            color: var(--text-muted);
+            flex-shrink: 0;
         }
 
         /* SCROLLABLE VIEWS (Setup & Info/Legal) */
@@ -1040,10 +1178,10 @@
             .play-layout {
                 display: grid;
                 grid-template-columns: 1fr auto;
-                grid-template-rows: auto auto;
+                grid-template-rows: auto auto auto;
                 align-items: center;
                 justify-content: center;
-                gap: 10px 20px;
+                gap: 8px 20px;
             }
             .play-hud {
                 grid-column: 1;
@@ -1053,12 +1191,16 @@
                 grid-column: 1;
                 grid-row: 2;
             }
+            .move-log {
+                grid-column: 1;
+                grid-row: 3;
+            }
             .board-stage {
                 grid-column: 2;
-                grid-row: 1 / span 2;
+                grid-row: 1 / span 3;
             }
             .game-board {
-                width: min(52vw, calc(100dvh - 140px));
+                width: min(50vw, calc(100dvh - 140px));
             }
         }
 
@@ -1066,16 +1208,16 @@
         @media (min-width: 840px) and (min-height: 541px) {
             .play-layout {
                 display: grid;
-                grid-template-columns: minmax(320px, 440px) minmax(280px, 340px);
-                grid-template-rows: 1fr auto;
+                grid-template-columns: minmax(320px, 440px) minmax(290px, 360px);
+                grid-template-rows: auto auto auto;
                 align-content: center;
                 justify-content: center;
-                gap: 20px 36px;
+                gap: 16px 36px;
                 padding: 24px 32px;
             }
             .board-stage {
                 grid-column: 1;
-                grid-row: 1 / span 2;
+                grid-row: 1 / span 3;
             }
             .game-board {
                 width: min(100%, 420px, calc(100dvh - 200px));
@@ -1088,6 +1230,11 @@
             .play-actions {
                 grid-column: 2;
                 grid-row: 2;
+                align-self: center;
+            }
+            .move-log {
+                grid-column: 2;
+                grid-row: 3;
                 align-self: start;
             }
         }
@@ -1170,7 +1317,18 @@
                                     <span id="ai-diff-label">Unbeatable</span>
                                 </button>
                             </div>
-                            <button type="button" class="mode-link" id="mode-shortcut-btn">2 Players</button>
+                            <div class="status-right">
+                                <span class="turn-timer" id="turn-timer" aria-label="Move countdown timer">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <circle cx="12" cy="13" r="8"/>
+                                        <path d="M12 9v4l2.5 1.5"/>
+                                        <path d="M9 2h6"/>
+                                    </svg>
+                                    <span id="turn-timer-val">15s</span>
+                                </span>
+                                <span class="status-sep" aria-hidden="true">&middot;</span>
+                                <button type="button" class="mode-link" id="mode-shortcut-btn">2 Players</button>
+                            </div>
                         </div>
                     </div>
 
@@ -1188,9 +1346,23 @@
                         </div>
                     </div>
 
-                    <div class="play-actions">
+                    <div class="play-actions has-undo" id="play-actions">
+                        <button type="button" class="btn-secondary btn-undo" id="undo-btn" aria-label="Undo last move" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M3 7v6h6"/>
+                                <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>
+                            </svg>
+                            <span>Undo</span>
+                        </button>
                         <button type="button" class="btn-primary" id="new-round-btn">New Round</button>
                         <button type="button" class="btn-secondary" id="reset-scores-btn">Reset Scores</button>
+                    </div>
+
+                    <div class="move-log" id="move-log" aria-label="Move Log">
+                        <span class="move-log-label">Moves</span>
+                        <div class="move-log-track" id="move-log-track" aria-live="polite">
+                            <span class="move-log-empty">No moves yet</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1457,6 +1629,11 @@
 
                 playClick() {
                     this.playSound(640, 0.04, 'sine', 0.08);
+                },
+
+                playTimeout() {
+                    this.playSound(240, 0.16, 'sawtooth', 0.12);
+                    setTimeout(() => this.playSound(190, 0.22, 'sawtooth', 0.12), 140);
                 }
             };
 
@@ -1486,11 +1663,16 @@
             const soundToggle = $('sound-toggle');
             const soundIconOn = $('sound-icon-on');
             const soundIconOff = $('sound-icon-off');
+            const playActions = $('play-actions');
+            const undoBtn = $('undo-btn');
             const newRoundBtn = $('new-round-btn');
             const resetScoresBtn = $('reset-scores-btn');
             const modeShortcutBtn = $('mode-shortcut-btn');
             const aiDiffIndicator = $('ai-diff-indicator');
             const aiDiffLabel = $('ai-diff-label');
+            const turnTimerEl = $('turn-timer');
+            const turnTimerVal = $('turn-timer-val');
+            const moveLogTrack = $('move-log-track');
             const historyBtn = $('history-btn');
             const historyModal = $('history-modal');
             const historyContent = $('history-content');
@@ -1499,14 +1681,19 @@
             const statusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
             const diffButtons = document.querySelectorAll('[data-diff]');
             const themeButtons = document.querySelectorAll('[data-theme]');
+            const TURN_TIME_SECONDS = 15;
             let roundResetTimer = null;
             let aiMoveTimer = null;
+            let turnTimerInterval = null;
 
             const state = {
                 board: Array(9).fill(''),
                 currentPlayer: 'X',
                 roundStarter: 'X',
                 isActive: true,
+                activeView: 'play',
+                turnTimeLeft: TURN_TIME_SECONDS,
+                moveHistory: [],
                 player1Name: 'Player 1',
                 player2Name: 'Player 2',
                 isVsComputer: false,
@@ -1583,6 +1770,150 @@
                 historyContent.appendChild(ul);
             };
 
+            const formatMoveCoord = (index) => `R${Math.floor(index / 3) + 1}C${(index % 3) + 1}`;
+
+            const renderMoveLog = () => {
+                if (!moveLogTrack) return;
+                moveLogTrack.innerHTML = '';
+                if (state.moveHistory.length === 0) {
+                    const empty = document.createElement('span');
+                    empty.className = 'move-log-empty';
+                    empty.textContent = 'No moves yet';
+                    moveLogTrack.appendChild(empty);
+                    return;
+                }
+
+                state.moveHistory.forEach((entry, idx) => {
+                    if (idx > 0) {
+                        const sep = document.createElement('span');
+                        sep.className = 'move-log-sep';
+                        sep.setAttribute('aria-hidden', 'true');
+                        sep.textContent = '·';
+                        moveLogTrack.appendChild(sep);
+                    }
+                    const item = document.createElement('span');
+                    item.className = idx === state.moveHistory.length - 1 ? 'move-log-entry latest' : 'move-log-entry';
+
+                    const numSpan = document.createElement('span');
+                    numSpan.textContent = `${idx + 1}.`;
+
+                    const markSpan = document.createElement('span');
+                    markSpan.className = entry.mark === 'X' ? 'mark-tag-x' : 'mark-tag-o';
+                    markSpan.textContent = entry.mark;
+
+                    const coordSpan = document.createElement('span');
+                    coordSpan.textContent = entry.coord;
+
+                    item.appendChild(numSpan);
+                    item.appendChild(markSpan);
+                    item.appendChild(coordSpan);
+                    moveLogTrack.appendChild(item);
+                });
+
+                moveLogTrack.scrollLeft = moveLogTrack.scrollWidth;
+            };
+
+            const updateUndoButtonUI = () => {
+                const showUndo = !state.isVsComputer;
+                if (playActions) {
+                    playActions.classList.toggle('has-undo', showUndo);
+                }
+                if (undoBtn) {
+                    undoBtn.disabled = !showUndo || !state.isActive || state.moveHistory.length === 0;
+                }
+            };
+
+            const stopTurnTimer = () => {
+                if (turnTimerInterval) {
+                    clearInterval(turnTimerInterval);
+                    turnTimerInterval = null;
+                }
+            };
+
+            const updateTurnTimerUI = () => {
+                if (!turnTimerEl || !turnTimerVal) return;
+                const activeClock = state.isActive;
+                turnTimerVal.textContent = activeClock ? `${state.turnTimeLeft}s` : (state.turnTimeLeft === 0 ? '0s' : '--');
+                turnTimerEl.classList.toggle('urgent', activeClock && state.turnTimeLeft <= 5);
+                turnTimerEl.classList.toggle('inactive', !activeClock);
+            };
+
+            const handleTurnTimeout = () => {
+                if (!state.isActive) return;
+                stopTurnTimer();
+                state.isActive = false;
+                state.turnTimeLeft = 0;
+                updateTurnTimerUI();
+                updateTurnHighlight();
+                updateUndoButtonUI();
+                newRoundBtn.textContent = 'Play Again';
+
+                const winnerMark = state.currentPlayer === 'X' ? 'O' : 'X';
+                const winnerName = winnerMark === 'X'
+                    ? state.player1Name
+                    : (state.isVsComputer ? 'Computer' : state.player2Name);
+
+                state.scores[winnerMark]++;
+                state.sessionGamesPlayed += 1;
+                const diffShort = state.difficulty === 'hard' ? 'Unbeatable' : state.difficulty === 'medium' ? 'Medium' : 'Easy';
+                const modeLabel = state.isVsComputer ? `AI · ${diffShort}` : '2 Players';
+                state.sessionHistory.push({
+                    gameNumber: state.sessionGamesPlayed,
+                    resultText: `${winnerName} Won (Time)`,
+                    modeLabel
+                });
+                if (state.sessionHistory.length > 5) {
+                    state.sessionHistory = state.sessionHistory.slice(-5);
+                }
+                if (state.isVsComputer) {
+                    state.roundStarter = state.roundStarter === 'X' ? 'O' : 'X';
+                }
+
+                statusText.textContent = `Time's up! ${winnerName} Wins!`;
+                SoundManager.playTimeout();
+                triggerHaptic(24);
+                updateScoreAndModeUI();
+                savePreferences();
+                roundResetTimer = setTimeout(resetGame, 2600);
+            };
+
+            const startTurnTimer = (reset = true) => {
+                stopTurnTimer();
+                if (reset) {
+                    state.turnTimeLeft = TURN_TIME_SECONDS;
+                }
+                updateTurnTimerUI();
+
+                if (!state.isActive || state.activeView !== 'play') return;
+                if (state.isVsComputer && state.currentPlayer === 'O') return;
+
+                turnTimerInterval = setInterval(() => {
+                    if (!state.isActive || state.activeView !== 'play') {
+                        stopTurnTimer();
+                        return;
+                    }
+                    if (state.isVsComputer && state.currentPlayer === 'O') {
+                        stopTurnTimer();
+                        return;
+                    }
+                    state.turnTimeLeft = Math.max(0, state.turnTimeLeft - 1);
+                    updateTurnTimerUI();
+                    if (state.turnTimeLeft <= 0) {
+                        handleTurnTimeout();
+                    }
+                }, 1000);
+            };
+
+            const recordMove = (index, mark) => {
+                state.moveHistory.push({
+                    index,
+                    mark,
+                    coord: formatMoveCoord(index)
+                });
+                renderMoveLog();
+                updateUndoButtonUI();
+            };
+
             const updateScoreAndModeUI = () => {
                 $('p1-name').textContent = state.player1Name;
                 $('p2-name').textContent = state.isVsComputer ? 'Computer' : state.player2Name;
@@ -1596,6 +1927,7 @@
                     aiDiffLabel.textContent = diffLabel;
                 }
                 modeShortcutBtn.textContent = state.isVsComputer ? 'Setup' : '2 Players';
+                updateUndoButtonUI();
             };
 
             const updateSetupControlsUI = () => {
@@ -1637,11 +1969,17 @@
 
             const switchView = (key) => {
                 SoundManager.playClick();
+                state.activeView = key;
                 Object.keys(views).forEach(k => {
                     views[k].classList.toggle('active', k === key);
                     navTabs[k].classList.toggle('active', k === key);
                     navTabs[k].setAttribute('aria-selected', String(k === key));
                 });
+                if (key === 'play') {
+                    startTurnTimer(false);
+                } else {
+                    stopTurnTimer();
+                }
             };
 
             navTabs.play.onclick = () => switchView('play');
@@ -1725,25 +2063,54 @@
                     clearTimeout(aiMoveTimer);
                     aiMoveTimer = null;
                 }
+                stopTurnTimer();
                 state.board.fill('');
                 state.currentPlayer = state.isVsComputer ? state.roundStarter : 'X';
                 state.isActive = true;
                 state.winningCells = [];
+                state.moveHistory = [];
+                state.turnTimeLeft = TURN_TIME_SECONDS;
                 newRoundBtn.textContent = 'New Round';
                 cells.forEach(cell => {
                     cell.textContent = '';
                     cell.className = 'cell';
                 });
+                renderMoveLog();
+                updateUndoButtonUI();
 
                 if (state.isVsComputer && state.currentPlayer === 'O') {
                     statusText.textContent = 'Computer opens (O)...';
                     updateTurnHighlight();
+                    updateTurnTimerUI();
                     computerMove();
                 } else {
                     statusText.textContent = `${state.player1Name}'s Turn (X)`;
                     updateTurnHighlight();
+                    startTurnTimer(true);
                 }
             };
+
+            const undoLastMove = () => {
+                if (state.isVsComputer || !state.isActive || state.moveHistory.length === 0) return;
+                const last = state.moveHistory.pop();
+                state.board[last.index] = '';
+                cells[last.index].textContent = '';
+                cells[last.index].className = 'cell';
+                state.currentPlayer = last.mark;
+
+                const playerName = last.mark === 'X' ? state.player1Name : state.player2Name;
+                statusText.textContent = `${playerName}'s Turn (${last.mark})`;
+                SoundManager.playClick();
+                triggerHaptic(6);
+                updateTurnHighlight();
+                renderMoveLog();
+                updateUndoButtonUI();
+                startTurnTimer(true);
+            };
+
+            if (undoBtn) {
+                undoBtn.onclick = () => undoLastMove();
+            }
 
             newRoundBtn.onclick = () => {
                 SoundManager.playClick();
@@ -2061,8 +2428,11 @@
                 const result = checkWinnerForBoard(state.board);
                 if (!result) return false;
 
+                stopTurnTimer();
                 state.isActive = false;
+                updateTurnTimerUI();
                 updateTurnHighlight();
+                updateUndoButtonUI();
                 newRoundBtn.textContent = 'Play Again';
 
                 state.sessionGamesPlayed += 1;
@@ -2117,6 +2487,9 @@
                     clearTimeout(aiMoveTimer);
                     aiMoveTimer = null;
                 }
+                stopTurnTimer();
+                state.turnTimeLeft = TURN_TIME_SECONDS;
+                updateTurnTimerUI();
                 statusText.textContent = 'Computer is thinking...';
                 updateTurnHighlight();
 
@@ -2129,6 +2502,7 @@
                     state.board[move] = 'O';
                     cells[move].textContent = 'O';
                     cells[move].classList.add('o', 'filled');
+                    recordMove(move, 'O');
                     SoundManager.playMove('O');
                     triggerHaptic(8);
 
@@ -2136,6 +2510,7 @@
                         state.currentPlayer = 'X';
                         statusText.textContent = `${state.player1Name}'s Turn (X)`;
                         updateTurnHighlight();
+                        startTurnTimer(true);
                     }
                 }, 340);
             };
@@ -2150,6 +2525,7 @@
                 state.board[id] = mark;
                 cell.textContent = mark;
                 cell.classList.add(mark.toLowerCase(), 'filled');
+                recordMove(id, mark);
                 SoundManager.playMove(mark);
                 triggerHaptic(10);
 
@@ -2162,11 +2538,13 @@
                     } else {
                         statusText.textContent = `${state.player2Name}'s Turn (O)`;
                         updateTurnHighlight();
+                        startTurnTimer(true);
                     }
                 } else {
                     state.currentPlayer = 'X';
                     statusText.textContent = `${state.player1Name}'s Turn (X)`;
                     updateTurnHighlight();
+                    startTurnTimer(true);
                 }
             };
 
@@ -2227,7 +2605,7 @@
                 setTimeout(updateStorageSummaryUI, 0);
             });
 
-            const APP_CACHE_NAME = 'tic-tac-toe-pro-v2.10.0';
+            const APP_CACHE_NAME = 'tic-tac-toe-pro-v2.11.0';
             const OFFLINE_CORE_ASSETS = [
                 '/',
                 '/index.html',
@@ -2308,6 +2686,7 @@
                     clearTimeout(aiMoveTimer);
                     aiMoveTimer = null;
                 }
+                stopTurnTimer();
 
                 try { localStorage.clear(); } catch (e) {}
                 try { sessionStorage.clear(); } catch (e) {}
@@ -2325,6 +2704,8 @@
                 state.currentPlayer = 'X';
                 state.roundStarter = 'X';
                 state.isActive = true;
+                state.turnTimeLeft = TURN_TIME_SECONDS;
+                state.moveHistory = [];
                 state.player1Name = 'Player 1';
                 state.player2Name = 'Player 2';
                 state.isVsComputer = false;
